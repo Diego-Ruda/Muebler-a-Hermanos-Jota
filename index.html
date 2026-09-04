@@ -1,11 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hola mundo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mueblería Hermanos Jota</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <h1>Si leen esto la rompi</h1>
+
+  <!-- HEADER  -->
+  <header class="header">
+    <div class="container header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">hj</span>
+        <span class="logo-text">HERMANOS JOTA</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link active">INICIO</a>
+        <a href="catalogo.html" class="nav-link">CATÁLOGO</a>
+        <a href="contacto.html" class="nav-link">CONTACTO</a>
+      </nav>
+      <a href="carrito.html" class="btn-carrito">Carrito</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO BANNER -->
+    <section class="hero">
+      <div class="hero-overlay">
+        <div class="container hero-content">
+          <span class="hero-subtitle">BUENOS AIRES DESDE 1982</span>
+          <h1 class="hero-title">MUEBLES QUE<br />SE QUEDAN</h1>
+          <p class="hero-description">
+            Diseño atemporal y madera de origen responsable. Piezas para habitar despacio, hechas en el taller de Hermanos Jota.
+          </p>
+          <a href="catalogo.html" class="btn-primary">VER CATÁLOGO</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN SUSTENTABILIDAD -->
+    <section class="sustentabilidad">
+      <div class="container">
+        <span class="section-tag">SUSTENTABILIDAD</span>
+        <h2 class="section-title">OFICIO, NO MODA</h2>
+        <p class="section-description">
+          Trabajamos maderas certificadas, aceites naturales y herrajes pensados para durar décadas. Cada pieza se puede restaurar; ninguna está hecha para desecharse.
+        </p>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <span class="feature-number">01</span>
+            <h3>MADERA NOBLE</h3>
+            <p>Nogal, roble, paraíso y guatambú de proveedores con cadena de custodia. El veteado queda a la vista: no hay dos iguales.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-number">02</span>
+            <h3>ACABADOS LIMPIOS</h3>
+            <p>Aceites de tung y linaza, lacas al agua y ceras vegetales. Menos VOC, más tacto y un envejecimiento honesto.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="feature-number">03</span>
+            <h3>HECHO EN CABA</h3>
+            <p>Taller y showroom en San Juan y Boedo. Podés ver las piezas, preguntar por medidas a medida y llevarte muestras de madera.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN PIEZAS DESTACADAS -->
+    <section class="destacados">
+      <div class="container">
+        <span class="section-tag">SELECCIÓN</span>
+        <h2 class="section-title">PIEZAS DESTACADAS</h2>
+
+        <div id="products-container" class="products-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER  -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="logo logo-footer">
+          <span class="logo-icon">hj</span>
+          <span class="logo-text">HERMANOS JOTA</span>
+        </div>
+        <p>Mueblería de diseño atemporal y sustentable. Showroom abierto de martes a sábado.</p>
+      </div>
+
+      <div class="footer-info">
+        <h4>Showroom</h4>
+        <p>Av. San Juan 2847, CABA</p>
+        <p><a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a></p>
+      </div>
+
+      <div class="footer-info">
+        <h4>Redes</h4>
+        <p>@hermanosjota_ba</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Hermanos Jota. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="productos.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

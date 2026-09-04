@@ -1,0 +1,372 @@
+/* root: {
+    --font1:;
+    --font2:;
+    --color1:;
+    --color2:;
+    --color3:;
+    --color4:;
+} */
+
+/* variables */
+:root {
+  /* Paleta de colores */
+  --primary-100: #FF7F50;
+  --primary-200: #dd6236;
+  --primary-300: #8f1e00;
+  --accent-100: #8B4513;
+  --accent-200: #ffd299;
+  --text-100: #000000;
+  --text-200: #2c2c2c;
+  --bg-100: #F7EEDD;
+  --bg-200: #ede4d3;
+  --bg-300: #c4bcab;
+
+  /* Mapeo funcional para componentes */
+  --bg-primary: var(--bg-100);
+  --bg-card: var(--bg-200);
+  --text-dark: var(--text-200);
+  --text-muted: var(--accent-100);
+  --accent-gold: var(--primary-100);
+  --accent-green: var(--primary-200);
+  --footer-bg: var(--text-200);
+  --footer-text: var(--bg-100);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* HEADER */
+.header {
+  background-color: var(--bg-primary);
+  padding: 1.2rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--bg-300);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  background-color: var(--primary-200);
+  color: #fff;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.logo-text {
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  color: var(--primary-300);
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.nav-link.active, 
+.nav-link:hover {
+  color: var(--primary-300);
+  font-weight: 600;
+}
+
+.btn-carrito {
+  background-color: var(--accent-200);
+  color: var(--text-dark);
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: background-color 0.2s ease;
+}
+
+.btn-carrito:hover {
+  background-color: var(--primary-100);
+  color: #fff;
+}
+
+/* HERO */
+.hero {
+  background: url('img/Fondo.jfif') center/cover no-repeat;
+  min-height: 80vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  padding: 4rem 0;
+}
+
+.hero-content {
+  color: #fff;
+  max-width: 600px;
+}
+
+.hero-subtitle {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  color: var(--accent-200);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin: 1rem 0;
+  font-weight: 700;
+}
+
+.hero-description {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: var(--bg-100);
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: var(--primary-100);
+  color: #fff;
+  padding: 0.9rem 1.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-200);
+}
+
+/* SUSTENTABILIDAD */
+.sustentabilidad {
+  padding: 5rem 0;
+}
+
+.section-tag {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--primary-200);
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  color: var(--primary-300);
+  margin: 0.5rem 0 1rem;
+}
+
+.section-description {
+  max-width: 650px;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--bg-300);
+  padding: 2.5rem 2rem;
+  border-radius: 6px;
+}
+
+.feature-number {
+  background-color: var(--primary-200);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+  font-size: 1.1rem;
+  color: var(--primary-300);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* DESTACADOS */
+.destacados {
+  padding: 3rem 0 6rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.product-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--bg-300);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.product-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background-color: var(--bg-300);
+}
+
+.product-info {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-title {
+  font-size: 1rem;
+  color: var(--primary-300);
+  margin-bottom: 0.4rem;
+}
+
+.product-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-price {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-100);
+}
+
+.product-link {
+  font-size: 0.8rem;
+  color: var(--primary-200);
+  font-weight: 600;
+}
+
+.product-link:hover {
+  color: var(--primary-300);
+}
+
+/* FOOTER */
+.footer {
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 4rem 0 2rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.logo-footer .logo-text {
+  color: #fff;
+}
+
+.footer-brand p {
+  color: var(--bg-300);
+  margin-top: 1rem;
+  max-width: 320px;
+  font-size: 0.9rem;
+}
+
+.footer-info h4 {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.footer-info p, 
+.footer-info a {
+  color: var(--bg-300);
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.footer-info a:hover {
+  color: var(--accent-200);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--accent-100);
+  padding-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--bg-300);
+}

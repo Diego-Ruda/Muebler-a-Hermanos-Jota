@@ -36,8 +36,6 @@ function renderFeaturedProducts() {
   });
 }
 
-
-
 /*  Mostrar productos en el productos.html  */
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,10 @@
         <a href="productos.html" class="nav-link">CATÁLOGO</a>
         <a href="contacto.html" class="nav-link active">CONTACTO</a>
       </nav>
-      <a href="carrito.html" class="btn-carrito">Carrito</a>
+      <!--<a href="carrito.html" class="btn-carrito">Carrito</a>-->
+      <button class="btn-carrito" type="button" data-open-cart aria-label="Abrir carrito">
+        Carrito <span class="cart-count" data-cart-count hidden>0</span>
+      </button>
     </div>
   </header>
 
@@ -98,7 +101,7 @@
             <img src="img/logo.svg" alt="" class="logo-img">
             <span class="logo-text">HERMANOS JOTA</span>
         </div>
-        <p>Mueblería de diseño atemporal y sustentable. Showroom abierto de martes a sábado.<br>Showroom abierto de Lunes a Sábado.</p>
+        <p>Mueblería de diseño atemporal y sustentable.<br>Showroom abierto de Lunes a Sábado.</p>
       </div>
 
       <div class="footer-info">
@@ -118,6 +121,34 @@
     </div>
   </footer>
 
+  <!-- Overlay para oscurecer el fondo cuando el carrito esté abierto -->
+<div class="cart-overlay" data-cart-overlay></div>
+
+<!-- Drawer / Sidebar del Carrito -->
+<aside class="cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Carrito de compras">
+  <header class="cart-header">
+    <h2>Tu Carrito</h2>
+    <button class="icon-btn" type="button" data-close-cart aria-label="Cerrar carrito">×</button>
+  </header>
+
+  <div class="cart-body">
+    <ul class="cart-list" data-cart-list>
+      <!-- Los productos agregados se renderizan dinámicamente aquí -->
+    </ul>
+  </div>
+
+  <footer class="cart-footer">
+    <div class="cart-total-wrapper">
+      <span>Total:</span>
+      <strong data-cart-total>$ 0</strong>
+    </div>
+    <!-- Podés dirigirlos a una página de checkout o a contacto -->
+    <a href="checkout.html" class="btn btn-primary btn-block">Finalizar Compra</a>
+  </footer>
+</aside>
+
   <script src="contacto.js"></script>
+  <script src="cart.js"></script>
+
 </body>
 </html>

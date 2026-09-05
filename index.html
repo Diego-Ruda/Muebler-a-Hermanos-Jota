@@ -15,13 +15,16 @@
         <img src="img/logo.svg" alt="" class="logo-img">
         <span class="logo-text">HERMANOS JOTA</span>
       </a>
-      <nav class="nav">
+      <nav class="nav" id="site-nav">
         <a href="index.html" class="nav-link active">INICIO</a>
         <a href="productos.html" class="nav-link">CATÁLOGO</a>
         <a href="contacto.html" class="nav-link">CONTACTO</a>
       </nav>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
       <button class="btn-carrito" type="button" data-open-cart aria-label="Abrir carrito">
-        Carrito <span class="cart-count" data-cart-count hidden>0</span>
+        <span class="cart-icon" aria-hidden="true">&#128722;</span><span class="cart-label">Carrito</span><span class="cart-count" data-cart-count hidden>0</span>
       </button>
     </div>
   </header>
@@ -36,7 +39,7 @@
           <p class="hero-description">
             Diseño atemporal y madera de origen responsable. Piezas para habitar despacio, hechas en el taller de Hermanos Jota.
           </p>
-          <a href="catalogo.html" class="btn-primary">VER CATÁLOGO</a>
+          <a href="productos.html" class="btn-primary">VER CATÁLOGO</a>
         </div>
       </div>
     </section>
@@ -78,7 +81,11 @@
         <span class="section-tag">SELECCIÓN</span>
         <h2 class="section-title">PIEZAS DESTACADAS</h2>
 
-        <div id="products-container" class="products-grid"></div>
+        <div class="featured-carousel" aria-label="Productos destacados">
+          <button class="carousel-button carousel-button-prev" type="button" aria-label="Producto anterior">‹</button>
+          <div id="products-container" class="products-grid"></div>
+          <button class="carousel-button carousel-button-next" type="button" aria-label="Producto siguiente">›</button>
+        </div>
       </div>
     </section>
   </main>

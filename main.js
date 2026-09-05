@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderFeaturedProducts() {
   const container = document.getElementById("products-container");
 
+  if (!container) {
+    return;
+  }
+
   // los productos con destacado: true
   const featured = products.filter(product => product.destacado === true);
 
@@ -34,6 +38,32 @@ function renderFeaturedProducts() {
 
     container.appendChild(card);
   });
+
+  setupFeaturedCarousel(container);
+}
+
+function setupFeaturedCarousel(container) {
+  const carousel = container.closest(".featured-carousel");
+  const previousButton = carousel?.querySelector(".carousel-button-prev");
+  const nextButton = carousel?.querySelector(".carousel-button-next");
+
+  if (!carousel || !previousButton || !nextButton) {
+    return;
+  }
+
+  const scrollCarousel = direction => {
+    const firstCard = container.querySelector(".product-card");
+    const cardGap = parseFloat(getComputedStyle(container).gap) || 0;
+    const scrollDistance = (firstCard?.getBoundingClientRect().width || container.clientWidth) + cardGap;
+
+    container.scrollBy({
+      left: direction * scrollDistance,
+      behavior: "smooth"
+    });
+  };
+
+  previousButton.addEventListener("click", () => scrollCarousel(-1));
+  nextButton.addEventListener("click", () => scrollCarousel(1));
 }
 
 /*  Mostrar productos en el productos.html  */

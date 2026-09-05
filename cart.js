@@ -2,6 +2,23 @@
 let cart = JSON.parse(localStorage.getItem('cart_hj')) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('is-open') ?? false;
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+  });
+
+  nav?.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+      menuToggle?.setAttribute('aria-label', 'Abrir menú');
+    });
+  });
+
   // Controles de Apertura / Cierre del Drawer
   const openCartBtn = document.querySelector('[data-open-cart]');
   const closeCartBtn = document.querySelector('[data-close-cart]');

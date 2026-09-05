@@ -99,20 +99,52 @@ a {
   font-weight: 600;
 }
 
+.menu-toggle {
+  display: none;
+  border: 0;
+  background: transparent;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 1.5rem;
+  height: 2px;
+  margin: 4px 0;
+  background-color: var(--primary-300);
+}
+
 .btn-carrito {
-  background-color: var(--accent-200);
-  color: var(--text-dark);
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
+  position: relative;
+  border: 1px solid var(--primary-100);
+  background-color: var(--primary-100);
+  color: #fff;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 3px 8px rgba(143, 30, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-carrito:hover {
-  background-color: var(--primary-100);
+  background-color: var(--primary-200);
+  border-color: var(--primary-200);
   color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(143, 30, 0, 0.25);
+}
+
+.cart-icon {
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 /* HERO */
@@ -309,6 +341,58 @@ a {
   color: var(--primary-300);
 }
 
+/* CARRUSEL DE DESTACADOS */
+.featured-carousel {
+  position: relative;
+  padding: 0 2.8rem;
+}
+
+.featured-carousel .products-grid {
+  display: flex;
+  gap: 1.5rem;
+  overflow: hidden;
+  margin-top: 2rem;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.featured-carousel .products-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.featured-carousel .product-card {
+  flex: 0 0 calc((100% - 3rem) / 3);
+  min-width: 0;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--bg-300);
+  border-radius: 50%;
+  background-color: var(--bg-primary);
+  color: var(--primary-300);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.carousel-button:hover {
+  background-color: var(--accent-200);
+}
+
+.carousel-button-prev {
+  left: 0;
+}
+
+.carousel-button-next {
+  right: 0;
+}
+
 /* FOOTER */
 .footer {
   background-color: var(--footer-bg);
@@ -357,6 +441,10 @@ a {
   padding-top: 1.5rem;
   font-size: 0.8rem;
   color: var(--bg-300);
+}
+
+.footer-bottom p {
+  overflow-wrap: anywhere;
 }
 
 /*==========================================================================
@@ -589,10 +677,142 @@ a {
 }
 
 .cart-count {
-  background-color: var(--primary-300);
-  color: #fff;
+  position: absolute;
+  top: -0.4rem;
+  right: -0.35rem;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  display: grid;
+  place-items: center;
+  padding: 0.1rem 0.3rem;
+  background-color: var(--accent-200);
+  color: var(--primary-300);
   border-radius: 50%;
-  padding: 0.15rem 0.45rem;
-  font-size: 0.75rem;
-  margin-left: 0.3rem;
+  border: 2px solid var(--bg-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.85rem 0;
+  }
+
+  .header-content {
+    position: relative;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: flex-start;
+  }
+
+  .logo {
+    order: 1;
+    margin-right: auto;
+  }
+
+  .logo-text {
+    font-size: 0.75rem;
+  }
+
+  .logo-img {
+    height: 34px;
+  }
+
+  .menu-toggle {
+    display: block;
+    order: 2;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 0;
+    z-index: 101;
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 1rem 0.75rem;
+    background-color: var(--bg-primary);
+    border-top: 1px solid var(--bg-300);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav.is-open {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: 0.7rem 0;
+  }
+
+  .btn-carrito {
+    order: 3;
+    width: 2.55rem;
+    height: 2.55rem;
+    justify-content: center;
+    padding: 0;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .cart-label {
+    display: none;
+  }
+
+  .hero {
+    min-height: 72vh;
+  }
+
+  .hero-title {
+    font-size: 2.7rem;
+  }
+
+  .sustentabilidad,
+  .destacados {
+    padding: 3.5rem 0;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .featured-carousel {
+    padding: 0 2.2rem;
+  }
+
+  .featured-carousel .product-card {
+    flex-basis: 100%;
+  }
+
+  .product-image {
+    height: 200px;
+  }
+
+  .footer {
+    padding: 3rem 0 1.5rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .footer-brand p {
+    margin-top: 0.75rem;
+  }
+
+  .footer-info h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-info p,
+  .footer-info a {
+    overflow-wrap: anywhere;
+  }
+
+  .footer-bottom {
+    padding-top: 1rem;
+  }
 }

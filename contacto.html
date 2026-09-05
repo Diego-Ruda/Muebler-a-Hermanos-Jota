@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - Hermanos Jota</title>
+  <meta name="description" content="Casa Taller en Av. San Juan 2847, CABA. Escribinos o visitanos.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-content">
+      <a href="index.html" class="logo">
+        <img src="img/logo.svg" alt="" class="logo-img">
+        <span class="logo-text">HERMANOS JOTA</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">INICIO</a>
+        <a href="productos.html" class="nav-link">CATÁLOGO</a>
+        <a href="contacto.html" class="nav-link active">CONTACTO</a>
+      </nav>
+      <a href="carrito.html" class="btn-carrito">Carrito</a>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <header class="page-hero container">
+      <p class="kicker">Contacto</p>
+      <h1>Visitá el taller</h1>
+    </header>
+
+    <section class="section">
+      <div class="container contact-layout">
+        <aside class="contact-card">
+          <h2>Showroom</h2>
+          <ul class="contact-list">
+            <li>
+              <strong>Dirección</strong><br>
+              Av. San Juan 2847, CABA<br>
+              C1232AAB - Barrio de San Cristóbal<br>
+              Ciudad Autónoma de Buenos Aires, Argentina
+            </li>
+            <li>
+              <strong>Email general</strong><br>
+              <a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a>
+            </li>
+            <li>
+              <strong>Email ventas</strong><br>
+              <a href="mailto:ventas@hermanosjota.com.ar">ventas@hermanosjota.com.ar</a>
+            </li>
+            <li>
+              <strong>WhatsApp</strong><br>
+              <a href="https://wa.me/541145678900">+54 11 4567-8900</a>
+            </li>
+            <li>
+              <strong>Instagram</strong><br>
+              <a href="https://instagram.com/hermanosjota_ba" rel="noopener noreferrer" target="_blank">@hermanosjota_ba</a>
+            </li>
+            <li>
+              <strong>Horarios</strong><br>
+              Lunes a Viernes 10:00–19:00 hs.<br>
+              Sábados 10:00–14:00 hs.
+            </li>
+          </ul>
+        </aside>
+
+        <div class="form-card">
+          <h2>Escribinos</h2>
+          <div class="form-success" data-form-success hidden tabindex="-1"></div>
+          <form data-contact-form novalidate>
+            <div class="form-field">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" type="text" autocomplete="name" required>
+              <span class="error" data-error-for="nombre"></span>
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+              <span class="error" data-error-for="email"></span>
+            </div>
+            <div class="form-field">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" name="mensaje" required placeholder="Contanos qué pieza te interesa o si querés una visita."></textarea>
+              <span class="error" data-error-for="mensaje"></span>
+            </div>
+            <button class="btn btn-primary" type="submit">Enviar consulta</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="logo logo-footer">
+            <img src="img/logo.svg" alt="" class="logo-img">
+            <span class="logo-text">HERMANOS JOTA</span>
+        </div>
+        <p>Mueblería de diseño atemporal y sustentable. Showroom abierto de martes a sábado.<br>Showroom abierto de Lunes a Sábado.</p>
+      </div>
+
+      <div class="footer-info">
+        <h4>Showroom</h4>
+        <p>Av. San Juan 2847, CABA</p>
+        <p><a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a></p>
+      </div>
+
+      <div class="footer-info">
+        <h4>Redes</h4>
+        <p>@hermanosjota_ba</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Hermanos Jota. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="contacto.js"></script>
+</body>
+</html>

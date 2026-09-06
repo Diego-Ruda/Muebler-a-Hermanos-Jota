@@ -8,7 +8,7 @@ Proyecto integrador de desarrollo web frontend desarrollado para simular la expe
 
 * **Integrante 1**: Diego Ruda — *GitHub: [@Diego-Ruda](https://github.com/Diego-Ruda)*
 * **Integrante 2**: Ruth Carrasco — *GitHub: [@rutth03](https://github.com/rutth03)*
-* **Integrante 3**: Lin Arancibia — *GitHub: [@linchuarancibia](https://github.com/linchuarancibia)*
+* **Integrante 3**: Lin Arancibia — *GitHub: [@linarancibia](https://github.com/linarancibia)*
 * **Integrante 4**: Juan Andres Tarragona — *GitHub: [@JuanTarra](https://github.com/JuanTarra)*
 
 > **Entrega**: Fin del Sprint 2
@@ -18,7 +18,7 @@ Proyecto integrador de desarrollo web frontend desarrollado para simular la expe
 ## 🌐 Demo Desplegada
 
 El sitio web se encuentra publicado y accesible en el siguiente enlace de hosting estático:
-👉 **[Ver Hermanos Jota en vivo](https://.....)**
+👉 **[Ver Hermanos Jota en vivo](https://diego-ruda.github.io/Muebler-a-Hermanos-Jota/)**
 
 ---
 

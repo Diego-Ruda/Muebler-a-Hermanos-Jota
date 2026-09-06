@@ -104,11 +104,15 @@ function asociarEventoCarrito(producto) {
   }
 
   boton.addEventListener("click", () => {
-    agregarAlCarrito(producto);
-    actualizarContadorCarrito();
+    // Llamamos directamente a la función definida en cart.js
+    if (typeof addToCart === 'function') {
+      addToCart(producto.id);
+      
+      const openCartBtn = document.querySelector('[data-open-cart]');
+      openCartBtn?.click();
+    }
   });
 }
-
 function agregarAlCarrito(producto) {
   const carrito = obtenerCarrito();
   const existente = carrito.find((item) => item.id === producto.id);

@@ -1,37 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mueblería Hermanos Jota - Detalle de Producto</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de Producto - Hermanos Jota</title>
+  <meta name="description" content="Detalle de pieza de la Mueblería Hermanos Jota. Diseño atemporal y madera de origen responsable.">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header / Navegación -->
-    <header class="header">
-        <div class="logo">Hermanos Jota</div>
-        <nav class="nav">
-            <a href="index.html">Inicio</a>
-            <a href="productos.html">Catálogo</a>
-            <a href="contacto.html">Contacto</a>
-        </nav>
-        <div class="carrito-counter">
-            🛒 Carrito: <span id="contador-carrito">0</span>
+
+  <header class="header">
+    <div class="container header-content">
+      <a href="index.html" class="logo">
+        <img src="img/logo.svg" alt="" class="logo-img">
+        <span class="logo-text">HERMANOS JOTA</span>
+      </a>
+      <nav class="nav" id="site-nav">
+        <a href="index.html" class="nav-link">INICIO</a>
+        <a href="productos.html" class="nav-link">CATÁLOGO</a>
+        <a href="contacto.html" class="nav-link">CONTACTO</a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="btn-carrito" type="button" data-open-cart aria-label="Abrir carrito">
+        <span class="cart-icon" aria-hidden="true">&#128722;</span>
+        <span class="cart-label">Carrito</span>
+        <span id="contador-carrito" class="cart-count" data-cart-count hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="producto-detalle-container">
+    <div id="producto-contenedor"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="logo logo-footer">
+          <img src="img/logo.svg" alt="" class="logo-img">
+          <span class="logo-text">HERMANOS JOTA</span>
         </div>
+        <p>Mueblería de diseño atemporal y sustentable.<br>Showroom abierto de Lunes a Sábado.</p>
+      </div>
+
+      <div class="footer-info">
+        <h4>Showroom</h4>
+        <p>Av. San Juan 2847, CABA</p>
+        <p><a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a></p>
+      </div>
+
+      <div class="footer-info">
+        <h4>Redes</h4>
+        <p>@hermanosjota_ba</p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Hermanos Jota. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <div class="cart-overlay" data-cart-overlay></div>
+
+  <aside class="cart-drawer" data-cart-drawer aria-hidden="true" aria-label="Carrito de compras">
+    <header class="cart-header">
+      <h2>Tu Carrito</h2>
+      <button class="icon-btn" type="button" data-close-cart aria-label="Cerrar carrito">×</button>
     </header>
 
-    <!-- Sección Principal de Detalle -->
-    <main class="producto-detalle-container">
-        <div id="producto-contenedor" class="producto-card-detalle">
-            <p>Cargando detalles del producto...</p>
-        </div>
-    </main>
+    <div class="cart-body">
+      <ul class="cart-list" data-cart-list></ul>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2026 Mueblería Hermanos Jota. Todos los derechos reservados.</p>
+    <footer class="cart-footer">
+      <div class="cart-total-wrapper">
+        <span>Total:</span>
+        <strong data-cart-total>$ 0</strong>
+      </div>
+      <a href="checkout.html" class="btn btn-primary btn-block">Finalizar Compra</a>
     </footer>
+  </aside>
 
-    <script src="producto.js"></script>
+  <script src="productos.js"></script>
+  <script src="producto.js"></script>
+  <script src="cart.js"></script>
 </body>
 </html>

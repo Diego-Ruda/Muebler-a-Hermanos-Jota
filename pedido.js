@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // --- LÓGICA DEL MENÚ HAMBURGUESA ---
+  // --- Lógica del menú hamburguesa ---
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- LÓGICA DE LA FACTURA Y CARRITO ---
+  // --- Lógica de la factura y el carrito ---
   let cart = JSON.parse(localStorage.getItem('cart_hj')) || [];
   const contenedor = document.getElementById('factura-contenido');
   const totalElem = document.getElementById('factura-total-monto');
@@ -41,15 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (cart.length === 0) {
     if (contenedor) {
-      contenedor.innerHTML = '<p style="padding: 15px 0;">No hay productos en el pedido actual.</p>';
+      contenedor.innerHTML = '<p class="factura-vacia-msg">No hay productos en el pedido actual.</p>';
     }
     if (totalElem) {
       totalElem.textContent = formatter.format(0);
     }
     if (btnPagar) {
-      btnPagar.disabled = true;
-      btnPagar.style.opacity = '0.5';
-      btnPagar.style.cursor = 'not-allowed';
+      btnPagar.disabled = true; // El CSS se encarga del cursor y la opacidad al estar deshabilitado
     }
   } else {
     let total = 0;
@@ -61,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <th>Cant.</th>
             <th class="monto">Precio Unit.</th>
             <th class="monto">Subtotal</th>
-            <th style="width: 40px;"></th>
+            <th class="col-acciones"></th>
           </tr>
         </thead>
         <tbody>
@@ -77,13 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${item.quantity}</td>
           <td class="monto">${formatter.format(item.precio)}</td>
           <td class="monto">${formatter.format(subtotal)}</td>
-          <td style="text-align: center;">
+          <td class="celda-accion">
             <button 
               type="button" 
               class="btn-eliminar-factura" 
               data-index="${index}" 
               title="Eliminar producto"
-              style="color: #c94a29; border: none; background: none; cursor: pointer; font-size: 1.1rem;"
             >
               &times;
             </button>

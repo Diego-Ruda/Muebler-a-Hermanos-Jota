@@ -112,11 +112,7 @@ function updateCartUI() {
     totalItems += item.quantity;
 
     const li = document.createElement('li');
-    li.classList.add('cart-item');
-    li.style.display = 'flex';
-    li.style.justifyContent = 'space-between';
-    li.style.alignItems = 'center';
-    li.style.marginBottom = '12px';
+    li.classList.add('cart-item'); 
 
     li.innerHTML = `
       <div>

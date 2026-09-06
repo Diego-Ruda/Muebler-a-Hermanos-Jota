@@ -447,10 +447,7 @@ a {
   overflow-wrap: anywhere;
 }
 
-/*==========================================================================
-  SECCIÓN CONTACTO Y FORMULARIO
-  ========================================================================== */
-
+/* CONTACTO */
 .page-hero {
   padding-top: 2.5rem; 
 }
@@ -661,9 +658,7 @@ button.btn-primary {
     font-size: 1.6rem;
   }
 }
-/*==========================================================================
-  SECCIÓN CARRITO / DRAWER LATERAL
-  ========================================================================== */
+/* CARRITO / DRAWER LATERAl */
 
 /* Overlay de fondo */
 .cart-overlay {
@@ -896,4 +891,135 @@ button.btn-primary {
   .footer-bottom {
     padding-top: 1rem;
   }
+  .factura-header {
+    flex-direction: column;
+  }
+  .factura-info {
+    text-align: left !important;
+  }
+  .factura-acciones {
+    flex-direction: column-reverse;
+  }
+  .factura-acciones a, .factura-acciones button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* PEDIDO */
+.pedido-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-300);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.factura-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--primary-300);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+.factura-info p {
+  margin: 4px 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.tabla-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 20px;
+}
+.factura-tabla {
+  width: 100%;
+  min-width: 450px; 
+  border-collapse: collapse;
+}
+.factura-tabla th, 
+.factura-tabla td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--bg-300);
+}
+.factura-tabla th {
+  background-color: var(--bg-100);
+  color: var(--primary-300);
+  font-weight: 600;
+}
+.factura-tabla td.monto, 
+.factura-tabla th.monto {
+  text-align: right;
+}
+.factura-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-100);
+  border-top: 2px solid var(--primary-300);
+  padding-top: 15px;
+  margin-bottom: 25px;
+}
+.factura-acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.cart-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cart-btn-action {
+  background: transparent;
+  border: 1px solid var(--bg-300);
+  color: var(--text-dark);
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cart-btn-action:hover {
+  background-color: var(--bg-100);
+  border-color: var(--primary-200);
+  color: var(--primary-300);
+}
+.cart-btn-remove {
+  color: var(--primary-300);
+  border-color: transparent;
+}
+.cart-btn-remove:hover {
+  background-color: var(--accent-200);
+  color: var(--primary-300);
+}
+.btn-eliminar-factura {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.btn-eliminar-factura:hover {
+  color: var(--primary-300);
+  background-color: var(--accent-200);
 }

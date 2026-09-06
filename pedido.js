@@ -114,12 +114,62 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+
+
+
+  
+  // --- Botón Pagar: pregunta si querés descargar la factura, y después vacía el carrito y redirige ---
   if (btnPagar && cart.length > 0) {
     btnPagar.addEventListener('click', (e) => {
       e.preventDefault();
-      localStorage.removeItem('cart_hj');
-      alert('¡Gracias por tu compra! Redirigiendo al catálogo...');
-      window.location.href = 'productos.html';
+
+      const quiereDescargar = confirm('¿Querés descargar la factura de tu compra?');
+
+      const continuarCompra = () => {
+        localStorage.removeItem('cart_hj');
+        alert('¡Gracias por tu compra! Redirigiendo al catálogo...');
+        window.location.href = 'productos.html';
+      };
+
+      if (quiereDescargar) {
+        btnPagar.disabled = true;
+        btnPagar.textContent = 'Generando recibo...';
+        descargarReciboPNG().finally(continuarCompra);
+      } else {
+        continuarCompra();
+      }
+    });
+  }
+
+  // --- Genera y descarga el recibo como PNG ---
+  function descargarReciboPNG() {
+    const contenedorFactura = document.querySelector('.pedido-container');
+    if (!contenedorFactura || typeof html2canvas === 'undefined') {
+      return Promise.resolve();
+    }
+
+    const acciones = contenedorFactura.querySelector('.factura-acciones');
+    const columnasAccion = contenedorFactura.querySelectorAll('.col-acciones, .celda-accion');
+
+    if (acciones) acciones.style.display = 'none';
+    columnasAccion.forEach(c => c.style.display = 'none');
+
+    return html2canvas(contenedorFactura, {
+      backgroundColor: '#f4ecd8',
+      scale: 2
+    }).then(canvas => {
+      if (acciones) acciones.style.display = '';
+      columnasAccion.forEach(c => c.style.display = '');
+
+      const numeroFactura = numeroFacturaElem?.textContent.trim() || 'recibo';
+      const link = document.createElement('a');
+      link.download = numeroFactura.replace('#', '').replace(/\s+/g, '-') + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }).catch(err => {
+      console.error('Error generando el recibo:', err);
+      if (acciones) acciones.style.display = '';
+      columnasAccion.forEach(c => c.style.display = '');
     });
   }
 });

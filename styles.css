@@ -571,6 +571,77 @@ a {
   font-weight: 600;
 }
 
+/* DETALLE DE PRODUCTO */
+.header:not(:has(.header-content)) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 5%;
+}
+
+.header:not(:has(.header-content)) .logo {
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--primary-300);
+}
+
+.carrito-counter {
+  font-weight: 600;
+  color: var(--primary-300);
+  white-space: nowrap;
+}
+
+.producto-detalle-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 3rem auto;
+  min-height: 60vh;
+}
+
+.producto-card-detalle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  background-color: var(--bg-card);
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.producto-detalle-imagen {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  background-color: var(--bg-100);
+  border-radius: 6px;
+}
+
+.producto-detalle-info h1 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary-300);
+}
+
+.producto-detalle-precio {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-100);
+  margin-bottom: 1rem;
+}
+
+.producto-detalle-info p {
+  margin-bottom: 1rem;
+}
+
+button.btn-primary {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 0.5rem;
+}
+
 @media (max-width: 768px) {
   .contact-layout {
     grid-template-columns: 1fr;
@@ -578,6 +649,16 @@ a {
   
   .page-hero h1 {
     font-size: 2.1rem;
+  }
+
+  .producto-card-detalle {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .producto-detalle-info h1 {
+    font-size: 1.6rem;
   }
 }
 /*==========================================================================

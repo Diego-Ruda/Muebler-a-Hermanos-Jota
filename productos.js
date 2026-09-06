@@ -6,6 +6,7 @@ const products = [
     medidas: "180 x 45 x 75 cm",
     precio: 850000,
     imagen: "img/Aparador Uspallata.png",
+    detallesFabricacion: "Nogal sostenible certificado, ensamblado a mano en el taller de Buenos Aires. Tiradores de latón cepillado y herrajes de cierre suave.",
     destacado: true
   },
   {
@@ -15,7 +16,8 @@ const products = [
     medidas: "100 x 35 x 200 cm",
     precio: 620000,
     imagen: "img/Biblioteca Recoleta.png",
-     destacado: false
+    detallesFabricacion: "Estructura de acero Sage Green con pintura al horno y estantes de roble claro de origen responsable. Montaje modular atornillado.",
+    destacado: false
   },
   {
     id: 3,
@@ -24,6 +26,7 @@ const products = [
     medidas: "80 x 75 x 85 cm",
     precio: 410000,
     imagen: "img/Butaca Mendoza.png",
+    detallesFabricacion: "Estructura de guatambú macizo, tapizado en bouclé Dusty Rose y relleno de espuma de alta densidad. Costuras realizadas a mano.",
     destacado: true
   },
   {
@@ -33,6 +36,7 @@ const products = [
     medidas: "90 x 85 x 95 cm",
     precio: 590000,
     imagen: "img/Sillón Copacabana.png",
+    detallesFabricacion: "Cuero cognac curtido vegetal sobre estructura de madera y base giratoria de acero Burnt Sienna. Acabado mate protector.",
     destacado: false
   },
   {
@@ -42,6 +46,7 @@ const products = [
     medidas: "90 x 90 x 45 cm",
     precio: 340000,
     imagen: "img/Mesa de Centro Araucaria.png",
+    detallesFabricacion: "Sobre de mármol Patagonia pulido y base de tres patas en nogal macizo. Unión metal-madera con herrajes ocultos.",
     destacado: true
   },
   {
@@ -51,6 +56,7 @@ const products = [
     medidas: "45 x 35 x 60 cm",
     precio: 210000,
     imagen: "img/Mesa de Noche Aconcagua.png",
+    detallesFabricacion: "Roble certificado FSC® con cajón de correderas silenciosas y acabado al aceite natural. Ensamble de caja y espiga.",
     destacado: false
   },
   {
@@ -60,6 +66,7 @@ const products = [
     medidas: "220 x 90 x 80 cm",
     precio: 980000,
     imagen: "img/Sofá Patagonia.png",
+    detallesFabricacion: "Estructura de madera maciza, tapizado en lino Warm Alabaster y cojines de espuma de alta resiliencia con plumón reciclado.",
     destacado: true
   },
   {
@@ -69,6 +76,7 @@ const products = [
     medidas: "160-240 x 90 x 75 cm",
     precio: 750000,
     imagen: "img/Mesa Comedor Pampa.png",
+    detallesFabricacion: "Roble macizo con tablero biselado, sistema extensible de apertura suave y barniz de poliuretano mate de bajo VOC.",
     destacado: false
   },
   {
@@ -78,6 +86,7 @@ const products = [
     medidas: "45 x 52 x 80 cm (cada una)",
     precio: 380000,
     imagen: "img/Sillas Córdoba.png",
+    detallesFabricacion: "Contrachapado moldeado de nogal y estructura tubular Sage Green. Set de cuatro unidades apilables con pads antideslizantes.",
     destacado: false
   },
   {
@@ -87,6 +96,7 @@ const products = [
     medidas: "120 x 60 x 75 cm",
     precio: 290000,
     imagen: "img/Escritorio Costa.png",
+    detallesFabricacion: "Bambú laminado con cajón organizador, tapa pasacables integrada y patas cónicas de madera. Acabado mate resistente al uso diario.",
     destacado: false
   },
   {
@@ -96,6 +106,7 @@ const products = [
     medidas: "60 x 60 x 90-100 cm",
     precio: 320000,
     imagen: "img/Silla de Trabajo Belgrano.png",
+    detallesFabricacion: "Mecanismo de altura regulable, respaldo de malla transpirable y asiento en tejido reciclado con soporte lumbar ajustable.",
     destacado: false
   }
 ];

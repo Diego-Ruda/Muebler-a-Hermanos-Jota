@@ -1,4 +1,4 @@
-// 1. Obtener carrito almacenado o iniciar vacío
+// Obtener carrito almacenado o iniciar vacío
 let cart = JSON.parse(localStorage.getItem('cart_hj')) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const closeCart = () => {
+    // Quita el foco de cualquier botón interno dentro del drawer
+    if (document.activeElement && cartDrawer?.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
+    
     cartDrawer?.setAttribute('aria-hidden', 'true');
     cartOverlay?.classList.remove('is-active');
   };
@@ -97,30 +102,68 @@ function updateCartUI() {
     maximumFractionDigits: 0
   });
 
-  // Limpiar lista actual
   cartList.innerHTML = '';
 
   let total = 0;
   let totalItems = 0;
 
-  cart.forEach(item => {
+  cart.forEach((item, index) => {
     total += item.precio * item.quantity;
     totalItems += item.quantity;
 
     const li = document.createElement('li');
     li.classList.add('cart-item');
+    li.style.display = 'flex';
+    li.style.justifyContent = 'space-between';
+    li.style.alignItems = 'center';
+    li.style.marginBottom = '12px';
+
     li.innerHTML = `
       <div>
         <strong>${item.nombre}</strong><br>
         <small>${item.quantity} x ${formatter.format(item.precio)}</small>
       </div>
+      <div class="cart-actions">
+        <button 
+          type="button" 
+          class="btn-restar cart-btn-action" 
+          data-index="${index}" 
+          title="Restar una unidad"
+        >-</button>
+        <button 
+          type="button" 
+          class="btn-eliminar cart-btn-action cart-btn-remove" 
+          data-index="${index}" 
+          title="Eliminar producto"
+        >&times;</button>
+      </div>
     `;
     cartList.appendChild(li);
   });
 
-  // Actualizar totales y contador
+  // Eventos para el botón (-)
+  cartList.querySelectorAll('.btn-restar').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = e.target.getAttribute('data-index');
+      if (cart[idx].quantity > 1) {
+        cart[idx].quantity -= 1;
+      } else {
+        cart.splice(idx, 1);
+      }
+      saveAndRefresh();
+    });
+  });
+
+  // Eventos para el botón (✕)
+  cartList.querySelectorAll('.btn-eliminar').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = e.target.getAttribute('data-index');
+      cart.splice(idx, 1);
+      saveAndRefresh();
+    });
+  });
+
   if (cartTotal) cartTotal.textContent = formatter.format(total);
-  
   if (cartCount) {
     cartCount.textContent = totalItems;
     cartCount.hidden = totalItems === 0;

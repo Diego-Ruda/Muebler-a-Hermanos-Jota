@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Lógica del menú hamburguesa ---
+  // Lógica del menú hamburguesa
   const menuToggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Lógica de la factura y el carrito ---
+  // Lógica de la factura y el carrito
   let cart = JSON.parse(localStorage.getItem('cart_hj')) || [];
   const contenedor = document.getElementById('factura-contenido');
   const totalElem = document.getElementById('factura-total-monto');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
       totalElem.textContent = formatter.format(0);
     }
     if (btnPagar) {
-      btnPagar.disabled = true; // El CSS se encarga del cursor y la opacidad al estar deshabilitado
+      btnPagar.disabled = true; 
     }
   } else {
     let total = 0;
@@ -114,11 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-
-
-
-  
-  // --- Botón Pagar: pregunta si querés descargar la factura, y después vacía el carrito y redirige ---
+  // Botón Pagar: pregunta si querés descargar la factura, y después vacía el carrito y redirige
   if (btnPagar && cart.length > 0) {
     btnPagar.addEventListener('click', (e) => {
       e.preventDefault();
@@ -141,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Genera y descarga el recibo como PNG ---
+  // Genera y descarga el recibo como PNG
   function descargarReciboPNG() {
     const contenedorFactura = document.querySelector('.pedido-container');
     if (!contenedorFactura || typeof html2canvas === 'undefined') {

@@ -18,7 +18,7 @@ Proyecto integrador de desarrollo web frontend desarrollado para simular la expe
 ## 🌐 Demo Desplegada
 
 El sitio web se encuentra publicado y accesible en el siguiente enlace de hosting estático:
-👉 **[Ver Hermanos Jota en vivo](https://diego-ruda.github.io/Muebler-a-Hermanos-Jota/)**
+👉 **[Ver Hermanos Jota en vivo](https://muebleriahermanoj.netlify.app/)**
 
 ---
 

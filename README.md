@@ -8,7 +8,7 @@ Proyecto integrador de desarrollo web frontend desarrollado para simular la expe
 
 * **Integrante 1**: Diego Ruda — *GitHub: [@Diego-Ruda](https://github.com/Diego-Ruda)*
 * **Integrante 2**: Ruth Carrasco — *GitHub: [@rutth03](https://github.com/rutth03)*
-* **Integrante 3**: Lin Arancibia — *GitHub: [@linarancibia](https://github.com/linarancibia)*
+* **Integrante 3**: Ailin Arancibia — *GitHub: [@linarancibia](https://github.com/linarancibia)*
 * **Integrante 4**: Juan Andres Tarragona — *GitHub: [@JuanTarra](https://github.com/JuanTarra)*
 
 > **Entrega**: Fin del Sprint 2

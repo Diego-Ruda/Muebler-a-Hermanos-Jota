@@ -1,0 +1,40 @@
+{
+  "name": "muebler-a-hermanos-jota",
+  "version": "1.0.0",
+  "description": "Proyecto integrador de desarrollo web frontend desarrollado para simular la experiencia completa de compra y catálogo interactivo de una mueblería artesanal y sustentable de diseño atemporal, sin requerir conexión a un servidor backend.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Diego-Ruda/Muebler-a-Hermanos-Jota.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Diego-Ruda/Muebler-a-Hermanos-Jota/issues"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "homepage": "https://github.com/Diego-Ruda/Muebler-a-Hermanos-Jota#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "prettier": "^3.9.9"
+  }
+}

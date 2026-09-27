@@ -1,8 +1,11 @@
 {
   "name": "muebler-a-hermanos-jota",
   "version": "1.0.0",
-  "description": "Proyecto integrador de desarrollo web frontend desarrollado para simular la experiencia completa de compra y catálogo interactivo de una mueblería artesanal y sustentable de diseño atemporal, sin requerir conexión a un servidor backend.",
-  "main": "main.js",
+  "description": "Proyecto integrador de desarrollo web (monorepo) para simular la experiencia completa de compra y catálogo interactivo de una mueblería artesanal y sustentable de diseño atemporal.",
+  "workspaces": [
+    "client",
+    "backend"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
@@ -21,7 +24,7 @@
     "url": "https://github.com/Diego-Ruda/Muebler-a-Hermanos-Jota/issues"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "**/*.{js,jsx}": [
       "eslint --fix",
       "prettier --write"
     ]

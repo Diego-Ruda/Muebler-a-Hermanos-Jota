@@ -1,13 +1,13 @@
-const CARRITO_STORAGE_KEY = "cart_hj";
+const CARRITO_STORAGE_KEY = 'cart_hj';
 const DELAY_CARGA_MS = 800;
 
-const formatterARS = new Intl.NumberFormat("es-AR", {
-  style: "currency",
-  currency: "ARS",
-  maximumFractionDigits: 0
+const formatterARS = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS',
+  maximumFractionDigits: 0,
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   actualizarContadorCarrito();
   cargarProducto();
 });
@@ -25,7 +25,7 @@ function contarItemsCarrito(carrito) {
 }
 
 function actualizarContadorCarrito() {
-  const contador = document.getElementById("contador-carrito");
+  const contador = document.getElementById('contador-carrito');
   if (!contador) {
     return;
   }
@@ -35,7 +35,7 @@ function actualizarContadorCarrito() {
 
 function obtenerIdDesdeURL() {
   const params = new URLSearchParams(window.location.search);
-  return Number(params.get("id"));
+  return Number(params.get('id'));
 }
 
 function delay(ms) {
@@ -50,7 +50,7 @@ async function obtenerProductoPorId(id) {
 }
 
 async function cargarProducto() {
-  const contenedor = document.getElementById("producto-contenedor");
+  const contenedor = document.getElementById('producto-contenedor');
   if (!contenedor) {
     return;
   }
@@ -98,16 +98,16 @@ function renderizarProducto(contenedor, producto) {
 }
 
 function asociarEventoCarrito(producto) {
-  const boton = document.getElementById("btn-anadir-carrito");
+  const boton = document.getElementById('btn-anadir-carrito');
   if (!boton) {
     return;
   }
 
-  boton.addEventListener("click", () => {
+  boton.addEventListener('click', () => {
     // Llamamos directamente a la función definida en cart.js
     if (typeof addToCart === 'function') {
       addToCart(producto.id);
-      
+
       const openCartBtn = document.querySelector('[data-open-cart]');
       openCartBtn?.click();
     }

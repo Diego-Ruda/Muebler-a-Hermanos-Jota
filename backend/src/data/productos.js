@@ -6,7 +6,7 @@ const products = [
       'Aparador de seis puertas fabricado en nogal sostenible con tiradores metálicos en acabado latón. Su silueta minimalista realza el veteado natural de la madera, creando una pieza que combina funcionalidad y elegancia atemporal para espacios contemporáneos.',
     medidas: '180 x 45 x 75 cm',
     precio: 850000,
-    imagen: '/img/Aparador Uspallata.png',
+    imagen: '/img/aparador-uspallata.png',
     detallesFabricacion:
       'Nogal sostenible certificado, ensamblado a mano en el taller de Buenos Aires. Tiradores de latón cepillado y herrajes de cierre suave.',
     destacado: true,
@@ -18,7 +18,7 @@ const products = [
       'Sistema modular de estantes abierto que combina estructura de acero Sage Green y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.',
     medidas: '100 x 35 x 200 cm',
     precio: 620000,
-    imagen: '/img/Biblioteca Recoleta.png',
+    imagen: '/img/biblioteca-recoleta.png',
     detallesFabricacion:
       'Estructura de acero Sage Green con pintura al horno y estantes de roble claro de origen responsable. Montaje modular atornillado.',
     destacado: false,
@@ -30,7 +30,7 @@ const products = [
       'Butaca tapizada en bouclé Dusty Rose con base de madera de guatambú. El respaldo curvo abraza el cuerpo y ofrece máximo confort, mientras que su diseño orgánico aporta calidez y sofisticación a cualquier ambiente contemporáneo.',
     medidas: '80 x 75 x 85 cm',
     precio: 410000,
-    imagen: '/img/Butaca Mendoza.png',
+    imagen: '/img/butaca-mendoza.png',
     detallesFabricacion:
       'Estructura de guatambú macizo, tapizado en bouclé Dusty Rose y relleno de espuma de alta densidad. Costuras realizadas a mano.',
     destacado: true,
@@ -42,7 +42,7 @@ const products = [
       'Sillón lounge en cuero cognac con base giratoria en acero Burnt Sienna. Inspirado en la estética brasilera moderna de los 60, combina comodidad excepcional con un diseño icónico que trasciende tendencias y épocas.',
     medidas: '90 x 85 x 95 cm',
     precio: 590000,
-    imagen: '/img/Sillón Copacabana.png',
+    imagen: '/img/sillon-copacabana.png',
     detallesFabricacion:
       'Cuero cognac curtido vegetal sobre estructura de madera y base giratoria de acero Burnt Sienna. Acabado mate protector.',
     destacado: false,
@@ -54,7 +54,7 @@ const products = [
       'Mesa de centro con sobre circular de mármol Patagonia y base de tres patas en madera de nogal. Su diseño minimalista se convierte en el punto focal perfecto para cualquier sala de estar contemporánea, combinando la frialdad del mármol con la calidez de la madera.',
     medidas: '90 x 90 x 45 cm',
     precio: 340000,
-    imagen: '/img/Mesa de Centro Araucaria.png',
+    imagen: '/img/mesa-centro-araucaria.png',
     detallesFabricacion:
       'Sobre de mármol Patagonia pulido y base de tres patas en nogal macizo. Unión metal-madera con herrajes ocultos.',
     destacado: true,
@@ -66,7 +66,7 @@ const products = [
       'Mesa de noche con cajón oculto y repisa inferior en roble certificado FSC®. Su diseño limpio y funcional permite convivir con diferentes estilos de dormitorio, ofreciendo almacenamiento discreto y elegante para objetos personales.',
     medidas: '45 x 35 x 60 cm',
     precio: 210000,
-    imagen: '/img/Mesa de Noche Aconcagua.png',
+    imagen: '/img/mesa-noche-aconcagua.png',
     detallesFabricacion:
       'Roble certificado FSC® con cajón de correderas silenciosas y acabado al aceite natural. Ensamble de caja y espiga.',
     destacado: false,
@@ -78,7 +78,7 @@ const products = [
       'Sofá de tres cuerpos tapizado en lino Warm Alabaster con patas cónicas de madera. Los cojines combinan espuma de alta resiliencia con plumón reciclado, ofreciendo comodidad duradera y sostenible para el hogar moderno.',
     medidas: '220 x 90 x 80 cm',
     precio: 980000,
-    imagen: '/img/Sofá Patagonia.png',
+    imagen: '/img/sofa-patagonia.png',
     detallesFabricacion:
       'Estructura de madera maciza, tapizado en lino Warm Alabaster y cojines de espuma de alta resiliencia con plumón reciclado.',
     destacado: true,
@@ -90,7 +90,7 @@ const products = [
       'Mesa extensible de roble macizo con tablero biselado y sistema de apertura suave. Su diseño robusto y elegante se adapta perfectamente a reuniones íntimas o grandes celebraciones familiares, extendiéndose de 6 a 10 comensales.',
     medidas: '160-240 x 90 x 75 cm',
     precio: 750000,
-    imagen: '/img/Mesa Comedor Pampa.png',
+    imagen: '/img/mesa-comedor-pampa.png',
     detallesFabricacion:
       'Roble macizo con tablero biselado, sistema extensible de apertura suave y barniz de poliuretano mate de bajo VOC.',
     destacado: false,
@@ -102,7 +102,7 @@ const products = [
       'Set de cuatro sillas apilables en contrachapado moldeado de nogal y estructura tubular pintada en Sage Green. Su diseño ergonómico y materiales de calidad garantizan comodidad y durabilidad en el uso diario, perfectas para comedores contemporáneos.',
     medidas: '45 x 52 x 80 cm (cada una)',
     precio: 380000,
-    imagen: '/img/Sillas Córdoba.png',
+    imagen: '/img/sillas-cordoba.png',
     detallesFabricacion:
       'Contrachapado moldeado de nogal y estructura tubular Sage Green. Set de cuatro unidades apilables con pads antideslizantes.',
     destacado: false,
@@ -114,7 +114,7 @@ const products = [
       'Escritorio compacto con cajón organizado y tapa pasacables integrada en bambú laminado. Ideal para espacios de trabajo en casa, combina funcionalidad moderna con estética minimalista y sostenible, perfecto para el trabajo remoto.',
     medidas: '120 x 60 x 75 cm',
     precio: 290000,
-    imagen: '/img/Escritorio Costa.png',
+    imagen: '/img/escritorio-costa.png',
     detallesFabricacion:
       'Bambú laminado con cajón organizador, tapa pasacables integrada y patas cónicas de madera. Acabado mate resistente al uso diario.',
     destacado: false,
@@ -126,7 +126,7 @@ const products = [
       'Silla ergonómica regulable en altura con respaldo de malla transpirable y asiento tapizado en tejido reciclado. Diseñada para largas jornadas de trabajo con máximo confort y apoyo lumbar, ideal para oficinas en casa y espacios de co-working.',
     medidas: '60 x 60 x 90-100 cm',
     precio: 320000,
-    imagen: '/img/Silla de Trabajo Belgrano.png',
+    imagen: '/img/silla-trabajo-belgrano.png',
     detallesFabricacion:
       'Mecanismo de altura regulable, respaldo de malla transpirable y asiento en tejido reciclado con soporte lumbar ajustable.',
     destacado: false,

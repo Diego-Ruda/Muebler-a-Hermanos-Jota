@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import logger from './middlewares/loggerMiddleware.js';
 import productosRoutes from './routes/productosRoutes.js';
 
 const app = express();
@@ -12,6 +13,7 @@ const PUBLIC_DIR = path.join(
   'public'
 );
 
+app.use(logger);
 app.use(cors());
 app.use(express.json());
 app.use(express.static(PUBLIC_DIR));

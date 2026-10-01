@@ -132,3 +132,5 @@ const products = [
     destacado: false,
   },
 ];
+
+export default products;

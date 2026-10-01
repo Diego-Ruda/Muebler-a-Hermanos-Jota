@@ -153,7 +153,7 @@ a {
 
 /* HERO */
 .hero {
-  background: url('img/Fondo.jfif') center/cover no-repeat;
+  background: url('./assets/Fondo.jfif') center/cover no-repeat;
   min-height: 80vh;
   position: relative;
   display: flex;

@@ -1,6 +1,6 @@
 import ProductList from '../components/ProductList';
 
-function CatalogPage({ products, onAddToCart }) {
+function CatalogPage({ products, loading, error, onAddToCart }) {
   return (
     <main>
       <section className="page-hero container">
@@ -13,7 +13,19 @@ function CatalogPage({ products, onAddToCart }) {
       </section>
       <section className="destacados">
         <div className="container">
-          <ProductList products={products} onAddToCart={onAddToCart} />
+          {loading && (
+            <p className="producto-loading" role="status">
+              Cargando productos…
+            </p>
+          )}
+          {!loading && error && (
+            <p className="producto-loading" role="alert">
+              No pudimos cargar los productos: {error}
+            </p>
+          )}
+          {!loading && !error && (
+            <ProductList products={products} onAddToCart={onAddToCart} />
+          )}
         </div>
       </section>
     </main>

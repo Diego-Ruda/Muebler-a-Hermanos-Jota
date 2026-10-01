@@ -1,20 +1,19 @@
 import { useRef, useState } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
-import products from './data/products';
+import { useProducts } from './hooks/useProducts';
 
-const featuredProducts = products.filter((product) => product.featured);
-
-function HomePage({ onAddToCart }) {
+function HomePage({ products, loading, error, onAddToCart }) {
   const featuredCarouselRef = useRef(null);
+  const featuredProducts = products.filter((product) => product.destacado);
 
   function scrollFeaturedProducts(direction) {
-    const productsGrid = featuredCarouselRef.current?.querySelector(
-      '.products-grid',
-    );
+    const productsGrid =
+      featuredCarouselRef.current?.querySelector('.products-grid');
 
     if (!productsGrid) {
       return;
@@ -34,7 +33,11 @@ function HomePage({ onAddToCart }) {
 
   return (
     <main>
-      <section className="hero" id="inicio">
+      <section
+        className="hero"
+        id="inicio"
+        style={{ backgroundImage: 'url(/img/fondo.jfif)' }}
+      >
         <div className="hero-overlay">
           <div className="container hero-content">
             <span className="hero-subtitle">BUENOS AIRES DESDE 1982</span>
@@ -47,9 +50,9 @@ function HomePage({ onAddToCart }) {
               Diseño atemporal y madera de origen responsable. Piezas para
               habitar despacio, hechas en el taller de Hermanos Jota.
             </p>
-            <a href="/productos.html" className="btn-primary">
+            <Link to="/productos" className="btn-primary">
               VER CATÁLOGO
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -96,32 +99,44 @@ function HomePage({ onAddToCart }) {
         <div className="container">
           <span className="section-tag">SELECCIÓN</span>
           <h2 className="section-title">PIEZAS DESTACADAS</h2>
-          <div
-            className="featured-carousel"
-            aria-label="Productos destacados"
-            ref={featuredCarouselRef}
-          >
-            <button
-              className="carousel-button carousel-button-prev"
-              type="button"
-              aria-label="Producto anterior"
-              onClick={() => scrollFeaturedProducts(-1)}
+          {loading && (
+            <p className="producto-loading" role="status">
+              Cargando productos…
+            </p>
+          )}
+          {!loading && error && (
+            <p className="producto-loading" role="alert">
+              No pudimos cargar los productos: {error}
+            </p>
+          )}
+          {!loading && !error && (
+            <div
+              className="featured-carousel"
+              aria-label="Productos destacados"
+              ref={featuredCarouselRef}
             >
-              ‹
-            </button>
-            <ProductList
-              products={featuredProducts}
-              onAddToCart={onAddToCart}
-            />
-            <button
-              className="carousel-button carousel-button-next"
-              type="button"
-              aria-label="Producto siguiente"
-              onClick={() => scrollFeaturedProducts(1)}
-            >
-              ›
-            </button>
-          </div>
+              <button
+                className="carousel-button carousel-button-prev"
+                type="button"
+                aria-label="Producto anterior"
+                onClick={() => scrollFeaturedProducts(-1)}
+              >
+                ‹
+              </button>
+              <ProductList
+                products={featuredProducts}
+                onAddToCart={onAddToCart}
+              />
+              <button
+                className="carousel-button carousel-button-next"
+                type="button"
+                aria-label="Producto siguiente"
+                onClick={() => scrollFeaturedProducts(1)}
+              >
+                ›
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </main>
@@ -130,24 +145,40 @@ function HomePage({ onAddToCart }) {
 
 function App() {
   const [cartCount, setCartCount] = useState(0);
+  const { products, loading, error } = useProducts();
 
   function handleAddToCart() {
     setCartCount((count) => count + 1);
   }
 
-  const currentPath = window.location.pathname.toLowerCase();
-  const page = currentPath.endsWith('/productos.html') ? (
-    <CatalogPage products={products} onAddToCart={handleAddToCart} />
-  ) : currentPath.endsWith('/contacto.html') ? (
-    <ContactPage />
-  ) : (
-    <HomePage onAddToCart={handleAddToCart} />
-  );
-
   return (
     <div className="app-shell">
       <Navbar cartCount={cartCount} />
-      {page}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              products={products}
+              loading={loading}
+              error={error}
+              onAddToCart={handleAddToCart}
+            />
+          }
+        />
+        <Route
+          path="/productos"
+          element={
+            <CatalogPage
+              products={products}
+              loading={loading}
+              error={error}
+              onAddToCart={handleAddToCart}
+            />
+          }
+        />
+        <Route path="/contacto" element={<ContactPage />} />
+      </Routes>
       <Footer />
     </div>
   );

@@ -8,17 +8,17 @@ function ProductCard({ product, onAddToCart }) {
   return (
     <article className="product-card">
       <img
-        src={product.image}
-        alt={product.title}
+        src={product.imagen}
+        alt={product.nombre}
         className="product-image"
         loading="lazy"
       />
       <div className="product-info">
-        <h3 className="product-title">{product.title}</h3>
-        <p className="product-desc">{product.description}</p>
+        <h3 className="product-title">{product.nombre}</h3>
+        <p className="product-desc">{product.descripcion}</p>
         <div className="product-footer">
           <span className="product-price">
-            {currencyFormatter.format(product.price)}
+            {currencyFormatter.format(product.precio)}
           </span>
           <button
             className="btn-primary"

@@ -20,8 +20,8 @@ function ProductDetail({ product, onAddToCart, onBack }) {
       <div className="producto-detalle-grid">
         <img
           className="producto-detalle-imagen"
-          src={product.image}
-          alt={product.title}
+          src={product.imagen}
+          alt={product.nombre}
         />
         <div className="producto-detalle-info">
           {onBack && (
@@ -29,11 +29,11 @@ function ProductDetail({ product, onAddToCart, onBack }) {
               Volver al catálogo
             </button>
           )}
-          <h1>{product.title}</h1>
+          <h1>{product.nombre}</h1>
           <p className="producto-detalle-precio">
-            {currencyFormatter.format(product.price)}
+            {currencyFormatter.format(product.precio)}
           </p>
-          <p>{product.description}</p>
+          <p>{product.descripcion}</p>
           <button
             className="btn-primary anadir-al-carrito"
             type="button"

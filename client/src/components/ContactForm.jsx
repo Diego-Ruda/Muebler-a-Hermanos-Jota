@@ -37,12 +37,7 @@ function ContactForm({ onSubmit }) {
           </div>
           <div className="form-field">
             <label htmlFor="contact-message">Mensaje</label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows="5"
-              required
-            />
+            <textarea id="contact-message" name="message" rows="5" required />
           </div>
           <button className="btn-primary" type="submit">
             Enviar mensaje

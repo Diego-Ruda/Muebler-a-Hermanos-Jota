@@ -1,6 +1,6 @@
-# Mueblería Hermanos Jota — E-Commerce
+# Mueblería Hermanos Jota — E-Commerce Fullstack
 
-Proyecto integrador de desarrollo web frontend desarrollado para simular la experiencia completa de compra y catálogo interactivo de una mueblería artesanal y sustentable de diseño atemporal, sin requerir conexión a un servidor backend.
+Proyecto integrador fullstack cuyo objetivo es simular una tienda interactiva de muebles artesanales y sustentables, abarcando tanto el frontend moderno (React) como un backend robusto (Node.js + Express.js). El equipo trabajó colaborativamente usando Trello e issues para gestión ágil y herramientas como Prettier, Husky y commitlint para mantener la calidad y orden del código.
 
 ---
 
@@ -10,93 +10,149 @@ Proyecto integrador de desarrollo web frontend desarrollado para simular la expe
 * **Integrante 2**: Ruth Carrasco — *GitHub: [@rutth03](https://github.com/rutth03)*
 * **Integrante 3**: Ailin Arancibia — *GitHub: [@linarancibia](https://github.com/linarancibia)*
 * **Integrante 4**: Juan Andres Tarragona — *GitHub: [@JuanTarra](https://github.com/JuanTarra)*
+* **Integrante 5**: Maxi Moncada — *GitHub: [@Maxidevv](https://github.com/Maxidevv)*
 
-> **Entrega**: Fin del Sprint 2
+> **Sprint 3 y 4 — Trabajo colaborativo, gestión en Trello, 17 issues resueltas (gestión, nuevas features, bugs, testing, refactorización y QA).*
 
 ---
 
 ## 🌐 Demo Desplegada
 
-El sitio web se encuentra publicado y accesible en el siguiente enlace de hosting estático:
 👉 **[Ver Hermanos Jota en vivo](https://muebleriahermanoj.netlify.app/)**
 
 ---
 
-## 📋 Descripción y Funcionalidades del Proyecto
+## 📋 Descripción y Funcionalidades
 
-El proyecto implementa una arquitectura 100% del lado del cliente (Client-side), estructurada mediante HTML5 semántico, estilizada con CSS3 bajo la metodología Mobile-First y dotada de interactividad mediante JavaScript Vanilla y manipulación activa del DOM.
+El sistema implementa:
 
-### 1. Página de Inicio (`index.html`)
-* **Header & Navegación**: Barra superior con logotipo, enlaces de navegación y botón de carrito interactivo con contador reactivo. Incluye menú desplegable accesible (hamburguesa) en dispositivos móviles.
-* **Hero Banner**: Presentación institucional de impacto con llamada a la acción (*Call to Action*).
-* **Sección de Sustentabilidad**: Tarjetas de características (*Madera noble*, *Acabados limpios*, *Hecho en CABA*).
-* **Carrusel de Piezas Destacadas**: Renderizado dinámico de productos marcados con la propiedad `destacado: true`, con controles de desplazamiento horizontal suave (*smooth scroll*).
-* **Footer**: Información de contacto, dirección del showroom en San Cristóbal (CABA), redes sociales y derechos reservados.
+- **Frontend moderno en React:**
+  - Listado, detalle y carrito mediante componentes reutilizables.
+  - Hooks propios (custom hooks) para manejo de estado y datos.
+  - Ruteo dinámico con React Router.
+  - Interfaz mobile-first.
+  - Validaciones y UI enfocada en la experiencia del usuario.
 
-### 2. Catálogo Completo (`productos.html`)
-* **Grilla Responsiva**: Visualización de todos los artículos del catálogo en formato de tarjetas adaptables.
-* **Carga de Datos Centralizada**: Los datos provienen de una colección estructurada de objetos en JavaScript (`productos.js`).
-* **Navegación al Detalle**: Cada tarjeta enlaza de forma dinámica a su correspondiente vista de detalle pasando el parámetro identificador por URL (`?id=X`).
+- **Backend sólido con Node.js + Express.js:**
+  - API RESTful centralizada, facilita la integración y escalabilidad.
+  - Control de rutas, middlewares y lógica desacoplada.
+  - Manejo y almacenamiento de datos de productos, simulando respuesta de base de datos.
+  - CORS habilitado para integración frontend-backend durante desarrollo.
 
-### 3. Detalle de Producto (`producto.html`)
-* **Lectura de Parámetros URL**: Mediante `URLSearchParams`, el script identifica el producto solicitado y extrae su información del catálogo.
-* **Ficha Técnica Completa**: Muestra imágenes en alta calidad, título, precio formateado en moneda local (`Intl.NumberFormat`), descripción y detalles de fabricación sustentable.
-* **Añadir al Carrito**: Botón interactivo que incorpora el ítem seleccionado al carrito de compras persistente.
-
-### 4. Carrito de Compras Lateral (*Drawer*) & Persistencia (`cart.js`)
-* **Sidebar Desplegable**: Panel lateral accesible desde cualquier página mediante el botón del header o al agregar un producto.
-* **Control de Unidades y Subtotales**: Permite aumentar, disminuir o remover unidades de cada producto en tiempo real, recalculando el total a pagar automáticamente.
-* **Persistencia Local**: Uso de `localStorage` para garantizar que el estado del carrito no se pierda entre navegaciones ni recargas.
-* **Indicador en Header**: Contador numérico sobre el ícono del carrito con actualización reactiva según la cantidad total de artículos.
-
-### 5. Página de Pedido y Facturación (`pedido.html` / `pedido.js`)
-* **Comprobante de Compra**: Generación de factura detallada con número de comprobante aleatorio, fecha del día y desglose de cantidades, precios unitarios y subtotal.
-* **Acciones**: Permite eliminar productos individuales o proceder al pago simulado.
-* **Exportación a Imagen**: Descarga automática del comprobante de compra en formato `.png` en alta resolución mediante la librería `html2canvas`.
-
-### 6. Página de Contacto (`contacto.html` / `contacto.js`)
-* **Información del Showroom**: Detalle de ubicación, canales directos (WhatsApp, Instagram, correos electrónicos) y horarios de atención.
-* **Formulario con Validación Client-Side**: Control en tiempo real de campos obligatorios y formato de correo electrónico mediante expresiones regulares (Regex).
-* **Registro de Mensajes**: Simulación de almacenamiento en `localStorage` y retroalimentación visual al usuario ante el envío exitoso.
-
----
-
-## 🛠️ Tecnologías Utilizadas
-
-* **HTML5**: Estructuración semántica (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`), accesibilidad con atributos ARIA y optimización para lectores de pantalla.
-* **CSS3**:
-  * Diseño adaptable (*Mobile First* y Media Queries).
-  * Flexbox y CSS Grid para layouts fluidos y componentes complejos.
-  * Variables CSS (`:root`) para centralizar la paleta de colores, tipografías y espaciados.
-  * Transiciones, estados de interacción (`:hover`, `:focus`) y diseño UI minimalista.
-* **JavaScript (ES6+)**:
-  * Manipulación modular y eficiente del DOM (`querySelector`, `createElement`, `innerHTML`, `classList`).
-  * Manejo avanzado de eventos (`addEventListener`, delegación de eventos).
-  * Almacenamiento local mediante Web Storage API (`localStorage`).
-  * Formateo nativo de monedas e internacionalización (`Intl.NumberFormat`).
-  * Manejo de asincronismo y temporizadores.
-* **Librerías Externas**:
-  * [html2canvas (v1.4.1)](https://html2canvas.hertzen.com/): Generación y exportación visual de la factura de compra a PNG.
-* **Control de Versiones**:
-  * **Git & GitHub**: Flujo de trabajo colaborativo por ramas y seguimiento de commits por parte de todo el equipo.
+- **Herramientas y calidad:**
+  - **Prettier:** Formateo automático de código consistente.
+  - **Husky + lint-staged + commitlint:** Hooks de pre-commit y validación de convenciones para mantener la base limpia.
+  - **Trello:** Gestión ágil con 17 issues resueltas, trabajo continuo y equipo multidisciplinario.
+  - **Git y GitHub:** Control de versiones, trabajo por ramas, revisiones colaborativas.
 
 ---
 
 ## 📂 Estructura del Proyecto
 
-```text
-muebleria-hermanos-jota/
-├── img/                       # Recursos gráficos, logotipos y fotos de piezas
-├── index.html                 # Página principal / Landing page
-├── productos.html             # Catálogo general de productos
-├── producto.html              # Vista de detalle individual de producto
-├── contacto.html              # Información de contacto y formulario
-├── pedido.html                # Vista de resumen de pedido y facturación
-├── styles.css                 # Hoja de estilos global, variables y responsive design
-├── productos.js               # Colección de objetos con los datos del catálogo
-├── main.js                    # Renderizado del catálogo y carrusel de destacados
-├── producto.js                # Lógica de carga de producto por parámetro URL
-├── cart.js                    # Lógica global del carrito lateral y persistencia
-├── contacto.js                # Validaciones del formulario de contacto
-├── pedido.js                  # Lógica de factura, totales y exportación PNG
-└── README.md                  # Documentación del proyecto
+```
+Muebler-a-Hermanos-Jota/
+├── backend/
+│   ├── src/
+│   │   ├── server.js            # Servidor Express
+│   │   ├── routes/              # Rutas de la API REST
+│   │   ├── data/                # Datos simulados
+│   │   └── middlewares/         # Middlewares personalizados
+│   └── package.json             # Dependencias y scripts backend
+│
+├── client/
+│   ├── src/
+│   │   ├── components/          # Componentes React reutilizables
+│   │   ├── pages/               # Páginas principales (catálogo, contacto, etc.)
+│   │   ├── hooks/               # Custom hooks
+│   │   ├── styles.css           # Estilos globales
+│   │   ├── App.js, index.js     # Entradas de la app
+│   └── package.json             # Dependencias y scripts frontend
+│
+├── .husky/                      # Hooks git (pre-commit, commit-msg)
+├── .prettierrc, .prettierignore # Reglas y exclusiones de Prettier
+└── README.md                    # Documentación (este archivo)
+```
+
+---
+
+## 🚀 Instalación y Puesta en Marcha
+
+1. **Clona el repositorio:**
+
+```bash
+git clone https://github.com/tu-usuario/Muebler-a-Hermanos-Jota.git
+cd Muebler-a-Hermanos-Jota
+```
+
+2. **Instala dependencias** para ambos entornos:
+
+```bash
+# Backend
+cd backend && npm install
+
+# Frontend
+cd ../client && npm install
+```
+
+3. **Inicia ambos servidores en terminales separadas:**
+
+```bash
+# Backend (Puerto 3000 por default)
+npm start
+
+# Frontend (Puerto 5173, proxy al backend)
+npm start
+```
+
+4. Accede a `http://localhost:5173` para la app React — el frontend consumirá el backend en `http://localhost:3000`.
+
+---
+
+## 📦 Scripts Útiles
+
+- **Frontend (client):**
+  - `npm start`: Ejecuta la app React en desarrollo.
+  - `npm run build`: Compila la app para producción.
+  - `npm test`: Ejecuta los tests.
+
+- **Backend (backend):**
+  - `npm start`: Levanta la API Express.
+
+---
+
+## 🛡️ Herramientas y Workflow Adoptado
+
+- **Prettier:** Autoformatea archivos *.js y *.jsx para mantener uniformidad.
+- **Husky:** Previene commits con formato incorrecto ejecutando scripts de chequeo (`pre-commit`, `commit-msg`).
+- **lint-staged:** Solo analiza y repara lo que se va a commitear.
+- **commitlint:** Fuerza convenciones en los mensajes de commit según las buenas prácticas.
+- **Trello:** Gestión ágil. Se resolvieron 17 issues (features, bugs, mejora UI, QA, etc.).
+- **Control de versiones:** Flujo git semi trunk-based, trabajo en ramas cortas y merges frecuentes.
+
+---
+
+## 📌 Notas y Recomendaciones
+
+- Sugerido tener Node.js v20+ instalado.
+- Usar siempre `npm install` al cambiar de rama principal.
+- ¡Revisá las issues y tareas resueltas en Trello para ver la evolución del trabajo colaborativo!
+
+---
+
+## 📝 Licencia
+
+MIT — Ver archivo LICENSE.
+
+---
+
+## 🔗 Gestión del Proyecto y Issues
+
+Todo el seguimiento de tareas, bugs, nuevas features y trabajo semanal se gestionó en:
+
+👉 **[Trello — Hermanos Jota Sprint 3-4: Issues y organización (invitado, solo lectura)](https://trello.com/invite/b/6ab55c145297c632712ef631/ATTIe347149249543921b7c949892a8b4787641365F7/hermanos-jota-sprint-3-4)**
+
+Podés revisar ahí todas las issues resueltas y el trabajo en equipo distribuido (al menos 17 issues, entre funcionalidades, correcciones y mejoras UI/UX).
+
+---
+
+*Para dudas, sugerencias o más información, contactá a cualquiera de los integrantes del equipo.*

@@ -9,7 +9,7 @@ const navLinks = [
   { to: '/contacto', label: 'CONTACTO' },
 ];
 
-function Navbar({ cartCount = 0 }) {
+function Navbar({ cartCount = 0, onCartClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -54,6 +54,7 @@ function Navbar({ cartCount = 0 }) {
           className="btn-carrito"
           type="button"
           aria-label={`Carrito, ${cartCount} productos`}
+          onClick={onCartClick}
         >
           <span className="cart-icon" aria-hidden="true">
             &#128722;

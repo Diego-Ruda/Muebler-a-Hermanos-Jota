@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import ProductDetail from './components/ProductDetail';
 import ProductList from './components/ProductList';
 import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
@@ -144,12 +145,28 @@ function HomePage({ products, loading, error, onAddToCart }) {
 }
 
 function App() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cart, setCart] = useState([]);
   const { products, loading, error } = useProducts();
 
-  function handleAddToCart() {
-    setCartCount((count) => count + 1);
+  function handleAddToCart(product) {
+    setCart((currentCart) => {
+      const existingItem = currentCart.find(
+        (item) => item.producto.id === product.id
+      );
+
+      if (existingItem) {
+        return currentCart.map((item) =>
+          item.producto.id === product.id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
+        );
+      }
+
+      return [...currentCart, { producto: product, cantidad: 1 }];
+    });
   }
+
+  const cartCount = cart.reduce((total, item) => total + item.cantidad, 0);
 
   return (
     <div className="app-shell">
@@ -178,6 +195,10 @@ function App() {
           }
         />
         <Route path="/contacto" element={<ContactPage />} />
+        <Route
+          path="/producto/:id"
+          element={<ProductDetail onAddToCart={handleAddToCart} />}
+        />
       </Routes>
       <Footer />
     </div>

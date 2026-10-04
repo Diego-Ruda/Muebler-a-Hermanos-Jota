@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
+import CartPanel from './components/CartPanel';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ProductDetail from './components/ProductDetail';
@@ -146,6 +147,7 @@ function HomePage({ products, loading, error, onAddToCart }) {
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [cartOpen, setCartOpen] = useState(false);
   const { products, loading, error } = useProducts();
 
   function handleAddToCart(product) {
@@ -166,11 +168,32 @@ function App() {
     });
   }
 
+  function changeQuantity(productId, delta) {
+    setCart((currentCart) =>
+      currentCart
+        .map((item) =>
+          item.producto.id === productId
+            ? { ...item, cantidad: item.cantidad + delta }
+            : item
+        )
+        .filter((item) => item.cantidad > 0)
+    );
+  }
+
+  function removeFromCart(productId) {
+    setCart((currentCart) =>
+      currentCart.filter((item) => item.producto.id !== productId)
+    );
+  }
+
   const cartCount = cart.reduce((total, item) => total + item.cantidad, 0);
 
   return (
     <div className="app-shell">
-      <Navbar cartCount={cartCount} />
+      <Navbar
+        cartCount={cartCount}
+        onCartClick={() => setCartOpen((open) => !open)}
+      />
       <Routes>
         <Route
           path="/"
@@ -201,6 +224,13 @@ function App() {
         />
       </Routes>
       <Footer />
+      <CartPanel
+        isOpen={cartOpen}
+        items={cart}
+        onClose={() => setCartOpen(false)}
+        onChangeQuantity={changeQuantity}
+        onRemove={removeFromCart}
+      />
     </div>
   );
 }

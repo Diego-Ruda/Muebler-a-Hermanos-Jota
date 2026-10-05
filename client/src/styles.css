@@ -667,7 +667,7 @@ button.btn-primary {
   .contact-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .page-hero h1 {
     font-size: 2.1rem;
   }
@@ -861,6 +861,11 @@ button.btn-primary {
   background-color: var(--bg-200);
 }
 
+.cart-footer-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
 .cart-total-wrapper {
   display: flex;
   justify-content: space-between;
@@ -879,6 +884,58 @@ button.btn-primary {
   border: 0;
   cursor: pointer;
   font-family: inherit;
+}
+
+.cart-footer .btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.btn-secondary {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--primary-100);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--primary-100);
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(89, 61, 46, 0.08);
+}
+
+.invoice-summary > p {
+  margin-bottom: 0.75rem;
+}
+
+.invoice-notice {
+  padding: 0.85rem;
+  border-left: 3px solid var(--accent-200);
+  background-color: var(--bg-200);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.invoice-download-help {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.invoice-list {
+  margin: 1.5rem 0;
+}
+
+.invoice-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--bg-300);
+}
+
+.invoice-item strong {
+  white-space: nowrap;
 }
 
 .cart-count {

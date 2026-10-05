@@ -27,7 +27,7 @@ Proyecto integrador fullstack cuyo objetivo es simular una tienda interactiva de
 El sistema implementa:
 
 - **Frontend moderno en React:**
-  - Listado, detalle y carrito mediante componentes reutilizables.
+  - Listado, detalle y carrito mediante componentes reutilizables, con finalización de compra simulada y comprobante descargable.
   - Hooks propios (custom hooks) para manejo de estado y datos.
   - Ruteo dinámico con React Router.
   - Interfaz mobile-first.

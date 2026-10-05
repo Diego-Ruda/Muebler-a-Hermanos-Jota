@@ -230,6 +230,7 @@ function App() {
         onClose={() => setCartOpen(false)}
         onChangeQuantity={changeQuantity}
         onRemove={removeFromCart}
+        onCheckout={() => setCart([])}
       />
     </div>
   );

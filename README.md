@@ -6,13 +6,13 @@ Proyecto integrador fullstack cuyo objetivo es simular una tienda interactiva de
 
 ## 👥 Integrantes del Equipo
 
-* **Integrante 1**: Diego Ruda — *GitHub: [@Diego-Ruda](https://github.com/Diego-Ruda)*
-* **Integrante 2**: Ruth Carrasco — *GitHub: [@rutth03](https://github.com/rutth03)*
-* **Integrante 3**: Ailin Arancibia — *GitHub: [@linarancibia](https://github.com/linarancibia)*
-* **Integrante 4**: Juan Andres Tarragona — *GitHub: [@JuanTarra](https://github.com/JuanTarra)*
-* **Integrante 5**: Maxi Moncada — *GitHub: [@Maxidevv](https://github.com/Maxidevv)*
+- **Integrante 1**: Diego Ruda — _GitHub: [@Diego-Ruda](https://github.com/Diego-Ruda)_
+- **Integrante 2**: Ruth Carrasco — _GitHub: [@rutth03](https://github.com/rutth03)_
+- **Integrante 3**: Ailin Arancibia — _GitHub: [@linarancibia](https://github.com/linarancibia)_
+- **Integrante 4**: Juan Andres Tarragona — _GitHub: [@JuanTarra](https://github.com/JuanTarra)_
+- **Integrante 5**: Maxi Moncada — _GitHub: [@Maxidevv](https://github.com/Maxidevv)_
 
-> **Sprint 3 y 4 — Trabajo colaborativo, gestión en Trello, 17 issues resueltas (gestión, nuevas features, bugs, testing, refactorización y QA).*
+> *_Sprint 3 y 4 — Trabajo colaborativo, gestión en Trello, 17 issues resueltas (gestión, nuevas features, bugs, testing, refactorización y QA)._
 
 ---
 
@@ -51,11 +51,14 @@ El sistema implementa:
 
 ```
 Muebler-a-Hermanos-Jota/
+├── api/                         # Serverless Functions de Vercel (deploy)
+│   └── productos.js             # GET /api/productos  ·  GET /api/productos?id=N
+│
 ├── backend/
 │   ├── src/
-│   │   ├── server.js            # Servidor Express
+│   │   ├── server.js            # Servidor Express (solo desarrollo local)
 │   │   ├── routes/              # Rutas de la API REST
-│   │   ├── data/                # Datos simulados
+│   │   ├── data/                # Datos simulados (fuente única para dev y deploy)
 │   │   └── middlewares/         # Middlewares personalizados
 │   └── package.json             # Dependencias y scripts backend
 │
@@ -66,12 +69,33 @@ Muebler-a-Hermanos-Jota/
 │   │   ├── hooks/               # Custom hooks
 │   │   ├── styles.css           # Estilos globales
 │   │   ├── App.js, index.js     # Entradas de la app
+│   ├── public/                  # index.html + img/ (assets servidos en /img)
 │   └── package.json             # Dependencias y scripts frontend
 │
+├── vercel.json                  # Configuración de build, output y funciones
+├── .vercelignore                # Archivos excluidos del upload a Vercel
 ├── .husky/                      # Hooks git (pre-commit, commit-msg)
 ├── .prettierrc, .prettierignore # Reglas y exclusiones de Prettier
 └── README.md                    # Documentación (este archivo)
 ```
+
+### ☁️ Deploy en Vercel
+
+El proyecto se despliega como **un único proyecto de Vercel** con la raíz en la raíz del repo:
+
+- **Frontend:** CRA compila a `client/build` (`buildCommand` + `outputDirectory` en `vercel.json`).
+- **Backend:** los archivos en `/api` se publican como Vercel Functions en `/api/*`.
+- **Assets:** `client/public/img` se copia al build y se sirve en `/img/*`.
+
+Como ambos sirven desde el mismo dominio, el frontend consume `/api/productos` sin CORS ni variables de entorno.
+
+El `rewrite` `/:path((?!api/).*)` → `/index.html` evita el 404 al recargar rutas internas de React Router (`/productos`, `/contacto`, `/producto/:id`) sin interceptar la API.
+
+Pasos:
+
+1. Importar el repo en Vercel y dejar el **Root Directory** en la raíz (`.`), tal como está.
+2. No tocar Build Command ni Output Directory: se leen de `vercel.json`.
+3. Deploy. Verificar `/api/productos` y una ruta interna con refresh.
 
 ---
 
@@ -97,11 +121,11 @@ cd ../client && npm install
 3. **Inicia ambos servidores en terminales separadas:**
 
 ```bash
-# Backend (Puerto 3000 por default)
-npm start
+# Terminal 1 — API Express (Puerto 3000 por default)
+npm run dev:backend
 
-# Frontend (Puerto 5173, proxy al backend)
-npm start
+# Terminal 2 — Frontend (Puerto 5173, proxy al backend)
+npm run dev:client
 ```
 
 4. Accede a `http://localhost:5173` para la app React — el frontend consumirá el backend en `http://localhost:3000`.
@@ -116,7 +140,12 @@ npm start
   - `npm test`: Ejecuta los tests.
 
 - **Backend (backend):**
-  - `npm start`: Levanta la API Express.
+  - `npm run dev:backend`: Levanta la API Express.
+  - `npm run dev:client`: Levanta el frontend React.
+
+- **Raíz (monorepo):**
+  - `npm run build`: Compila el frontend para producción.
+  - `npm run lint` / `npm run format`: Lint y formateo.
 
 ---
 
@@ -155,4 +184,4 @@ Podés revisar ahí todas las issues resueltas y el trabajo en equipo distribuid
 
 ---
 
-*Para dudas, sugerencias o más información, contactá a cualquiera de los integrantes del equipo.*
+_Para dudas, sugerencias o más información, contactá a cualquiera de los integrantes del equipo._

@@ -10,7 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build": "npm run build --workspace client",
+    "dev:client": "npm run start --workspace client",
+    "dev:backend": "npm run start --workspace backend"
   },
   "repository": {
     "type": "git",

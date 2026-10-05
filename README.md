@@ -18,7 +18,7 @@ Proyecto integrador fullstack cuyo objetivo es simular una tienda interactiva de
 
 ## 🌐 Demo Desplegada
 
-👉 **[Ver Hermanos Jota en vivo](https://muebler-a-hermanos-jota-p4az7q1ug-test11-890e.vercel.app/)**
+👉 **[Ver Hermanos Jota en vivo](https://muebler-a-hermanos-jota-phi.vercel.app/)**
 
 ---
 

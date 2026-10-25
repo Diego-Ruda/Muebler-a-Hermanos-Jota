@@ -153,12 +153,12 @@ function App() {
   function handleAddToCart(product) {
     setCart((currentCart) => {
       const existingItem = currentCart.find(
-        (item) => item.producto.id === product.id
+        (item) => item.producto._id === product._id
       );
 
       if (existingItem) {
         return currentCart.map((item) =>
-          item.producto.id === product.id
+          item.producto._id === product._id
             ? { ...item, cantidad: item.cantidad + 1 }
             : item
         );
@@ -172,7 +172,7 @@ function App() {
     setCart((currentCart) =>
       currentCart
         .map((item) =>
-          item.producto.id === productId
+          item.producto._id === productId
             ? { ...item, cantidad: item.cantidad + delta }
             : item
         )
@@ -182,7 +182,7 @@ function App() {
 
   function removeFromCart(productId) {
     setCart((currentCart) =>
-      currentCart.filter((item) => item.producto.id !== productId)
+      currentCart.filter((item) => item.producto._id !== productId)
     );
   }
 

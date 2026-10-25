@@ -90,7 +90,7 @@ function ProductDetail({ onAddToCart }) {
       <div className="producto-detalle-grid">
         <img
           className="producto-detalle-imagen"
-          src={product.imagen}
+          src={product.imagenUrl}
           alt={product.nombre}
         />
         <div className="producto-detalle-info">

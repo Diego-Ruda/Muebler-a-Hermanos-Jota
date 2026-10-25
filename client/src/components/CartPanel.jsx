@@ -212,9 +212,9 @@ function CartPanel({
                     const subtotal = producto.precio * cantidad;
 
                     return (
-                      <li key={producto.id} className="cart-item">
+                      <li key={producto._id} className="cart-item">
                         <img
-                          src={producto.imagen}
+                          src={producto.imagenUrl}
                           alt={producto.nombre}
                           className="cart-item-image"
                         />
@@ -230,7 +230,7 @@ function CartPanel({
                                 type="button"
                                 aria-label={`Restar ${producto.nombre}`}
                                 onClick={() =>
-                                  onChangeQuantity(producto.id, -1)
+                                  onChangeQuantity(producto._id, -1)
                                 }
                               >
                                 −
@@ -240,7 +240,9 @@ function CartPanel({
                                 className="cart-qty-btn"
                                 type="button"
                                 aria-label={`Sumar ${producto.nombre}`}
-                                onClick={() => onChangeQuantity(producto.id, 1)}
+                                onClick={() =>
+                                  onChangeQuantity(producto._id, 1)
+                                }
                               >
                                 +
                               </button>
@@ -252,7 +254,7 @@ function CartPanel({
                           <button
                             className="cart-item-remove"
                             type="button"
-                            onClick={() => onRemove(producto.id)}
+                            onClick={() => onRemove(producto._id)}
                           >
                             Eliminar
                           </button>

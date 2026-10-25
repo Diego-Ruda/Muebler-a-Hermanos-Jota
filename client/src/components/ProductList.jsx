@@ -13,7 +13,7 @@ function ProductList({ products = [], onAddToCart }) {
     <div className="products-grid">
       {products.map((product) => (
         <ProductCard
-          key={product.id}
+          key={product._id}
           product={product}
           onAddToCart={onAddToCart}
         />

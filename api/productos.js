@@ -1,25 +1,41 @@
-import productos from '../backend/src/data/productos.js';
+import dotenv from 'dotenv';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import connectDB from '../backend/src/config/db.js';
+import {
+  getProductos,
+  getProductoPorId,
+} from '../backend/src/controllers/productosController.js';
 
-// Serverless Function de Vercel.
-// Reemplaza al route handler de Express en produccion,
-// reutilizando el mismo modulo de datos (fuente unica de verdad).
-export default function handler(req, res) {
+dotenv.config({
+  path: path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    '..',
+    'backend',
+    '.env'
+  ),
+});
+
+export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ mensaje: 'Método no permitido' });
   }
 
+  try {
+    await connectDB();
+  } catch (error) {
+    console.error('Error al conectar a MongoDB:', error.message);
+    return res
+      .status(500)
+      .json({ mensaje: 'Error de conexión a la base de datos' });
+  }
+
   const { id } = req.query ?? {};
 
   if (id) {
-    const producto = productos.find((item) => String(item.id) === id);
-
-    if (!producto) {
-      return res.status(404).json({ mensaje: 'Producto no encontrado' });
-    }
-
-    return res.status(200).json(producto);
+    return getProductoPorId({ params: { id } }, res);
   }
 
-  return res.status(200).json(productos);
+  return getProductos(req, res);
 }

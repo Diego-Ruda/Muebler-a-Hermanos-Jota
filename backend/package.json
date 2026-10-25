@@ -5,7 +5,8 @@
   "description": "API de Mueblería Hermanos Jota (Node.js + Express.js)",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "seed": "node src/scripts/seedProductos.js"
   },
   "keywords": [],
   "author": "",

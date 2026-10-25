@@ -17,7 +17,12 @@ const PUBLIC_DIR = path.join(
   'public'
 );
 
-connectDB();
+try {
+  await connectDB();
+} catch (error) {
+  console.error('Error al conectar a MongoDB:', error.message);
+  process.exit(1);
+}
 
 app.use(logger);
 app.use(cors());

@@ -7,13 +7,13 @@ const currencyFormatter = new Intl.NumberFormat('es-AR', {
 });
 
 function ProductCard({ product, onAddToCart }) {
-  const productPath = `/producto/${product.id}`;
+  const productPath = `/producto/${product._id}`;
 
   return (
     <article className="product-card">
       <Link to={productPath}>
         <img
-          src={product.imagen}
+          src={product.imagenUrl}
           alt={product.nombre}
           className="product-image"
           loading="lazy"

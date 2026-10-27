@@ -31,3 +31,40 @@ export async function getProductoPorId(req, res) {
     return res.status(500).json({ mensaje: 'Error al obtener el producto' });
   }
 }
+export async function crearProducto(req, res) {
+  const {
+    nombre,
+    descripcion,
+    medidas,
+    precio,
+    stock,
+    imagenUrl,
+    detallesFabricacion,
+    destacado,
+  } = req.body ?? {};
+
+  try {
+    const producto = await Product.create({
+      nombre,
+      descripcion,
+      medidas,
+      precio,
+      stock,
+      imagenUrl,
+      detallesFabricacion,
+      destacado,
+    });
+
+    return res.status(201).json(producto);
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        mensaje: 'Datos de producto inválidos',
+        errores: Object.values(error.errors).map((e) => e.message),
+      });
+    }
+
+    console.error('Error al crear el producto:', error.message);
+    return res.status(500).json({ mensaje: 'Error al crear el producto' });
+  }
+}

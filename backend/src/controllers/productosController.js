@@ -100,3 +100,26 @@ export async function actualizarProducto(req, res) {
     return res.status(500).json({ mensaje: 'Error al actualizar el producto' });
   }
 }
+
+export async function eliminarProducto(req, res) {
+  const { id } = req.params;
+
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ mensaje: 'ID de producto inválido' });
+  }
+
+  try {
+    const productoEliminado = await Product.findByIdAndDelete(id);
+
+    if (!productoEliminado) {
+      return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    }
+
+    return res
+      .status(200)
+      .json({ mensaje: 'Producto eliminado correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar el producto:', error.message);
+    return res.status(500).json({ mensaje: 'Error al eliminar el producto' });
+  }
+}

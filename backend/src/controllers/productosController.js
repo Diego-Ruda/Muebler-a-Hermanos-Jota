@@ -68,3 +68,35 @@ export async function crearProducto(req, res) {
     return res.status(500).json({ mensaje: 'Error al crear el producto' });
   }
 }
+
+export async function actualizarProducto(req, res) {
+  const { id } = req.params;
+
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ mensaje: 'ID de producto inválido' });
+  }
+
+  try {
+    const productoActualizado = await Product.findByIdAndUpdate(
+      id,
+      req.body ?? {},
+      { new: true, runValidators: true }
+    );
+
+    if (!productoActualizado) {
+      return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    }
+
+    return res.status(200).json(productoActualizado);
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        mensaje: 'Datos de producto inválidos',
+        errores: Object.values(error.errors).map((e) => e.message),
+      });
+    }
+
+    console.error('Error al actualizar el producto:', error.message);
+    return res.status(500).json({ mensaje: 'Error al actualizar el producto' });
+  }
+}

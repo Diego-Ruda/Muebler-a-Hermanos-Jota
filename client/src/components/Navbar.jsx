@@ -6,6 +6,7 @@ const logo = '/img/logo.svg';
 const navLinks = [
   { to: '/', label: 'INICIO', end: true },
   { to: '/productos', label: 'CATÁLOGO' },
+  { to: '/admin/crear-producto', label: 'ADMIN' },
   { to: '/contacto', label: 'CONTACTO' },
 ];
 

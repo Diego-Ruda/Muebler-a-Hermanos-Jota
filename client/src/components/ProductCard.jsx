@@ -7,7 +7,7 @@ const currencyFormatter = new Intl.NumberFormat('es-AR', {
 });
 
 function ProductCard({ product, onAddToCart }) {
-  const productPath = `/producto/${product._id}`;
+  const productPath = `/productos/${product._id}`;
 
   return (
     <article className="product-card">

@@ -7,6 +7,7 @@ import ProductDetail from './components/ProductDetail';
 import ProductList from './components/ProductList';
 import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
+import CreateProductPage from './pages/CreateProductPage';
 import { useProducts } from './hooks/useProducts';
 
 function HomePage({ products, loading, error, onAddToCart }) {
@@ -148,7 +149,7 @@ function HomePage({ products, loading, error, onAddToCart }) {
 function App() {
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const { products, loading, error } = useProducts();
+  const { products, loading, error, addProduct } = useProducts();
 
   function handleAddToCart(product) {
     setCart((currentCart) => {
@@ -219,8 +220,12 @@ function App() {
         />
         <Route path="/contacto" element={<ContactPage />} />
         <Route
-          path="/producto/:id"
+          path="/productos/:id"
           element={<ProductDetail onAddToCart={handleAddToCart} />}
+        />
+        <Route
+          path="/admin/crear-producto"
+          element={<CreateProductPage onProductCreated={addProduct} />}
         />
       </Routes>
       <Footer />

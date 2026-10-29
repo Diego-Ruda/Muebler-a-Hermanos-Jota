@@ -34,5 +34,9 @@ export function useProducts() {
     };
   }, []);
 
-  return { products, loading, error };
+  function addProduct(product) {
+    setProducts((currentProducts) => [...currentProducts, product]);
+  }
+
+  return { products, loading, error, addProduct };
 }

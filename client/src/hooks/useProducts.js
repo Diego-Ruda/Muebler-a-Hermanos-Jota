@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { PRODUCTS_API_URL } from '../config/api';
 
 export function useProducts() {
   const [products, setProducts] = useState([]);
@@ -10,7 +11,7 @@ export function useProducts() {
 
     async function fetchProducts() {
       try {
-        const response = await fetch('/api/productos', {
+        const response = await fetch(PRODUCTS_API_URL, {
           signal: controller.signal,
         });
         if (!response.ok) {

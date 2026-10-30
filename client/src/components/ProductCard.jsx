@@ -24,6 +24,7 @@ function ProductCard({ product, onAddToCart }) {
           <Link to={productPath}>{product.nombre}</Link>
         </h3>
         <p className="product-desc">{product.descripcion}</p>
+        <p className="product-stock">Stock: {product.stock ?? 0}</p>
         <div className="product-footer">
           <span className="product-price">
             {currencyFormatter.format(product.precio)}

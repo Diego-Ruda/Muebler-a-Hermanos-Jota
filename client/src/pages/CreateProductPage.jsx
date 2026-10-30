@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PRODUCTS_API_URL } from '../config/api';
 
 function CreateProductPage({ onProductCreated }) {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function CreateProductPage({ onProductCreated }) {
     };
 
     try {
-      const response = await fetch('/api/productos', {
+      const response = await fetch(PRODUCTS_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product),

@@ -1,14 +1,14 @@
 /* variables */
 :root {
   /* Paleta de colores */
-  --primary-100: #FF7F50;
+  --primary-100: #ff7f50;
   --primary-200: #dd6236;
   --primary-300: #8f1e00;
-  --accent-100: #8B4513;
+  --accent-100: #8b4513;
   --accent-200: #ffd299;
   --text-100: #000000;
   --text-200: #2c2c2c;
-  --bg-100: #F7EEDD;
+  --bg-100: #f7eedd;
   --bg-200: #ede4d3;
   --bg-300: #c4bcab;
 
@@ -30,7 +30,15 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-dark);
   line-height: 1.6;
@@ -97,7 +105,7 @@ a {
   transition: color 0.2s ease;
 }
 
-.nav-link.active, 
+.nav-link.active,
 .nav-link:hover {
   color: var(--primary-300);
   font-weight: 600;
@@ -133,7 +141,11 @@ a {
   gap: 0.35rem;
   box-shadow: 0 3px 8px rgba(143, 30, 0, 0.2);
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .btn-carrito:hover {
@@ -288,7 +300,9 @@ a {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .product-card:hover {
@@ -321,6 +335,12 @@ a {
   color: var(--text-muted);
   margin-bottom: 1.5rem;
   flex-grow: 1;
+}
+
+.product-stock {
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
 .product-footer {
@@ -428,7 +448,7 @@ a {
   color: #fff;
 }
 
-.footer-info p, 
+.footer-info p,
 .footer-info a {
   color: var(--bg-300);
   font-size: 0.85rem;
@@ -453,7 +473,7 @@ a {
 
 /* CONTACTO */
 .page-hero {
-  padding-top: 2.5rem; 
+  padding-top: 2.5rem;
 }
 
 .page-hero h1 {
@@ -479,7 +499,7 @@ a {
   margin-bottom: 4rem;
 }
 
-.contact-card, 
+.contact-card,
 .form-card {
   background: var(--bg-card);
   padding: 2.5rem;
@@ -488,7 +508,7 @@ a {
   border-left: 4px solid var(--primary-200);
 }
 
-.contact-card h2, 
+.contact-card h2,
 .form-card h2 {
   font-size: 1.75rem;
   margin-bottom: 1.25rem;
@@ -538,7 +558,7 @@ a {
   color: var(--text-dark);
 }
 
-.form-field input, 
+.form-field input,
 .form-field textarea {
   padding: 0.85rem;
   border: 1px solid var(--bg-300);
@@ -546,10 +566,12 @@ a {
   font-family: inherit;
   font-size: 0.95rem;
   background-color: var(--bg-primary);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.form-field input:focus, 
+.form-field input:focus,
 .form-field textarea:focus {
   outline: none;
   border-color: var(--primary-200);
@@ -614,6 +636,15 @@ a {
   border-radius: 6px;
 }
 
+.producto-detalle-sin-imagen {
+  display: grid;
+  min-height: 300px;
+  place-items: center;
+  background-color: var(--bg-100);
+  border-radius: 6px;
+  color: var(--text-muted);
+}
+
 .producto-detalle-info h1 {
   font-size: 2rem;
   margin-bottom: 0.75rem;
@@ -633,6 +664,10 @@ a {
   font-weight: 700;
   color: var(--accent-100);
   margin-bottom: 1rem;
+}
+
+.producto-detalle-stock {
+  font-weight: 600;
 }
 
 .producto-detalle-info p {
@@ -695,7 +730,9 @@ button.btn-primary {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   z-index: 200;
 }
 
@@ -721,7 +758,7 @@ button.btn-primary {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cart-drawer[aria-hidden="false"] {
+.cart-drawer[aria-hidden='false'] {
   transform: translateX(0);
 }
 
@@ -991,11 +1028,11 @@ button.btn-primary {
 
 .factura-tabla {
   width: 100%;
-  min-width: 450px; 
+  min-width: 450px;
   border-collapse: collapse;
 }
 
-.factura-tabla th, 
+.factura-tabla th,
 .factura-tabla td {
   padding: 10px;
   text-align: left;
@@ -1008,7 +1045,7 @@ button.btn-primary {
   font-weight: 600;
 }
 
-.factura-tabla td.monto, 
+.factura-tabla td.monto,
 .factura-tabla th.monto {
   text-align: right;
 }
@@ -1253,7 +1290,8 @@ button.btn-primary {
   .factura-acciones {
     flex-direction: column-reverse;
   }
-  .factura-acciones a, .factura-acciones button {
+  .factura-acciones a,
+  .factura-acciones button {
     width: 100%;
     text-align: center;
   }

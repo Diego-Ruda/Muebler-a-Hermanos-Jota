@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProductForm from '../components/ProductForm';
 import { PRODUCTS_API_URL } from '../config/api';
 
 function CreateProductPage({ onProductCreated }) {
@@ -7,21 +8,9 @@ function CreateProductPage({ onProductCreated }) {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(product) {
     setError('');
     setIsSubmitting(true);
-
-    const formData = new FormData(event.currentTarget);
-    const product = {
-      nombre: formData.get('nombre').trim(),
-      descripcion: formData.get('descripcion').trim(),
-      precio: Number(formData.get('precio')),
-      stock: Number(formData.get('stock') || 0),
-      imagenUrl: formData.get('imagenUrl').trim(),
-      medidas: formData.get('medidas').trim(),
-      detallesFabricacion: formData.get('detallesFabricacion').trim(),
-    };
 
     try {
       const response = await fetch(PRODUCTS_API_URL, {
@@ -37,8 +26,10 @@ function CreateProductPage({ onProductCreated }) {
         );
       }
 
-      onProductCreated(createdProduct);
-      navigate('/productos');
+      onProductCreated?.(createdProduct);
+      navigate('/productos', {
+        state: { flash: 'Producto creado correctamente.' },
+      });
     } catch (submitError) {
       setError(
         submitError instanceof Error
@@ -61,68 +52,13 @@ function CreateProductPage({ onProductCreated }) {
       </section>
       <section className="container">
         <div className="form-card">
-          <form onSubmit={handleSubmit}>
-            <div className="form-field">
-              <label htmlFor="product-name">Nombre</label>
-              <input id="product-name" name="nombre" required />
-            </div>
-            <div className="form-field">
-              <label htmlFor="product-description">Descripción</label>
-              <textarea id="product-description" name="descripcion" rows="4" />
-            </div>
-            <div className="form-field">
-              <label htmlFor="product-price">Precio</label>
-              <input
-                id="product-price"
-                name="precio"
-                type="number"
-                min="0"
-                step="0.01"
-                required
-              />
-            </div>
-            <div className="form-field">
-              <label htmlFor="product-stock">Stock</label>
-              <input
-                id="product-stock"
-                name="stock"
-                type="number"
-                min="0"
-                step="1"
-                defaultValue="0"
-              />
-            </div>
-            <div className="form-field">
-              <label htmlFor="product-image">URL de imagen</label>
-              <input id="product-image" name="imagenUrl" type="url" />
-            </div>
-            <div className="form-field">
-              <label htmlFor="product-measurements">Medidas</label>
-              <input id="product-measurements" name="medidas" />
-            </div>
-            <div className="form-field">
-              <label htmlFor="product-manufacturing">
-                Detalles de fabricación
-              </label>
-              <textarea
-                id="product-manufacturing"
-                name="detallesFabricacion"
-                rows="4"
-              />
-            </div>
-            {error && (
-              <p className="error" role="alert">
-                {error}
-              </p>
-            )}
-            <button
-              className="btn-primary"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Guardando…' : 'Crear producto'}
-            </button>
-          </form>
+          <ProductForm
+            onSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+            error={error}
+            submitLabel="Crear producto"
+            submittingLabel="Guardando…"
+          />
         </div>
       </section>
     </main>

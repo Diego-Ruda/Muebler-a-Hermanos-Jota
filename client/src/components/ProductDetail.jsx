@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { PRODUCTS_API_URL } from '../config/api';
 
 const currencyFormatter = new Intl.NumberFormat('es-AR', {
@@ -10,6 +10,8 @@ const currencyFormatter = new Intl.NumberFormat('es-AR', {
 
 function ProductDetail({ onAddToCart }) {
   const { id } = useParams();
+  const location = useLocation();
+  const flashMessage = location.state?.flash;
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -131,6 +133,11 @@ function ProductDetail({ onAddToCart }) {
           <Link to="/productos" className="product-link">
             Volver al catálogo
           </Link>
+          {flashMessage && (
+            <p className="form-success" role="status">
+              {flashMessage}
+            </p>
+          )}
           <h1>{product.nombre}</h1>
           <p className="producto-detalle-precio">
             {currencyFormatter.format(product.precio)}
@@ -157,6 +164,12 @@ function ProductDetail({ onAddToCart }) {
           >
             Añadir al carrito
           </button>
+          <Link
+            className="btn-secondary editar-producto"
+            to={`/admin/editar-producto/${product._id}`}
+          >
+            Editar producto
+          </Link>
         </div>
       </div>
     </section>

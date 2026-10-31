@@ -111,6 +111,19 @@ a {
   font-weight: 600;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-left: 1.5rem;
+}
+
+.admin-link {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--bg-300);
+  white-space: nowrap;
+}
+
 .menu-toggle {
   display: none;
   border: 0;
@@ -314,7 +327,7 @@ a {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  background-color: var(--bg-300);
+  background-color: #87a96b;
 }
 
 .product-info {
@@ -632,7 +645,7 @@ a {
   height: auto;
   max-height: 520px;
   object-fit: contain;
-  background-color: var(--bg-100);
+  background-color: #87a96b;
   border-radius: 6px;
 }
 
@@ -640,7 +653,7 @@ a {
   display: grid;
   min-height: 300px;
   place-items: center;
-  background-color: var(--bg-100);
+  background-color: #87a96b;
   border-radius: 6px;
   color: var(--text-muted);
 }
@@ -696,6 +709,17 @@ button.btn-primary {
   cursor: pointer;
   font-family: inherit;
   margin-top: 0.5rem;
+}
+
+.editar-producto {
+  display: inline-block;
+  margin-top: 0.75rem;
+  margin-left: 0.75rem;
+}
+
+button.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 @media (max-width: 768px) {
@@ -1195,6 +1219,22 @@ button.btn-primary {
 
   .nav-link {
     padding: 0.7rem 0;
+  }
+
+  .header-actions {
+    order: 3;
+    gap: 0.65rem;
+    margin-left: 0;
+  }
+
+  .admin-link {
+    max-width: 7.5rem;
+    padding-left: 0;
+    border-left: 0;
+    font-size: 0.65rem;
+    line-height: 1.25;
+    text-align: right;
+    white-space: normal;
   }
 
   .btn-carrito {

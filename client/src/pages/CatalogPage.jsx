@@ -1,6 +1,10 @@
+import { useLocation } from 'react-router-dom';
 import ProductList from '../components/ProductList';
 
 function CatalogPage({ products, loading, error, onAddToCart }) {
+  const location = useLocation();
+  const flashMessage = location.state?.flash;
+
   return (
     <main>
       <section className="page-hero container">
@@ -13,6 +17,11 @@ function CatalogPage({ products, loading, error, onAddToCart }) {
       </section>
       <section className="destacados">
         <div className="container">
+          {flashMessage && (
+            <p className="form-success" role="status">
+              {flashMessage}
+            </p>
+          )}
           {loading && (
             <p className="producto-loading" role="status">
               Cargando productos…

@@ -47,5 +47,18 @@ export function useProducts() {
     );
   }
 
-  return { products, loading, error, addProduct, updateProduct };
+  function removeProduct(productId) {
+    setProducts((currentProducts) =>
+      currentProducts.filter((product) => product._id !== productId)
+    );
+  }
+
+  return {
+    products,
+    loading,
+    error,
+    addProduct,
+    updateProduct,
+    removeProduct,
+  };
 }

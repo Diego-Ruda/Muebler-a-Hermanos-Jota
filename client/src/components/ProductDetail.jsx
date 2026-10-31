@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import FlashMessage from './FlashMessage';
 import { PRODUCTS_API_URL } from '../config/api';
 
 const currencyFormatter = new Intl.NumberFormat('es-AR', {
@@ -8,14 +9,19 @@ const currencyFormatter = new Intl.NumberFormat('es-AR', {
   maximumFractionDigits: 0,
 });
 
-function ProductDetail({ onAddToCart }) {
+function ProductDetail({ onAddToCart, onProductDeleted }) {
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const flashMessage = location.state?.flash;
+  const flashType = location.state?.flashType;
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [notFound, setNotFound] = useState(false);
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -71,6 +77,45 @@ function ProductDetail({ onAddToCart }) {
       controller.abort();
     };
   }, [id]);
+
+  async function handleDelete() {
+    if (!product) {
+      return;
+    }
+
+    setDeleteError('');
+    setIsDeleting(true);
+
+    try {
+      const response = await fetch(`${PRODUCTS_API_URL}/${product._id}`, {
+        method: 'DELETE',
+      });
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(
+          data?.mensaje || `Error al eliminar el producto: ${response.status}`
+        );
+      }
+
+      onProductDeleted?.(product._id);
+      navigate('/productos', {
+        state: {
+          flash: 'Producto eliminado correctamente.',
+          flashType: 'delete',
+        },
+      });
+    } catch (deleteFailure) {
+      setDeleteError(
+        deleteFailure instanceof TypeError
+          ? 'No pudimos conectar con el servidor. Intentá nuevamente.'
+          : deleteFailure instanceof Error
+            ? deleteFailure.message
+            : 'No pudimos eliminar el producto. Intentá nuevamente.'
+      );
+      setIsDeleting(false);
+    }
+  }
 
   if (loading) {
     return (
@@ -133,11 +178,7 @@ function ProductDetail({ onAddToCart }) {
           <Link to="/productos" className="product-link">
             Volver al catálogo
           </Link>
-          {flashMessage && (
-            <p className="form-success" role="status">
-              {flashMessage}
-            </p>
-          )}
+          <FlashMessage message={flashMessage} variant={flashType} />
           <h1>{product.nombre}</h1>
           <p className="producto-detalle-precio">
             {currencyFormatter.format(product.precio)}
@@ -157,19 +198,68 @@ function ProductDetail({ onAddToCart }) {
               <p>{product.detallesFabricacion}</p>
             </>
           )}
-          <button
-            className="btn-primary anadir-al-carrito"
-            type="button"
-            onClick={() => onAddToCart?.(product)}
-          >
-            Añadir al carrito
-          </button>
-          <Link
-            className="btn-secondary editar-producto"
-            to={`/admin/editar-producto/${product._id}`}
-          >
-            Editar producto
-          </Link>
+          <div className="producto-detalle-acciones">
+            <button
+              className="btn-primary anadir-al-carrito"
+              type="button"
+              onClick={() => onAddToCart?.(product)}
+            >
+              Añadir al carrito
+            </button>
+            <Link
+              className="btn-secondary editar-producto"
+              to={`/admin/editar-producto/${product._id}`}
+            >
+              Editar producto
+            </Link>
+            <button
+              className="btn-secondary eliminar-producto"
+              type="button"
+              disabled={isDeleting || isConfirmingDelete}
+              onClick={() => {
+                setDeleteError('');
+                setIsConfirmingDelete(true);
+              }}
+            >
+              Eliminar producto
+            </button>
+          </div>
+          {isConfirmingDelete && (
+            <div
+              className="confirm-delete"
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="delete-confirm-title"
+            >
+              <p id="delete-confirm-title">
+                ¿Seguro que querés eliminar “{product.nombre}”? Esta acción no
+                se puede deshacer.
+              </p>
+              <div className="confirm-delete-actions">
+                <button
+                  className="btn-secondary"
+                  type="button"
+                  disabled={isDeleting}
+                  onClick={() => setIsConfirmingDelete(false)}
+                >
+                  Cancelar
+                </button>
+                <button
+                  className="btn-primary"
+                  type="button"
+                  disabled={isDeleting}
+                  onClick={handleDelete}
+                >
+                  {isDeleting ? 'Eliminando…' : 'Sí, eliminar'}
+                </button>
+              </div>
+            </div>
+          )}
+          {deleteError && (
+            <p className="error" role="alert">
+              {deleteError}
+            </p>
+          )}
         </div>
       </div>
     </section>

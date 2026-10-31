@@ -150,7 +150,8 @@ function HomePage({ products, loading, error, onAddToCart }) {
 function App() {
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const { products, loading, error, addProduct, updateProduct } = useProducts();
+  const { products, loading, error, addProduct, updateProduct, removeProduct } =
+    useProducts();
 
   function handleAddToCart(product) {
     setCart((currentCart) => {
@@ -188,6 +189,11 @@ function App() {
     );
   }
 
+  function handleProductDeleted(productId) {
+    removeProduct(productId);
+    removeFromCart(productId);
+  }
+
   const cartCount = cart.reduce((total, item) => total + item.cantidad, 0);
 
   return (
@@ -222,7 +228,12 @@ function App() {
         <Route path="/contacto" element={<ContactPage />} />
         <Route
           path="/productos/:id"
-          element={<ProductDetail onAddToCart={handleAddToCart} />}
+          element={
+            <ProductDetail
+              onAddToCart={handleAddToCart}
+              onProductDeleted={handleProductDeleted}
+            />
+          }
         />
         <Route
           path="/admin/crear-producto"

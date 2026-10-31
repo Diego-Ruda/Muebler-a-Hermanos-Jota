@@ -607,6 +607,18 @@ a {
   font-weight: 600;
 }
 
+.flash-message {
+  transition: opacity 0.3s ease;
+}
+
+.flash-message-delete {
+  background-color: #c62828;
+}
+
+.flash-message-success {
+  background-color: #2e7d32;
+}
+
 /* DETALLE DE PRODUCTO */
 .producto-detalle-container {
   width: 90%;
@@ -711,10 +723,61 @@ button.btn-primary {
   margin-top: 0.5rem;
 }
 
+.producto-detalle-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.producto-detalle-acciones .btn-primary,
+.producto-detalle-acciones .btn-secondary {
+  margin-top: 0;
+}
+
 .editar-producto {
   display: inline-block;
-  margin-top: 0.75rem;
-  margin-left: 0.75rem;
+}
+
+.eliminar-producto {
+  border-color: var(--primary-300);
+  color: var(--primary-300);
+}
+
+.eliminar-producto:hover {
+  background-color: var(--primary-300);
+  color: #fff;
+}
+
+.eliminar-producto:disabled,
+.confirm-delete .btn-primary:disabled,
+.confirm-delete .btn-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.confirm-delete {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--primary-300);
+  border-radius: 6px;
+}
+
+.confirm-delete p {
+  margin-bottom: 0.75rem;
+}
+
+.confirm-delete-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.confirm-delete-actions .btn-primary,
+.confirm-delete-actions .btn-secondary {
+  margin-top: 0;
 }
 
 button.btn-primary:disabled {

@@ -1,9 +1,11 @@
 import { useLocation } from 'react-router-dom';
+import FlashMessage from '../components/FlashMessage';
 import ProductList from '../components/ProductList';
 
 function CatalogPage({ products, loading, error, onAddToCart }) {
   const location = useLocation();
   const flashMessage = location.state?.flash;
+  const flashType = location.state?.flashType;
 
   return (
     <main>
@@ -17,11 +19,7 @@ function CatalogPage({ products, loading, error, onAddToCart }) {
       </section>
       <section className="destacados">
         <div className="container">
-          {flashMessage && (
-            <p className="form-success" role="status">
-              {flashMessage}
-            </p>
-          )}
+          <FlashMessage message={flashMessage} variant={flashType} />
           {loading && (
             <p className="producto-loading" role="status">
               Cargando productos…

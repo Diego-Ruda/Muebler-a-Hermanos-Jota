@@ -111,6 +111,19 @@ a {
   font-weight: 600;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-left: 1.5rem;
+}
+
+.admin-link {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--bg-300);
+  white-space: nowrap;
+}
+
 .menu-toggle {
   display: none;
   border: 0;
@@ -314,7 +327,7 @@ a {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  background-color: var(--bg-300);
+  background-color: #87a96b;
 }
 
 .product-info {
@@ -594,6 +607,18 @@ a {
   font-weight: 600;
 }
 
+.flash-message {
+  transition: opacity 0.3s ease;
+}
+
+.flash-message-delete {
+  background-color: #c62828;
+}
+
+.flash-message-success {
+  background-color: #2e7d32;
+}
+
 /* DETALLE DE PRODUCTO */
 .producto-detalle-container {
   width: 90%;
@@ -632,7 +657,7 @@ a {
   height: auto;
   max-height: 520px;
   object-fit: contain;
-  background-color: var(--bg-100);
+  background-color: #87a96b;
   border-radius: 6px;
 }
 
@@ -640,7 +665,7 @@ a {
   display: grid;
   min-height: 300px;
   place-items: center;
-  background-color: var(--bg-100);
+  background-color: #87a96b;
   border-radius: 6px;
   color: var(--text-muted);
 }
@@ -696,6 +721,68 @@ button.btn-primary {
   cursor: pointer;
   font-family: inherit;
   margin-top: 0.5rem;
+}
+
+.producto-detalle-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.producto-detalle-acciones .btn-primary,
+.producto-detalle-acciones .btn-secondary {
+  margin-top: 0;
+}
+
+.editar-producto {
+  display: inline-block;
+}
+
+.eliminar-producto {
+  border-color: var(--primary-300);
+  color: var(--primary-300);
+}
+
+.eliminar-producto:hover {
+  background-color: var(--primary-300);
+  color: #fff;
+}
+
+.eliminar-producto:disabled,
+.confirm-delete .btn-primary:disabled,
+.confirm-delete .btn-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.confirm-delete {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--primary-300);
+  border-radius: 6px;
+}
+
+.confirm-delete p {
+  margin-bottom: 0.75rem;
+}
+
+.confirm-delete-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.confirm-delete-actions .btn-primary,
+.confirm-delete-actions .btn-secondary {
+  margin-top: 0;
+}
+
+button.btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 @media (max-width: 768px) {
@@ -1195,6 +1282,22 @@ button.btn-primary {
 
   .nav-link {
     padding: 0.7rem 0;
+  }
+
+  .header-actions {
+    order: 3;
+    gap: 0.65rem;
+    margin-left: 0;
+  }
+
+  .admin-link {
+    max-width: 7.5rem;
+    padding-left: 0;
+    border-left: 0;
+    font-size: 0.65rem;
+    line-height: 1.25;
+    text-align: right;
+    white-space: normal;
   }
 
   .btn-carrito {

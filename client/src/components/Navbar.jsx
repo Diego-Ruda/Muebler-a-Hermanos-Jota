@@ -6,9 +6,13 @@ const logo = '/img/logo.svg';
 const navLinks = [
   { to: '/', label: 'INICIO', end: true },
   { to: '/productos', label: 'CATÁLOGO' },
-  { to: '/admin/crear-producto', label: 'ADMIN' },
   { to: '/contacto', label: 'CONTACTO' },
 ];
+
+const adminLink = {
+  to: '/admin/crear-producto',
+  label: 'PANEL DE ADMINISTRACIÓN',
+};
 
 function Navbar({ cartCount = 0, onCartClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,20 +55,31 @@ function Navbar({ cartCount = 0, onCartClick }) {
           <span />
           <span />
         </button>
-        <button
-          className="btn-carrito"
-          type="button"
-          aria-label={`Carrito, ${cartCount} productos`}
-          onClick={onCartClick}
-        >
-          <span className="cart-icon" aria-hidden="true">
-            &#128722;
-          </span>
-          <span className="cart-label">Carrito</span>
-          <span className="cart-count" hidden={cartCount === 0}>
-            {cartCount}
-          </span>
-        </button>
+        <div className="header-actions">
+          <button
+            className="btn-carrito"
+            type="button"
+            aria-label={`Carrito, ${cartCount} productos`}
+            onClick={onCartClick}
+          >
+            <span className="cart-icon" aria-hidden="true">
+              &#128722;
+            </span>
+            <span className="cart-label">Carrito</span>
+            <span className="cart-count" hidden={cartCount === 0}>
+              {cartCount}
+            </span>
+          </button>
+          <NavLink
+            to={adminLink.to}
+            className={({ isActive }) =>
+              `nav-link admin-link${isActive ? ' active' : ''}`
+            }
+            onClick={() => setIsMenuOpen(false)}
+          >
+            {adminLink.label}
+          </NavLink>
+        </div>
       </div>
     </header>
   );

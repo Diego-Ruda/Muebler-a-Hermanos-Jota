@@ -8,6 +8,7 @@ import ProductList from './components/ProductList';
 import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
 import CreateProductPage from './pages/CreateProductPage';
+import EditProductPage from './pages/EditProductPage';
 import { useProducts } from './hooks/useProducts';
 
 function HomePage({ products, loading, error, onAddToCart }) {
@@ -51,7 +52,7 @@ function HomePage({ products, loading, error, onAddToCart }) {
             </h1>
             <p className="hero-description">
               Diseño atemporal y madera de origen responsable. Piezas para
-              habitar despacio, hechas en el taller de Hermanos Jota.
+              habitar tranquilo, hechas en el taller de Hermanos Jota.
             </p>
             <Link to="/productos" className="btn-primary">
               VER CATÁLOGO
@@ -149,7 +150,8 @@ function HomePage({ products, loading, error, onAddToCart }) {
 function App() {
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const { products, loading, error, addProduct } = useProducts();
+  const { products, loading, error, addProduct, updateProduct, removeProduct } =
+    useProducts();
 
   function handleAddToCart(product) {
     setCart((currentCart) => {
@@ -187,6 +189,11 @@ function App() {
     );
   }
 
+  function handleProductDeleted(productId) {
+    removeProduct(productId);
+    removeFromCart(productId);
+  }
+
   const cartCount = cart.reduce((total, item) => total + item.cantidad, 0);
 
   return (
@@ -221,11 +228,24 @@ function App() {
         <Route path="/contacto" element={<ContactPage />} />
         <Route
           path="/productos/:id"
-          element={<ProductDetail onAddToCart={handleAddToCart} />}
+          element={
+            <ProductDetail
+              onAddToCart={handleAddToCart}
+              onProductDeleted={handleProductDeleted}
+            />
+          }
         />
         <Route
           path="/admin/crear-producto"
           element={<CreateProductPage onProductCreated={addProduct} />}
+        />
+        <Route
+          path="/admin/editar-producto/:id"
+          element={<EditProductPage onProductUpdated={updateProduct} />}
+        />
+        <Route
+          path="/productos/:id/editar"
+          element={<EditProductPage onProductUpdated={updateProduct} />}
         />
       </Routes>
       <Footer />

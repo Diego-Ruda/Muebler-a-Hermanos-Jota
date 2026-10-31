@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ProductForm from '../components/ProductForm';
 import { PRODUCTS_API_URL } from '../config/api';
 
 function CreateProductPage({ onProductCreated }) {
@@ -37,6 +38,10 @@ function CreateProductPage({ onProductCreated }) {
       detallesFabricacion: formData.detallesFabricacion.trim(),
     };
 
+  async function handleSubmit(product) {
+    setError('');
+    setIsSubmitting(true);
+
     try {
       const response = await fetch(PRODUCTS_API_URL, {
         method: 'POST',
@@ -57,6 +62,10 @@ function CreateProductPage({ onProductCreated }) {
 
       onProductCreated(createdProduct);
       navigate('/productos');
+      onProductCreated?.(createdProduct);
+      navigate('/productos', {
+        state: { flash: 'Producto creado correctamente.' },
+      });
     } catch (submitError) {
       setError(
         submitError instanceof TypeError
@@ -171,6 +180,13 @@ function CreateProductPage({ onProductCreated }) {
               {isSubmitting ? 'Guardando…' : 'Crear producto'}
             </button>
           </form>
+          <ProductForm
+            onSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+            error={error}
+            submitLabel="Crear producto"
+            submittingLabel="Guardando…"
+          />
         </div>
       </section>
     </main>

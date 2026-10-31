@@ -59,5 +59,26 @@ export function useProducts() {
     setProducts((currentProducts) => [...currentProducts, product]);
   }
 
-  return { products, loading, error, addProduct };
+  function updateProduct(updatedProduct) {
+    setProducts((currentProducts) =>
+      currentProducts.map((product) =>
+        product._id === updatedProduct._id ? updatedProduct : product
+      )
+    );
+  }
+
+  function removeProduct(productId) {
+    setProducts((currentProducts) =>
+      currentProducts.filter((product) => product._id !== productId)
+    );
+  }
+
+  return {
+    products,
+    loading,
+    error,
+    addProduct,
+    updateProduct,
+    removeProduct,
+  };
 }

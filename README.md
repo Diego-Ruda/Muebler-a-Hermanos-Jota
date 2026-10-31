@@ -148,6 +148,18 @@ npm run dev:client
   - `npm run build`: Compila el frontend para producción.
   - `npm run lint` / `npm run format`: Lint y formateo.
 
+## 🧪 Pruebas CRUD de productos con Postman
+
+La colección [productos-crud.postman_collection.json](./postman/productos-crud.postman_collection.json) valida secuencialmente los endpoints de productos. Importala en Postman y ejecutala completa desde **Collection Runner** para respetar el orden de las solicitudes.
+
+Antes de ejecutar:
+
+1. Configurá `backend/.env` con una `MONGODB_URI` de una base de datos de desarrollo o pruebas y levantá el backend con `npm run dev:backend`.
+2. En la colección, ajustá la variable `baseUrl` si la API no está en `http://localhost:3000`.
+3. Ejecutá la colección completa. Crea un producto temporal, verifica sus cambios consultándolo nuevamente y lo elimina al final.
+
+La colección comprueba códigos y cuerpos de respuesta para listado (`200`), creación (`201` y `400` por campos obligatorios faltantes), consulta, actualización (`200` y `404`) y eliminación (`200` y `404`). Los IDs inexistentes son ObjectIds válidos generados para la ejecución. Las consultas posteriores a la creación, actualización y eliminación verifican la persistencia efectiva en MongoDB. La ejecución requiere una base accesible; no uses una base con datos de producción.
+
 ---
 
 ## 🛡️ Herramientas y Workflow Adoptado

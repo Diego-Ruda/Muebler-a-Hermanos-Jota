@@ -1,0 +1,370 @@
+{
+  "info": {
+    "_postman_id": "d6f7ce19-62f6-4f16-9b76-7d5fc2a1e016",
+    "name": "Mueblería Hermanos Jota - CRUD de productos",
+    "description": "Pruebas de integración secuenciales para los cinco endpoints de productos. Verifica respuestas HTTP, cuerpos JSON y persistencia mediante lecturas posteriores. Al terminar elimina el producto de prueba creado.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://muebler-a-hermanos-jota-v4q0.onrender.com"
+    },
+    {
+      "key": "productoId",
+      "value": ""
+    },
+    {
+      "key": "productoNoExistente",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Listado",
+      "item": [
+        {
+          "name": "Listar productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos",
+            "description": "Devuelve la colección completa; una lista vacía también es válida."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const id = Array.from({ length: 24 }, () => Math.floor(Math.random() * 16).toString(16)).join('');",
+                  "pm.collectionVariables.set('productoNoExistente', id);",
+                  "pm.collectionVariables.unset('productoId');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));",
+                  "pm.test('El cuerpo es una lista JSON', () => pm.expect(pm.response.json()).to.be.an('array'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Creación",
+      "item": [
+        {
+          "name": "Crear producto válido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Producto de prueba Postman\",\n  \"descripcion\": \"Registro temporal para validar el CRUD\",\n  \"medidas\": \"100 x 50 x 40 cm\",\n  \"precio\": 123456,\n  \"stock\": 3,\n  \"imagenUrl\": \"/img/logo.svg\",\n  \"detallesFabricacion\": \"Creado por la colección de Postman\",\n  \"destacado\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/productos",
+            "description": "Crea un producto temporal y guarda su ID para las siguientes pruebas."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201 Created', () => pm.response.to.have.status(201));",
+                  "pm.test('Devuelve el producto creado con sus campos', () => {",
+                  "  const producto = pm.response.json();",
+                  "  pm.expect(producto).to.have.property('_id').that.is.a('string');",
+                  "  pm.expect(producto.nombre).to.eql('Producto de prueba Postman');",
+                  "  pm.expect(producto.precio).to.eql(123456);",
+                  "  pm.collectionVariables.set('productoId', producto._id);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Rechazar creación sin campos obligatorios",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descripcion\": \"Faltan nombre y precio\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/productos",
+            "description": "Comprueba la validación del modelo para los campos nombre y precio obligatorios."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400 Bad Request', () => pm.response.to.have.status(400));",
+                  "pm.test('Informa errores de validación para nombre y precio', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.mensaje).to.eql('Datos de producto inválidos');",
+                  "  pm.expect(body.errores).to.be.an('array');",
+                  "  pm.expect(body.errores.join(' ')).to.include('nombre');",
+                  "  pm.expect(body.errores.join(' ')).to.include('precio');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. Consulta por ID",
+      "item": [
+        {
+          "name": "Consultar producto creado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos/{{productoId}}",
+            "description": "Lee desde MongoDB el producto recién creado para comprobar persistencia."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));",
+                  "pm.test('El producto persistido coincide con el creado', () => {",
+                  "  const producto = pm.response.json();",
+                  "  pm.expect(producto._id).to.eql(pm.collectionVariables.get('productoId'));",
+                  "  pm.expect(producto.nombre).to.eql('Producto de prueba Postman');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar ID inexistente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos/{{productoNoExistente}}",
+            "description": "Usa un ObjectId válido generado al comenzar la colección, pero sin documento asociado."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 404 Not Found', () => pm.response.to.have.status(404));",
+                  "pm.test('Informa que el producto no existe', () => pm.expect(pm.response.json().mensaje).to.eql('Producto no encontrado'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Actualización",
+      "item": [
+        {
+          "name": "Actualizar producto creado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio\": 234567,\n  \"stock\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/productos/{{productoId}}",
+            "description": "Actualiza el producto creado en la prueba anterior."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Devuelve los campos actualizados', () => {",
+                  "  const producto = pm.response.json();",
+                  "  pm.expect(producto._id).to.eql(pm.collectionVariables.get('productoId'));",
+                  "  pm.expect(producto.precio).to.eql(234567);",
+                  "  pm.expect(producto.stock).to.eql(8);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Verificar actualización persistida",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos/{{productoId}}",
+            "description": "Vuelve a consultar MongoDB para confirmar que PUT persistió los cambios."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));",
+                  "pm.test('MongoDB contiene los valores actualizados', () => {",
+                  "  const producto = pm.response.json();",
+                  "  pm.expect(producto.precio).to.eql(234567);",
+                  "  pm.expect(producto.stock).to.eql(8);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Actualizar producto inexistente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio\": 999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/productos/{{productoNoExistente}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 404 Not Found', () => pm.response.to.have.status(404));",
+                  "pm.test('Informa que el producto no existe', () => pm.expect(pm.response.json().mensaje).to.eql('Producto no encontrado'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5. Eliminación",
+      "item": [
+        {
+          "name": "Eliminar producto creado",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos/{{productoId}}",
+            "description": "Elimina el registro temporal creado por esta colección."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Confirma la eliminación', () => pm.expect(pm.response.json().mensaje).to.eql('Producto eliminado correctamente'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Verificar eliminación persistida",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos/{{productoId}}",
+            "description": "Confirma que el producto eliminado ya no existe en MongoDB."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 404 luego de eliminar', () => pm.response.to.have.status(404));",
+                  "pm.test('Informa que el producto ya no existe', () => pm.expect(pm.response.json().mensaje).to.eql('Producto no encontrado'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar producto inexistente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos/{{productoNoExistente}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 404 Not Found', () => pm.response.to.have.status(404));",
+                  "pm.test('Informa que el producto no existe', () => pm.expect(pm.response.json().mensaje).to.eql('Producto no encontrado'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -36,7 +36,7 @@ El sistema implementa:
 - **Backend sólido con Node.js + Express.js:**
   - API RESTful centralizada, facilita la integración y escalabilidad.
   - Control de rutas, middlewares y lógica desacoplada.
-  - Manejo y almacenamiento de datos de productos, simulando respuesta de base de datos.
+  - Productos persistidos en MongoDB mediante Mongoose.
   - CORS habilitado para integración frontend-backend durante desarrollo.
 
 - **Herramientas y calidad:**
@@ -52,13 +52,13 @@ El sistema implementa:
 ```
 Muebler-a-Hermanos-Jota/
 ├── api/                         # Serverless Functions de Vercel (deploy)
-│   └── productos.js             # GET /api/productos  ·  GET /api/productos?id=N
+│   └── productos.js             # API de productos conectada a MongoDB
 │
 ├── backend/
 │   ├── src/
 │   │   ├── server.js            # Servidor Express (solo desarrollo local)
 │   │   ├── routes/              # Rutas de la API REST
-│   │   ├── data/                # Datos simulados (fuente única para dev y deploy)
+│   │   ├── data/                # Datos iniciales para cargar con el seed
 │   │   └── middlewares/         # Middlewares personalizados
 │   └── package.json             # Dependencias y scripts backend
 │
@@ -87,7 +87,7 @@ El proyecto se despliega como **un único proyecto de Vercel** con la raíz en l
 - **Backend:** los archivos en `/api` se publican como Vercel Functions en `/api/*`.
 - **Assets:** `client/public/img` se copia al build y se sirve en `/img/*`.
 
-Como ambos sirven desde el mismo dominio, el frontend consume `/api/productos` sin CORS ni variables de entorno.
+La función serverless de `/api/productos` usa los mismos controladores y la misma base MongoDB que Express. El frontend consume `/api/productos` en el mismo dominio por defecto; para alojar la API en otro dominio se puede definir `REACT_APP_API_URL` con la URL base del backend. La ruta de detalle `/api/productos/:id` también se enruta a la función serverless.
 
 El `rewrite` `/:path((?!api/).*)` → `/index.html` evita el 404 al recargar rutas internas de React Router (`/productos`, `/contacto`, `/producto/:id`) sin interceptar la API.
 
@@ -121,6 +121,7 @@ cd ../client && npm install
 3. **Inicia ambos servidores en terminales separadas:**
 
 ```bash
+# Configura backend/.env con MONGODB_URI antes de iniciar la API.
 # Terminal 1 — API Express (Puerto 3000 por default)
 npm run dev:backend
 
@@ -128,7 +129,7 @@ npm run dev:backend
 npm run dev:client
 ```
 
-4. Accede a `http://localhost:5173` para la app React — el frontend consumirá el backend en `http://localhost:3000`.
+4. Accede a `http://localhost:5173` para la app React. El proxy envía las peticiones `/api` a Express en `http://localhost:3000`.
 
 ---
 

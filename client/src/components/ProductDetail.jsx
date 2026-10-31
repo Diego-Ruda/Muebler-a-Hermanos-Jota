@@ -41,6 +41,10 @@ function ProductDetail({ onAddToCart }) {
           );
         }
 
+        if (!data || typeof data !== 'object' || Array.isArray(data)) {
+          throw new Error('El servidor devolvió una respuesta inválida.');
+        }
+
         if (controller.signal.aborted) {
           return;
         }

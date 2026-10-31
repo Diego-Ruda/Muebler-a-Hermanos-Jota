@@ -14,17 +14,37 @@ export function useProducts() {
         const response = await fetch(PRODUCTS_API_URL, {
           signal: controller.signal,
         });
+        const data = await response.json().catch(() => {
+          throw new Error('El servidor devolvió una respuesta inválida.');
+        });
+
         if (!response.ok) {
-          throw new Error(`Error al cargar los productos: ${response.status}`);
+          throw new Error(
+            data?.mensaje || `Error al cargar los productos: ${response.status}`
+          );
         }
-        const data = await response.json();
-        setProducts(Array.isArray(data) ? data : []);
+
+        if (!Array.isArray(data)) {
+          throw new Error(
+            'El servidor devolvió una lista de productos inválida.'
+          );
+        }
+
+        setProducts(data);
       } catch (err) {
         if (err.name !== 'AbortError') {
-          setError(err instanceof Error ? err.message : 'Error desconocido');
+          setError(
+            err instanceof TypeError
+              ? 'No pudimos conectar con el servidor. Intentá nuevamente.'
+              : err instanceof Error
+                ? err.message
+                : 'Error desconocido'
+          );
         }
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     }
 

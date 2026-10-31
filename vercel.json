@@ -11,6 +11,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/productos/:id",
+      "destination": "/api/productos?id=:id"
+    },
+    {
       "source": "/:path((?!api/).*)",
       "destination": "/index.html"
     }

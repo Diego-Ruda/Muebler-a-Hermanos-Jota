@@ -42,6 +42,7 @@ export async function crearProducto(req, res) {
     detallesFabricacion,
     destacado,
   } = req.body ?? {};
+  const usuario = req.usuario ?? req.user;
 
   try {
     const producto = await Product.create({
@@ -53,6 +54,7 @@ export async function crearProducto(req, res) {
       imagenUrl,
       detallesFabricacion,
       destacado,
+      creadoPor: usuario?.id,
     });
 
     return res.status(201).json(producto);
@@ -76,12 +78,21 @@ export async function actualizarProducto(req, res) {
     return res.status(400).json({ mensaje: 'ID de producto inválido' });
   }
 
+  const usuario = req.usuario ?? req.user;
+  const cambios = { ...(req.body ?? {}) };
+
+  delete cambios.creadoPor;
+  delete cambios.actualizadoPor;
+
+  if (usuario?.id) {
+    cambios.actualizadoPor = usuario.id;
+  }
+
   try {
-    const productoActualizado = await Product.findByIdAndUpdate(
-      id,
-      req.body ?? {},
-      { new: true, runValidators: true }
-    );
+    const productoActualizado = await Product.findByIdAndUpdate(id, cambios, {
+      returnDocument: 'after',
+      runValidators: true,
+    });
 
     if (!productoActualizado) {
       return res.status(404).json({ mensaje: 'Producto no encontrado' });

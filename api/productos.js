@@ -9,6 +9,7 @@ import {
   actualizarProducto,
   eliminarProducto,
 } from '../backend/src/controllers/productosController.js';
+import { autenticarToken } from '../backend/src/middlewares/authMiddleware.js';
 
 dotenv.config({
   path: path.resolve(
@@ -31,6 +32,20 @@ export default async function handler(req, res) {
 
   const { id } = req.query ?? {};
   const method = req.method;
+  const requiereAutenticacion = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(
+    method
+  );
+
+  if (requiereAutenticacion) {
+    const { usuario, error } = await autenticarToken(req);
+
+    if (error) {
+      return res.status(error.status).json(error.body);
+    }
+
+    req.usuario = usuario;
+    req.user = usuario;
+  }
 
   if (method === 'GET') {
     if (id) {
@@ -47,7 +62,10 @@ export default async function handler(req, res) {
     if (!id) {
       return res.status(400).json({ mensaje: 'ID de producto requerido' });
     }
-    return actualizarProducto({ params: { id }, body: req.body }, res);
+    return actualizarProducto(
+      { params: { id }, body: req.body, usuario: req.usuario },
+      res
+    );
   }
 
   if (method === 'DELETE') {

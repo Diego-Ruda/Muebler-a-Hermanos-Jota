@@ -41,6 +41,14 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    creadoPor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    actualizadoPor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     timestamps: true,

@@ -6,13 +6,14 @@ import {
   actualizarProducto,
   eliminarProducto,
 } from '../controllers/productosController.js';
+import { verificarToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
 router.get('/', getProductos);
 router.get('/:id', getProductoPorId);
-router.post('/', crearProducto);
-router.put('/:id', actualizarProducto);
-router.delete('/:id', eliminarProducto);
+router.post('/', verificarToken, crearProducto);
+router.put('/:id', verificarToken, actualizarProducto);
+router.delete('/:id', verificarToken, eliminarProducto);
 
 export default router;

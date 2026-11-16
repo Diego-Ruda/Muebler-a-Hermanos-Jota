@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import logger from './middlewares/loggerMiddleware.js';
 import productosRoutes from './routes/productosRoutes.js';
+import registroRoutes from './routes/registroRoutes.js';
 import connectDB from './config/db.js';
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(PUBLIC_DIR));
 app.use('/api/productos', productosRoutes);
+app.use('/registro', registroRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);

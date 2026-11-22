@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import { VALID_ROLES } from '../constants/roles.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -55,11 +56,15 @@ export async function iniciarSesion(req, res) {
       return res.status(401).json({ mensaje: 'Credenciales inválidas' });
     }
 
+    if (!VALID_ROLES.includes(usuario.role)) {
+      return res.status(401).json({ mensaje: 'Rol de usuario inválido' });
+    }
+
     const token = jwt.sign(
       {
         id: usuario._id.toString(),
         email: usuario.email,
-        rol: usuario.rol,
+        role: usuario.role,
       },
       jwtSecret,
       { expiresIn: process.env.JWT_EXPIRES_IN ?? '2h' }
@@ -72,7 +77,7 @@ export async function iniciarSesion(req, res) {
         id: usuario._id,
         nombre: usuario.nombre,
         email: usuario.email,
-        rol: usuario.rol,
+        role: usuario.role,
       },
     });
   } catch (error) {

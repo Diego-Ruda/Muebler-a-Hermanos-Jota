@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import migrateUserRoles from './migrateUserRoles.js';
 
 let connectionPromise = null;
 
@@ -19,8 +20,9 @@ const connectDB = async () => {
   if (!connectionPromise) {
     connectionPromise = mongoose
       .connect(uri)
-      .then((conn) => {
+      .then(async (conn) => {
         console.log(`MongoDB conectado: ${conn.connection.host}`);
+        await migrateUserRoles();
         return conn;
       })
       .catch((error) => {

@@ -5,10 +5,13 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ProductDetail from './components/ProductDetail';
 import ProductList from './components/ProductList';
+import ProtectedRoute from './components/ProtectedRoute';
+import { ROLES } from './auth/roles';
 import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
 import CreateProductPage from './pages/CreateProductPage';
 import EditProductPage from './pages/EditProductPage';
+import ProfilePage from './pages/ProfilePage';
 import { useProducts } from './hooks/useProducts';
 
 function HomePage({ products, loading, error, onAddToCart }) {
@@ -227,6 +230,14 @@ function App() {
         />
         <Route path="/contacto" element={<ContactPage />} />
         <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/productos/:id"
           element={
             <ProductDetail
@@ -237,15 +248,27 @@ function App() {
         />
         <Route
           path="/admin/crear-producto"
-          element={<CreateProductPage onProductCreated={addProduct} />}
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+              <CreateProductPage onProductCreated={addProduct} />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/admin/editar-producto/:id"
-          element={<EditProductPage onProductUpdated={updateProduct} />}
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+              <EditProductPage onProductUpdated={updateProduct} />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/productos/:id/editar"
-          element={<EditProductPage onProductUpdated={updateProduct} />}
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+              <EditProductPage onProductUpdated={updateProduct} />
+            </ProtectedRoute>
+          }
         />
       </Routes>
       <Footer />

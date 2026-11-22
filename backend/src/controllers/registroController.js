@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from '../models/User.js';
+import { ROLES } from '../constants/roles.js';
 
 const SALT_ROUNDS = 10;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,6 +55,7 @@ export async function registrarUsuario(req, res) {
       nombre: nombre.trim(),
       email: emailNormalizado,
       password: passwordHash,
+      role: ROLES.USER,
     });
 
     return res.status(201).json({
@@ -62,7 +64,7 @@ export async function registrarUsuario(req, res) {
         id: usuario._id,
         nombre: usuario.nombre,
         email: usuario.email,
-        rol: usuario.rol,
+        role: usuario.role,
       },
     });
   } catch (error) {

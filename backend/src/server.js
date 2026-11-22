@@ -7,6 +7,7 @@ import logger from './middlewares/loggerMiddleware.js';
 import productosRoutes from './routes/productosRoutes.js';
 import registroRoutes from './routes/registroRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
+import usuariosRoutes from './routes/usuariosRoutes.js';
 import connectDB from './config/db.js';
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.use(express.static(PUBLIC_DIR));
 app.use('/api/productos', productosRoutes);
 app.use('/registro', registroRoutes);
 app.use('/login', loginRoutes);
+app.use('/api/users', usuariosRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);

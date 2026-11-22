@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { VALID_ROLES, ROLES } from '../constants/roles.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -23,10 +24,10 @@ const userSchema = new mongoose.Schema(
       minlength: [8, 'La contraseña debe tener al menos 8 caracteres'],
       select: false,
     },
-    rol: {
+    role: {
       type: String,
-      enum: ['cliente', 'admin'],
-      default: 'cliente',
+      enum: VALID_ROLES,
+      default: ROLES.USER,
     },
   },
   {

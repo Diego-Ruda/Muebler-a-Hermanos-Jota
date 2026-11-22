@@ -124,6 +124,51 @@ a {
   white-space: nowrap;
 }
 
+.account-link,
+.account-button {
+  white-space: nowrap;
+}
+
+.account-button {
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.auth-error {
+  max-width: 14rem;
+  color: var(--primary-300);
+  font-size: 0.75rem;
+}
+
+.auth-container {
+  max-width: 640px;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+.profile-card p + p {
+  margin-top: 0.75rem;
+}
+
+.access-denied {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--bg-300);
+  border-radius: 6px;
+}
+
+.access-denied h1 {
+  color: var(--primary-300);
+}
+
+.access-denied p {
+  margin: 0.75rem 0 1.5rem;
+}
+
 .menu-toggle {
   display: none;
   border: 0;
@@ -1298,6 +1343,17 @@ button.btn-primary:disabled {
     line-height: 1.25;
     text-align: right;
     white-space: normal;
+  }
+
+  .account-link,
+  .account-button {
+    font-size: 0.6rem;
+    letter-spacing: 0.4px;
+    white-space: normal;
+  }
+
+  .auth-error {
+    display: none;
   }
 
   .btn-carrito {

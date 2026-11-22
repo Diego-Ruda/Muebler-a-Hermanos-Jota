@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import User from '../models/User.js';
+import { VALID_ROLES } from '../constants/roles.js';
 
 function obtenerToken(req) {
   const authorization = req.headers?.authorization;
@@ -64,7 +65,7 @@ export async function autenticarToken(req) {
   }
 
   try {
-    const usuario = await User.findById(payload.id).select('nombre email rol');
+    const usuario = await User.findById(payload.id).select('nombre email role');
 
     if (!usuario) {
       return {
@@ -75,12 +76,21 @@ export async function autenticarToken(req) {
       };
     }
 
+    if (!VALID_ROLES.includes(usuario.role)) {
+      return {
+        error: {
+          status: 401,
+          body: { mensaje: 'Rol de usuario inválido' },
+        },
+      };
+    }
+
     return {
       usuario: {
         id: usuario._id.toString(),
         nombre: usuario.nombre,
         email: usuario.email,
-        rol: usuario.rol,
+        role: usuario.role,
       },
     };
   } catch (error) {

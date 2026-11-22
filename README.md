@@ -138,8 +138,18 @@ Base URL en producción: `https://backend-muebler-a-hermanos-jota.onrender.com/`
 | `POST`   | `/api/productos`     | Crea un producto                         |
 | `PUT`    | `/api/productos/:id` | Actualiza un producto                    |
 | `DELETE` | `/api/productos/:id` | Elimina un producto                      |
+| `GET`    | `/api/users/profile` | Obtiene el perfil autenticado       |
 
 **Modelo `Product`:** `nombre` (requerido), `descripcion`, `precio` (requerido, ≥ 0), `stock` (≥ 0), `imagenUrl`, `medidas`, `detallesFabricacion`, `destacado` (boolean) y `timestamps` (`createdAt` / `updatedAt`).
+
+### Autenticación y roles
+
+- `POST /registro` crea siempre usuarios con el rol `USER`; cualquier `role` enviado en el cuerpo se ignora.
+- `POST /login` devuelve un JWT y el perfil sin contraseña. Envíalo como `Authorization: Bearer <token>` a las rutas protegidas.
+- `GET /api/users/profile` valida el token y devuelve el perfil y el rol vigente en la base de datos.
+- El catálogo (`GET /api/productos` y `GET /api/productos/:id`) es público. Crear, editar y eliminar productos requiere autenticación y rol `ADMIN` (respuesta `401` si falta autenticación y `403` para un usuario sin permisos).
+- Los roles permitidos son `USER` y `ADMIN`. Al conectar el backend se migran los valores heredados (`cliente` → `USER`, `admin` → `ADMIN`) y se eliminan del documento; los roles ausentes o inválidos se normalizan a `USER`.
+- No hay una ruta pública para elevar privilegios. Para habilitar una cuenta administrativa, un operador debe asignar `role: "ADMIN"` directamente en la base de datos, con acceso controlado.
 
 ---
 

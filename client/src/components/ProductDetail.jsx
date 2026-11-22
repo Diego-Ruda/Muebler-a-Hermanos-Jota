@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import FlashMessage from './FlashMessage';
-import { PRODUCTS_API_URL } from '../config/api';
+import { PRODUCTS_API_URL, getAuthHeaders } from '../config/api';
+import { useAuth } from '../auth/AuthContext';
 
 const currencyFormatter = new Intl.NumberFormat('es-AR', {
   style: 'currency',
@@ -10,6 +11,7 @@ const currencyFormatter = new Intl.NumberFormat('es-AR', {
 });
 
 function ProductDetail({ onAddToCart, onProductDeleted }) {
+  const { isAdmin, token } = useAuth();
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -89,6 +91,7 @@ function ProductDetail({ onAddToCart, onProductDeleted }) {
     try {
       const response = await fetch(`${PRODUCTS_API_URL}/${product._id}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(token),
       });
       const data = await response.json().catch(() => null);
 
@@ -206,25 +209,29 @@ function ProductDetail({ onAddToCart, onProductDeleted }) {
             >
               Añadir al carrito
             </button>
-            <Link
-              className="btn-secondary editar-producto"
-              to={`/admin/editar-producto/${product._id}`}
-            >
-              Editar producto
-            </Link>
-            <button
-              className="btn-secondary eliminar-producto"
-              type="button"
-              disabled={isDeleting || isConfirmingDelete}
-              onClick={() => {
-                setDeleteError('');
-                setIsConfirmingDelete(true);
-              }}
-            >
-              Eliminar producto
-            </button>
+            {isAdmin && (
+              <>
+                <Link
+                  className="btn-secondary editar-producto"
+                  to={`/admin/editar-producto/${product._id}`}
+                >
+                  Editar producto
+                </Link>
+                <button
+                  className="btn-secondary eliminar-producto"
+                  type="button"
+                  disabled={isDeleting || isConfirmingDelete}
+                  onClick={() => {
+                    setDeleteError('');
+                    setIsConfirmingDelete(true);
+                  }}
+                >
+                  Eliminar producto
+                </button>
+              </>
+            )}
           </div>
-          {isConfirmingDelete && (
+          {isAdmin && isConfirmingDelete && (
             <div
               className="confirm-delete"
               role="alertdialog"

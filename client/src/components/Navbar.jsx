@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
 
 const logo = '/img/logo.svg';
 
@@ -16,6 +17,7 @@ const adminLink = {
 
 function Navbar({ cartCount = 0, onCartClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { authError, isAdmin, isAuthenticated, isLoading, logout } = useAuth();
 
   return (
     <header className="header">
@@ -56,6 +58,11 @@ function Navbar({ cartCount = 0, onCartClick }) {
           <span />
         </button>
         <div className="header-actions">
+          {authError && (
+            <span className="auth-error" role="alert">
+              {authError}
+            </span>
+          )}
           <button
             className="btn-carrito"
             type="button"
@@ -70,15 +77,38 @@ function Navbar({ cartCount = 0, onCartClick }) {
               {cartCount}
             </span>
           </button>
-          <NavLink
-            to={adminLink.to}
-            className={({ isActive }) =>
-              `nav-link admin-link${isActive ? ' active' : ''}`
-            }
-            onClick={() => setIsMenuOpen(false)}
-          >
-            {adminLink.label}
-          </NavLink>
+          {!isLoading && isAuthenticated && (
+            <>
+              <Link
+                to="/perfil"
+                className="nav-link account-link"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                MI PERFIL
+              </Link>
+              {isAdmin && (
+                <NavLink
+                  to={adminLink.to}
+                  className={({ isActive }) =>
+                    `nav-link admin-link${isActive ? ' active' : ''}`
+                  }
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {adminLink.label}
+                </NavLink>
+              )}
+              <button
+                className="nav-link account-button"
+                type="button"
+                onClick={() => {
+                  logout();
+                  setIsMenuOpen(false);
+                }}
+              >
+                CERRAR SESIÓN
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>

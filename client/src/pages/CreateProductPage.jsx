@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
-import { PRODUCTS_API_URL } from '../config/api';
+import { PRODUCTS_API_URL, getAuthHeaders } from '../config/api';
+import { useAuth } from '../auth/AuthContext';
 
 function CreateProductPage({ onProductCreated }) {
+  const { token } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,7 +17,10 @@ function CreateProductPage({ onProductCreated }) {
     try {
       const response = await fetch(PRODUCTS_API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...getAuthHeaders(token),
+        },
         body: JSON.stringify(product),
       });
       const createdProduct = await response.json();

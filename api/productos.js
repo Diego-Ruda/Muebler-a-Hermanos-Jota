@@ -10,6 +10,8 @@ import {
   eliminarProducto,
 } from '../backend/src/controllers/productosController.js';
 import { autenticarToken } from '../backend/src/middlewares/authMiddleware.js';
+import { authorizeRoles } from '../backend/src/middlewares/roleMiddleware.js';
+import { ROLES } from '../backend/src/constants/roles.js';
 
 dotenv.config({
   path: path.resolve(
@@ -45,6 +47,15 @@ export default async function handler(req, res) {
 
     req.usuario = usuario;
     req.user = usuario;
+
+    let autorizado = false;
+    authorizeRoles(ROLES.ADMIN)(req, res, () => {
+      autorizado = true;
+    });
+
+    if (!autorizado) {
+      return;
+    }
   }
 
   if (method === 'GET') {

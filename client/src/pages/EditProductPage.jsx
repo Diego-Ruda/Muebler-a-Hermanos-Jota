@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
-import { PRODUCTS_API_URL } from '../config/api';
+import { PRODUCTS_API_URL, getAuthHeaders } from '../config/api';
+import { useAuth } from '../auth/AuthContext';
 
 function EditProductPage({ onProductUpdated }) {
+  const { token } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
@@ -72,7 +74,10 @@ function EditProductPage({ onProductUpdated }) {
     try {
       const response = await fetch(`${PRODUCTS_API_URL}/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...getAuthHeaders(token),
+        },
         body: JSON.stringify(updatedProduct),
       });
       const data = await response.json().catch(() => null);

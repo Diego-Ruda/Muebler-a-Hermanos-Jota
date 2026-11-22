@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { ROLES } from './roles';
 import {
@@ -37,6 +37,23 @@ async function readResponse(response, fallbackMessage) {
   return data;
 }
 
+function getSafeUser(user) {
+  if (!user?.id && !user?._id) {
+    throw new Error('El servidor devolvió una respuesta de sesión inválida.');
+  }
+
+  if (!Object.values(ROLES).includes(user.role)) {
+    throw new Error('El servidor devolvió una respuesta de sesión inválida.');
+  }
+
+  return {
+    id: user.id ?? user._id,
+    nombre: user.nombre,
+    email: user.email,
+    role: user.role,
+  };
+}
+
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() =>
     window.localStorage.getItem(AUTH_TOKEN_KEY)
@@ -54,6 +71,7 @@ export function AuthProvider({ children }) {
 
     if (!storedToken) {
       setUser(null);
+      window.localStorage.removeItem(AUTH_USER_KEY);
       setIsLoading(false);
       return undefined;
     }
@@ -70,14 +88,7 @@ export function AuthProvider({ children }) {
           response,
           'No se pudo validar la sesión.'
         );
-        const authenticatedUser = data.usuario;
-
-        if (
-          !authenticatedUser?.id ||
-          !Object.values(ROLES).includes(authenticatedUser.role)
-        ) {
-          throw new Error('El servidor devolvió un perfil inválido.');
-        }
+        const authenticatedUser = getSafeUser(data.usuario);
 
         if (!controller.signal.aborted) {
           setUser(authenticatedUser);
@@ -94,11 +105,13 @@ export function AuthProvider({ children }) {
 
         if (error.status === 401) {
           window.localStorage.removeItem(AUTH_TOKEN_KEY);
+          window.localStorage.removeItem(AUTH_USER_KEY);
           setToken(null);
+        } else {
+          window.localStorage.removeItem(AUTH_USER_KEY);
         }
 
         setUser(null);
-        window.localStorage.removeItem(AUTH_USER_KEY);
 
         if (error instanceof TypeError) {
           setAuthError('No pudimos validar tu sesión con el servidor.');
@@ -121,32 +134,37 @@ export function AuthProvider({ children }) {
     return () => controller.abort();
   }, []);
 
-  async function login(credentials) {
-    const response = await fetch(LOGIN_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials),
-    });
-    const data = await readResponse(response, 'No se pudo iniciar sesión.');
+  const login = useCallback(async (authData) => {
+    let data = authData;
 
-    if (
-      !data.token ||
-      !data.usuario?.id ||
-      !Object.values(ROLES).includes(data.usuario.role)
-    ) {
+    if (!authData?.token) {
+      const response = await fetch(LOGIN_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(authData),
+      });
+      data = await readResponse(response, 'No se pudo iniciar sesión.');
+    }
+
+    if (typeof data?.token !== 'string' || !data.token) {
       throw new Error('El servidor devolvió una respuesta de sesión inválida.');
     }
 
+    const authenticatedUser = getSafeUser(data.user ?? data.usuario);
     window.localStorage.setItem(AUTH_TOKEN_KEY, data.token);
-    window.localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.usuario));
+    window.localStorage.setItem(
+      AUTH_USER_KEY,
+      JSON.stringify(authenticatedUser)
+    );
     setToken(data.token);
-    setUser(data.usuario);
+    setUser(authenticatedUser);
     setAuthError('');
+    setIsLoading(false);
 
-    return data.usuario;
-  }
+    return authenticatedUser;
+  }, []);
 
-  async function register(userData) {
+  const register = useCallback(async (userData) => {
     const response = await fetch(REGISTER_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -154,16 +172,16 @@ export function AuthProvider({ children }) {
     });
 
     return readResponse(response, 'No se pudo completar el registro.');
-  }
+  }, []);
 
-  function logout() {
+  const logout = useCallback(() => {
     window.localStorage.removeItem(AUTH_TOKEN_KEY);
     window.localStorage.removeItem(AUTH_USER_KEY);
     setToken(null);
     setUser(null);
     setAuthError('');
     setIsLoading(false);
-  }
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -172,14 +190,14 @@ export function AuthProvider({ children }) {
       role: isLoading ? null : (user?.role ?? null),
       isLoading,
       authError,
-      isAuthenticated: !isLoading && Boolean(user),
+      isAuthenticated: !isLoading && Boolean(token && user),
       isAdmin: !isLoading && user?.role === ROLES.ADMIN,
       isUser: !isLoading && user?.role === ROLES.USER,
       login,
       register,
       logout,
     }),
-    [authError, isLoading, token, user]
+    [authError, isLoading, login, logout, register, token, user]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -152,6 +152,21 @@ a {
   margin-top: 0.75rem;
 }
 
+.auth-alternate {
+  margin-top: 1.25rem;
+}
+
+.auth-alternate a,
+.form-success a {
+  color: var(--primary-300);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.form-alert {
+  margin-bottom: 1rem;
+}
+
 .access-denied {
   margin-top: 3rem;
   margin-bottom: 3rem;

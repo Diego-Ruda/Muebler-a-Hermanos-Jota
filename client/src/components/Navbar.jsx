@@ -77,6 +77,24 @@ function Navbar({ cartCount = 0, onCartClick }) {
               {cartCount}
             </span>
           </button>
+          {!isLoading && !isAuthenticated && (
+            <>
+              <Link
+                to="/registro"
+                className="nav-link account-link"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                REGISTRARME
+              </Link>
+              <Link
+                to="/login"
+                className="nav-link account-link"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                INICIAR SESIÓN
+              </Link>
+            </>
+          )}
           {!isLoading && isAuthenticated && (
             <>
               <Link

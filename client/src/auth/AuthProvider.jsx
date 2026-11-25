@@ -29,7 +29,11 @@ async function readResponse(response, fallbackMessage) {
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    const error = new Error(data.mensaje || fallbackMessage);
+    const details = Array.isArray(data?.errores) ? data.errores.join('. ') : '';
+    const message = details
+      ? `${data?.mensaje || fallbackMessage}: ${details}`
+      : data?.mensaje || fallbackMessage;
+    const error = new Error(message);
     error.status = response.status;
     throw error;
   }

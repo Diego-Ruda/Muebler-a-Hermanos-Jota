@@ -11,7 +11,9 @@ import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
 import CreateProductPage from './pages/CreateProductPage';
 import EditProductPage from './pages/EditProductPage';
+import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
+import RegisterPage from './pages/RegisterPage';
 import { useProducts } from './hooks/useProducts';
 
 function HomePage({ products, loading, error, onAddToCart }) {
@@ -229,6 +231,8 @@ function App() {
           }
         />
         <Route path="/contacto" element={<ContactPage />} />
+        <Route path="/registro" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/perfil"
           element={

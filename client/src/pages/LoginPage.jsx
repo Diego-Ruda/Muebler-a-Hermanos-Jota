@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LoginPage() {
   const { login } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
@@ -23,6 +26,8 @@ function LoginPage() {
 
     if (!formData.email.trim()) {
       validationErrors.email = 'Ingresá tu correo electrónico.';
+    } else if (!EMAIL_REGEX.test(formData.email.trim())) {
+      validationErrors.email = 'Ingresá un correo electrónico válido.';
     }
 
     if (!formData.password) {
@@ -43,7 +48,7 @@ function LoginPage() {
         email: formData.email.trim(),
         password: formData.password,
       });
-      navigate('/');
+      navigate(location.state?.from ?? '/', { replace: true });
     } catch (error) {
       setServerError(
         error instanceof TypeError

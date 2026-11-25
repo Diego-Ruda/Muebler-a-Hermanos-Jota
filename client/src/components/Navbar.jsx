@@ -19,6 +19,23 @@ function Navbar({ cartCount = 0, onCartClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { authError, isAdmin, isAuthenticated, isLoading, logout } = useAuth();
 
+  const cartButton = (extraClass = '') => (
+    <button
+      className={`btn-carrito${extraClass ? ` ${extraClass}` : ''}`}
+      type="button"
+      aria-label={`Carrito, ${cartCount} productos`}
+      onClick={onCartClick}
+    >
+      <span className="cart-icon" aria-hidden="true">
+        &#128722;
+      </span>
+      <span className="cart-label">Carrito</span>
+      <span className="cart-count" hidden={cartCount === 0}>
+        {cartCount}
+      </span>
+    </button>
+  );
+
   return (
     <header className="header">
       <div className="container header-content">
@@ -31,7 +48,16 @@ function Navbar({ cartCount = 0, onCartClick }) {
           id="site-nav"
           aria-label="Navegación principal"
         >
-          {navLinks.map(({ to, label, end }) => (
+          {navLinks.flatMap(({ to, label, end }, index) => [
+            index > 0 && (
+              <span
+                key={`nav-separator-${to}`}
+                className="nav-separator"
+                aria-hidden="true"
+              >
+                |
+              </span>
+            ),
             <NavLink
               key={to}
               to={to}
@@ -42,8 +68,8 @@ function Navbar({ cartCount = 0, onCartClick }) {
               onClick={() => setIsMenuOpen(false)}
             >
               {label}
-            </NavLink>
-          ))}
+            </NavLink>,
+          ])}
         </nav>
         <button
           className="menu-toggle"
@@ -63,20 +89,7 @@ function Navbar({ cartCount = 0, onCartClick }) {
               {authError}
             </span>
           )}
-          <button
-            className="btn-carrito"
-            type="button"
-            aria-label={`Carrito, ${cartCount} productos`}
-            onClick={onCartClick}
-          >
-            <span className="cart-icon" aria-hidden="true">
-              &#128722;
-            </span>
-            <span className="cart-label">Carrito</span>
-            <span className="cart-count" hidden={cartCount === 0}>
-              {cartCount}
-            </span>
-          </button>
+          {isLoading && cartButton()}
           {!isLoading && !isAuthenticated && (
             <>
               <Link
@@ -86,6 +99,9 @@ function Navbar({ cartCount = 0, onCartClick }) {
               >
                 REGISTRARME
               </Link>
+              <span className="auth-separator" aria-hidden="true">
+                | o |
+              </span>
               <Link
                 to="/login"
                 className="nav-link account-link"
@@ -93,10 +109,12 @@ function Navbar({ cartCount = 0, onCartClick }) {
               >
                 INICIAR SESIÓN
               </Link>
+              {cartButton('cart-button-header')}
             </>
           )}
           {!isLoading && isAuthenticated && (
             <>
+              {cartButton()}
               <Link
                 to="/perfil"
                 className="nav-link account-link"

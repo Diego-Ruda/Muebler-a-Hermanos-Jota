@@ -95,7 +95,12 @@ a {
 
 .nav {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
+}
+
+.nav-separator {
+  color: var(--bg-300);
+  font-size: 0.8rem;
 }
 
 .nav-link {
@@ -129,6 +134,16 @@ a {
   white-space: nowrap;
 }
 
+.auth-separator {
+  color: var(--bg-300);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.cart-button-header {
+  margin-left: auto;
+}
+
 .account-button {
   border: 0;
   background: transparent;
@@ -146,6 +161,15 @@ a {
   max-width: 640px;
   margin-top: 2rem;
   margin-bottom: 4rem;
+}
+
+.auth-hero {
+  max-width: 640px;
+  text-align: center;
+}
+
+.auth-container .form-card h2 {
+  text-align: center;
 }
 
 .profile-card p + p {
@@ -1338,6 +1362,10 @@ button.btn-primary:disabled {
 
   .nav.is-open {
     display: flex;
+  }
+
+  .nav-separator {
+    display: none;
   }
 
   .nav-link {

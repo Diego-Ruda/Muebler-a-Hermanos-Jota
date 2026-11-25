@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAlerts } from '../components/AlertsProvider';
 import { useAuth } from '../auth/AuthContext';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +35,7 @@ function validateRegistration({ nombre, email, password, confirmPassword }) {
 
 function RegisterPage() {
   const { register } = useAuth();
+  const { showAlert } = useAlerts();
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -41,8 +43,6 @@ function RegisterPage() {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
-  const [serverError, setServerError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleChange(event) {
@@ -53,18 +53,19 @@ function RegisterPage() {
       [name]: '',
       ...(name === 'password' ? { confirmPassword: '' } : {}),
     }));
-    setServerError('');
-    setSuccessMessage('');
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     const validationErrors = validateRegistration(formData);
     setErrors(validationErrors);
-    setServerError('');
-    setSuccessMessage('');
 
     if (Object.keys(validationErrors).length > 0) {
+      showAlert({
+        severity: 'warning',
+        title: 'Revisá los datos',
+        message: 'Hay campos incompletos o incorrectos en el formulario.',
+      });
       return;
     }
 
@@ -76,10 +77,16 @@ function RegisterPage() {
         email: formData.email.trim(),
         password: formData.password,
       });
-      setSuccessMessage(
-        response.mensaje ||
-          'Tu cuenta se creó correctamente. Ya podés iniciar sesión.'
-      );
+      showAlert({
+        severity: 'success',
+        title: '¡Cuenta creada!',
+        message: (
+          <>
+            {response.mensaje || 'Tu cuenta se creó correctamente.'} Ya podés{' '}
+            <Link to="/login">iniciar sesión</Link>.
+          </>
+        ),
+      });
       setFormData({
         nombre: '',
         email: '',
@@ -87,11 +94,14 @@ function RegisterPage() {
         confirmPassword: '',
       });
     } catch (error) {
-      setServerError(
-        error instanceof TypeError
-          ? 'No pudimos conectarnos con el servidor. Intentá nuevamente.'
-          : error.message || 'No se pudo completar el registro.'
-      );
+      showAlert({
+        severity: 'error',
+        title: 'No se pudo completar el registro',
+        message:
+          error instanceof TypeError
+            ? 'No pudimos conectarnos con el servidor. Intentá nuevamente.'
+            : error.message || 'Intentá nuevamente en unos minutos.',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -99,23 +109,13 @@ function RegisterPage() {
 
   return (
     <main>
-      <section className="page-hero container">
+      <section className="page-hero auth-hero container">
         <span className="section-tag">MI CUENTA</span>
         <h1>CREAR CUENTA</h1>
       </section>
       <section className="container auth-container">
         <div className="form-card">
           <h2>Registrate</h2>
-          {serverError && (
-            <p className="error form-alert" role="alert">
-              {serverError}
-            </p>
-          )}
-          {successMessage && (
-            <p className="form-success" role="status">
-              {successMessage} <Link to="/login">Iniciar sesión</Link>
-            </p>
-          )}
           <form onSubmit={handleSubmit} noValidate>
             <div className="form-field">
               <label htmlFor="register-name">Nombre</label>

@@ -1,23 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAlerts } from '../components/AlertsProvider';
 import { useAuth } from '../auth/AuthContext';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LoginPage() {
   const { login } = useAuth();
+  const { showAlert } = useAlerts();
   const location = useLocation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
-  const [serverError, setServerError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.from) {
+      showAlert({
+        severity: 'info',
+        title: 'Iniciá sesión para continuar',
+        message: 'Necesitás una cuenta para acceder a esa sección.',
+      });
+    }
+  }, [location.state, showAlert]);
 
   function handleChange(event) {
     const { name, value } = event.target;
     setFormData((currentData) => ({ ...currentData, [name]: value }));
     setErrors((currentErrors) => ({ ...currentErrors, [name]: '' }));
-    setServerError('');
   }
 
   async function handleSubmit(event) {
@@ -35,26 +45,38 @@ function LoginPage() {
     }
 
     setErrors(validationErrors);
-    setServerError('');
 
     if (Object.keys(validationErrors).length > 0) {
+      showAlert({
+        severity: 'warning',
+        title: 'Revisá los datos',
+        message: 'Hay campos incompletos o incorrectos en el formulario.',
+      });
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      await login({
+      const authenticatedUser = await login({
         email: formData.email.trim(),
         password: formData.password,
       });
+      showAlert({
+        severity: 'success',
+        title: '¡Sesión iniciada!',
+        message: `Bienvenido/a, ${authenticatedUser?.nombre ?? 'usuario'}.`,
+      });
       navigate(location.state?.from ?? '/', { replace: true });
     } catch (error) {
-      setServerError(
-        error instanceof TypeError
-          ? 'No pudimos conectarnos con el servidor. Intentá nuevamente.'
-          : error.message || 'No se pudo iniciar sesión.'
-      );
+      showAlert({
+        severity: 'error',
+        title: 'No se pudo iniciar sesión',
+        message:
+          error instanceof TypeError
+            ? 'No pudimos conectarnos con el servidor. Intentá nuevamente.'
+            : error.message || 'Revisá tus credenciales e intentá de nuevo.',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -62,18 +84,13 @@ function LoginPage() {
 
   return (
     <main>
-      <section className="page-hero container">
+      <section className="page-hero auth-hero container">
         <span className="section-tag">MI CUENTA</span>
         <h1>INICIAR SESIÓN</h1>
       </section>
       <section className="container auth-container">
         <div className="form-card">
           <h2>Bienvenido/a</h2>
-          {serverError && (
-            <p className="error form-alert" role="alert">
-              {serverError}
-            </p>
-          )}
           <form onSubmit={handleSubmit} noValidate>
             <div className="form-field">
               <label htmlFor="login-email">Correo electrónico</label>

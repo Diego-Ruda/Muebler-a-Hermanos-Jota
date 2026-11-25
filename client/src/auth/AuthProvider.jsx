@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { ROLES } from './roles';
 import {
@@ -42,12 +42,12 @@ async function readResponse(response, fallbackMessage) {
 }
 
 function getSafeUser(user) {
-  if (!user?.id && !user?._id) {
-    throw new Error('El servidor devolvió una respuesta de sesión inválida.');
-  }
-
-  if (!Object.values(ROLES).includes(user.role)) {
-    throw new Error('El servidor devolvió una respuesta de sesión inválida.');
+  if ((!user?.id && !user?._id) || !Object.values(ROLES).includes(user.role)) {
+    const error = new Error(
+      'El servidor devolvió una respuesta de sesión inválida.'
+    );
+    error.name = 'InvalidSessionError';
+    throw error;
   }
 
   return {
@@ -69,6 +69,7 @@ export function AuthProvider({ children }) {
     Boolean(window.localStorage.getItem(AUTH_TOKEN_KEY))
   );
   const [authError, setAuthError] = useState('');
+  const validationIdRef = useRef(0);
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem(AUTH_TOKEN_KEY);
@@ -81,6 +82,7 @@ export function AuthProvider({ children }) {
     }
 
     const controller = new AbortController();
+    const validationId = ++validationIdRef.current;
 
     async function validateSession() {
       try {
@@ -94,7 +96,10 @@ export function AuthProvider({ children }) {
         );
         const authenticatedUser = getSafeUser(data.usuario);
 
-        if (!controller.signal.aborted) {
+        if (
+          !controller.signal.aborted &&
+          validationIdRef.current === validationId
+        ) {
           setUser(authenticatedUser);
           window.localStorage.setItem(
             AUTH_USER_KEY,
@@ -103,11 +108,14 @@ export function AuthProvider({ children }) {
           setAuthError('');
         }
       } catch (error) {
-        if (controller.signal.aborted) {
+        if (
+          controller.signal.aborted ||
+          validationIdRef.current !== validationId
+        ) {
           return;
         }
 
-        if (error.status === 401) {
+        if (error.status === 401 || error.name === 'InvalidSessionError') {
           window.localStorage.removeItem(AUTH_TOKEN_KEY);
           window.localStorage.removeItem(AUTH_USER_KEY);
           setToken(null);
@@ -127,7 +135,10 @@ export function AuthProvider({ children }) {
           );
         }
       } finally {
-        if (!controller.signal.aborted) {
+        if (
+          !controller.signal.aborted &&
+          validationIdRef.current === validationId
+        ) {
           setIsLoading(false);
         }
       }
@@ -155,6 +166,7 @@ export function AuthProvider({ children }) {
     }
 
     const authenticatedUser = getSafeUser(data.user ?? data.usuario);
+    validationIdRef.current += 1;
     window.localStorage.setItem(AUTH_TOKEN_KEY, data.token);
     window.localStorage.setItem(
       AUTH_USER_KEY,
@@ -179,6 +191,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const logout = useCallback(() => {
+    validationIdRef.current += 1;
     window.localStorage.removeItem(AUTH_TOKEN_KEY);
     window.localStorage.removeItem(AUTH_USER_KEY);
     setToken(null);

@@ -1,3 +1,6 @@
+@import 'tailwindcss';
+@import '@heroui/styles';
+
 /* variables */
 :root {
   /* Paleta de colores */

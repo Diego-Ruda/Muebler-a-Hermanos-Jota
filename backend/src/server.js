@@ -8,6 +8,7 @@ import productosRoutes from './routes/productosRoutes.js';
 import registroRoutes from './routes/registroRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
 import usuariosRoutes from './routes/usuariosRoutes.js';
+import contactoRoutes from './routes/contactoRoutes.js';
 import connectDB from './config/db.js';
 
 dotenv.config();
@@ -35,6 +36,7 @@ app.use('/api/productos', productosRoutes);
 app.use('/registro', registroRoutes);
 app.use('/login', loginRoutes);
 app.use('/api/users', usuariosRoutes);
+app.use('/api/contacto', contactoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);

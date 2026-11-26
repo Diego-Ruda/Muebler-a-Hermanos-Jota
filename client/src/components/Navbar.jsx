@@ -11,6 +11,7 @@ import {
 } from '@gravity-ui/icons';
 import { Button } from '@heroui/react';
 import { useAuth } from '../auth/AuthContext';
+import { useAlerts } from './AlertsProvider';
 
 const logo = '/img/logo.svg';
 
@@ -28,6 +29,7 @@ const adminLink = {
 function Navbar({ cartCount = 0, onCartClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { authError, isAdmin, isAuthenticated, isLoading, logout } = useAuth();
+  const { showAlert } = useAlerts();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -164,6 +166,11 @@ function Navbar({ cartCount = 0, onCartClick }) {
                 variant="ghost"
                 onPress={() => {
                   logout();
+                  showAlert({
+                    severity: 'success',
+                    title: 'Sesión cerrada',
+                    message: 'Cerraste sesión correctamente.',
+                  });
                   setIsMenuOpen(false);
                 }}
               >

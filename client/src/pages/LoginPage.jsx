@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAlerts } from '../components/AlertsProvider';
 import { useAuth } from '../auth/AuthContext';
@@ -6,15 +6,26 @@ import { useAuth } from '../auth/AuthContext';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LoginPage() {
-  const { login } = useAuth();
+  const { clearJustLoggedOut, justLoggedOut, login } = useAuth();
   const { showAlert } = useAlerts();
   const location = useLocation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const logoutAlertHandledRef = useRef(false);
 
   useEffect(() => {
+    if (logoutAlertHandledRef.current) {
+      return;
+    }
+
+    if (justLoggedOut) {
+      logoutAlertHandledRef.current = true;
+      clearJustLoggedOut();
+      return;
+    }
+
     if (location.state?.from) {
       showAlert({
         severity: 'info',
@@ -22,7 +33,7 @@ function LoginPage() {
         message: 'Necesitás una cuenta para acceder a esa sección.',
       });
     }
-  }, [location.state, showAlert]);
+  }, [clearJustLoggedOut, justLoggedOut, location.state, showAlert]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -64,8 +75,8 @@ function LoginPage() {
       });
       showAlert({
         severity: 'success',
-        title: '¡Sesión iniciada!',
-        message: `Bienvenido/a, ${authenticatedUser?.nombre ?? 'usuario'}.`,
+        title: 'Sesión iniciada correctamente.',
+        message: `Bienvenido/a, ${authenticatedUser?.nombre ?? 'usuario.'}.`,
       });
       navigate(location.state?.from ?? '/', { replace: true });
     } catch (error) {

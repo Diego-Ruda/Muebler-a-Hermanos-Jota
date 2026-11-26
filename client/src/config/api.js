@@ -4,6 +4,7 @@ export const PRODUCTS_API_URL = `${API_BASE_URL}/api/productos`;
 export const LOGIN_API_URL = `${API_BASE_URL}/login`;
 export const REGISTER_API_URL = `${API_BASE_URL}/registro`;
 export const PROFILE_API_URL = `${API_BASE_URL}/api/users/profile`;
+export const CONTACT_API_URL = `${API_BASE_URL}/api/contacto`;
 export const AUTH_TOKEN_KEY = 'hj_access_token';
 export const AUTH_USER_KEY = 'hj_user';
 

@@ -817,6 +817,10 @@ a {
     box-shadow 0.2s ease;
 }
 
+.form-field textarea {
+  resize: none;
+}
+
 .form-field input:focus,
 .form-field textarea:focus {
   outline: none;

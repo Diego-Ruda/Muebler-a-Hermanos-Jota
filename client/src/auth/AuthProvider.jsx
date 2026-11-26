@@ -69,6 +69,7 @@ export function AuthProvider({ children }) {
     Boolean(window.localStorage.getItem(AUTH_TOKEN_KEY))
   );
   const [authError, setAuthError] = useState('');
+  const [justLoggedOut, setJustLoggedOut] = useState(false);
   const validationIdRef = useRef(0);
 
   useEffect(() => {
@@ -175,6 +176,7 @@ export function AuthProvider({ children }) {
     setToken(data.token);
     setUser(authenticatedUser);
     setAuthError('');
+    setJustLoggedOut(false);
     setIsLoading(false);
 
     return authenticatedUser;
@@ -197,8 +199,11 @@ export function AuthProvider({ children }) {
     setToken(null);
     setUser(null);
     setAuthError('');
+    setJustLoggedOut(true);
     setIsLoading(false);
   }, []);
+
+  const clearJustLoggedOut = useCallback(() => setJustLoggedOut(false), []);
 
   const value = useMemo(
     () => ({
@@ -210,11 +215,23 @@ export function AuthProvider({ children }) {
       isAuthenticated: !isLoading && Boolean(token && user),
       isAdmin: !isLoading && user?.role === ROLES.ADMIN,
       isUser: !isLoading && user?.role === ROLES.USER,
+      justLoggedOut,
+      clearJustLoggedOut,
       login,
       register,
       logout,
     }),
-    [authError, isLoading, login, logout, register, token, user]
+    [
+      authError,
+      clearJustLoggedOut,
+      isLoading,
+      justLoggedOut,
+      login,
+      logout,
+      register,
+      token,
+      user,
+    ]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

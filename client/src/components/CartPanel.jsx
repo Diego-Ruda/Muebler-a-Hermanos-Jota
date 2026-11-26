@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCart } from '../cart/CartContext';
 
 const currencyFormatter = new Intl.NumberFormat('es-AR', {
   style: 'currency',
@@ -68,19 +69,16 @@ function buildInvoiceHtml(invoice) {
 </html>`;
 }
 
-function CartPanel({
-  isOpen,
-  items,
-  onClose,
-  onChangeQuantity,
-  onRemove,
-  onCheckout,
-}) {
+function CartPanel({ isOpen, onClose }) {
+  const {
+    cart: items,
+    cartTotal,
+    getItemSubtotal,
+    changeQuantity: onChangeQuantity,
+    removeFromCart: onRemove,
+    clearCart: onCheckout,
+  } = useCart();
   const [invoice, setInvoice] = useState(null);
-  const cartTotal = items.reduce(
-    (total, item) => total + item.producto.precio * item.cantidad,
-    0
-  );
 
   function closePanel() {
     setInvoice(null);
@@ -209,7 +207,7 @@ function CartPanel({
                 <ul className="cart-list">
                   {items.map((item) => {
                     const { producto, cantidad } = item;
-                    const subtotal = producto.precio * cantidad;
+                    const subtotal = getItemSubtotal(item);
 
                     return (
                       <li key={producto._id} className="cart-item">

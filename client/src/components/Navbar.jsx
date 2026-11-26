@@ -1,13 +1,23 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {
+  ArrowRightFromSquare,
+  ArrowRightToSquare,
+  Envelope,
+  House,
+  LayoutList,
+  Person,
+  ShoppingCart,
+} from '@gravity-ui/icons';
+import { Button } from '@heroui/react';
 import { useAuth } from '../auth/AuthContext';
 
 const logo = '/img/logo.svg';
 
 const navLinks = [
-  { to: '/', label: 'INICIO', end: true },
-  { to: '/productos', label: 'CATÁLOGO' },
-  { to: '/contacto', label: 'CONTACTO' },
+  { to: '/', label: 'INICIO', end: true, Icon: House },
+  { to: '/productos', label: 'CATÁLOGO', Icon: LayoutList },
+  { to: '/contacto', label: 'CONTACTO', Icon: Envelope },
 ];
 
 const adminLink = {
@@ -18,27 +28,28 @@ const adminLink = {
 function Navbar({ cartCount = 0, onCartClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { authError, isAdmin, isAuthenticated, isLoading, logout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isNavActive = ({ to, end }) =>
+    end ? location.pathname === to : location.pathname.startsWith(to);
 
   const cartButton = (extraClass = '') => (
-    <button
-      className={`btn-carrito${extraClass ? ` ${extraClass}` : ''}`}
-      type="button"
+    <Button
+      className={`nav-button cart-nav-button${extraClass ? ` ${extraClass}` : ''}`}
+      variant="ghost"
       aria-label={`Carrito, ${cartCount} productos`}
-      onClick={onCartClick}
+      onPress={onCartClick}
     >
-      <span className="cart-icon" aria-hidden="true">
-        &#128722;
-      </span>
-      <span className="cart-label">Carrito</span>
-      <span className="cart-count" hidden={cartCount === 0}>
-        {cartCount}
-      </span>
-    </button>
+      <ShoppingCart aria-hidden="true" />
+      <span className="cart-label">CARRITO</span>
+      {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+    </Button>
   );
 
   return (
     <header className="header">
-      <div className="container header-content">
+      <div className="header-content">
         <NavLink to="/" className="logo" aria-label="Hermanos Jota, inicio">
           <img src={logo} alt="" className="logo-img" />
           <span className="logo-text">HERMANOS JOTA</span>
@@ -48,28 +59,39 @@ function Navbar({ cartCount = 0, onCartClick }) {
           id="site-nav"
           aria-label="Navegación principal"
         >
-          {navLinks.flatMap(({ to, label, end }, index) => [
-            index > 0 && (
-              <span
-                key={`nav-separator-${to}`}
-                className="nav-separator"
-                aria-hidden="true"
+          {navLinks.flatMap(({ to, label, end, Icon }, index) => {
+            const active = isNavActive({ to, end });
+            const items = [];
+
+            if (index > 0) {
+              items.push(
+                <span
+                  key={`nav-separator-${to}`}
+                  className="nav-separator"
+                  aria-hidden="true"
+                >
+                  |
+                </span>
+              );
+            }
+
+            items.push(
+              <Button
+                key={to}
+                className={`nav-button${active ? ' nav-button--active' : ''}`}
+                variant={active ? 'primary' : 'ghost'}
+                onPress={() => {
+                  navigate(to);
+                  setIsMenuOpen(false);
+                }}
               >
-                |
-              </span>
-            ),
-            <NavLink
-              key={to}
-              to={to}
-              end={end}
-              className={({ isActive }) =>
-                `nav-link${isActive ? ' active' : ''}`
-              }
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {label}
-            </NavLink>,
-          ])}
+                <Icon aria-hidden="true" />
+                {label}
+              </Button>
+            );
+
+            return items;
+          })}
         </nav>
         <button
           className="menu-toggle"
@@ -92,36 +114,27 @@ function Navbar({ cartCount = 0, onCartClick }) {
           {isLoading && cartButton()}
           {!isLoading && !isAuthenticated && (
             <>
-              <Link
-                to="/registro"
-                className="nav-link account-link"
-                onClick={() => setIsMenuOpen(false)}
+              <Button
+                className={`nav-button account-nav-button${
+                  location.pathname === '/login' ? ' nav-button--active' : ''
+                }`}
+                variant={location.pathname === '/login' ? 'primary' : 'ghost'}
+                onPress={() => {
+                  navigate('/login');
+                  setIsMenuOpen(false);
+                }}
               >
-                REGISTRARME
-              </Link>
-              <span className="auth-separator" aria-hidden="true">
-                | o |
-              </span>
-              <Link
-                to="/login"
-                className="nav-link account-link"
-                onClick={() => setIsMenuOpen(false)}
-              >
+                <ArrowRightToSquare aria-hidden="true" />
                 INICIAR SESIÓN
-              </Link>
+              </Button>
+              <span className="auth-separator" aria-hidden="true">
+                |
+              </span>
               {cartButton('cart-button-header')}
             </>
           )}
           {!isLoading && isAuthenticated && (
             <>
-              {cartButton()}
-              <Link
-                to="/perfil"
-                className="nav-link account-link"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                MI PERFIL
-              </Link>
               {isAdmin && (
                 <NavLink
                   to={adminLink.to}
@@ -133,16 +146,34 @@ function Navbar({ cartCount = 0, onCartClick }) {
                   {adminLink.label}
                 </NavLink>
               )}
-              <button
-                className="nav-link account-button"
-                type="button"
-                onClick={() => {
+              <Button
+                className={`nav-button account-nav-button profile-nav-button${
+                  location.pathname === '/perfil' ? ' nav-button--active' : ''
+                }`}
+                variant={location.pathname === '/perfil' ? 'primary' : 'ghost'}
+                onPress={() => {
+                  navigate('/perfil');
+                  setIsMenuOpen(false);
+                }}
+              >
+                <Person aria-hidden="true" />
+                MI PERFIL
+              </Button>
+              <Button
+                className="nav-button account-nav-button logout-nav-button"
+                variant="ghost"
+                onPress={() => {
                   logout();
                   setIsMenuOpen(false);
                 }}
               >
+                <ArrowRightFromSquare aria-hidden="true" />
                 CERRAR SESIÓN
-              </button>
+              </Button>
+              <span className="auth-separator" aria-hidden="true">
+                |
+              </span>
+              {cartButton('cart-button-header')}
             </>
           )}
         </div>

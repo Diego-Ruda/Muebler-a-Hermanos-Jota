@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { LayoutList } from '@gravity-ui/icons';
+import { Button } from '@heroui/react';
 import CartPanel from './components/CartPanel';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
@@ -17,6 +19,7 @@ import RegisterPage from './pages/RegisterPage';
 import { useProducts } from './hooks/useProducts';
 
 function HomePage({ products, loading, error, onAddToCart }) {
+  const navigate = useNavigate();
   const featuredCarouselRef = useRef(null);
   const featuredProducts = products.filter((product) => product.destacado);
 
@@ -42,26 +45,35 @@ function HomePage({ products, loading, error, onAddToCart }) {
 
   return (
     <main>
-      <section
-        className="hero"
-        id="inicio"
-        style={{ backgroundImage: 'url(/img/fondo.jfif)' }}
-      >
+      <section className="hero" id="inicio">
+        <div
+          className="hero-bg"
+          style={{ backgroundImage: 'url(/img/fondo.jfif)' }}
+          aria-hidden="true"
+        />
         <div className="hero-overlay">
           <div className="container hero-content">
-            <span className="hero-subtitle">BUENOS AIRES DESDE 1982</span>
+            <span className="hero-subtitle">BUENOS AIRES, DESDE 1982.</span>
             <h1 className="hero-title">
               MUEBLES QUE
               <br />
               SE QUEDAN
+              <br />
+              PARA SIEMPRE.
             </h1>
             <p className="hero-description">
-              Diseño atemporal y madera de origen responsable. Piezas para
-              habitar tranquilo, hechas en el taller de Hermanos Jota.
+              Creamos muebles atemporales con maderas nobles y origen
+              responsable. Cada pieza, hecha a mano en nuestro taller, combina
+              diseño, calidez y durabilidad para acompañarte por generaciones.
             </p>
-            <Link to="/productos" className="btn-primary">
+            <Button
+              className="hero-cta-button"
+              size="lg"
+              onPress={() => navigate('/productos')}
+            >
+              <LayoutList aria-hidden="true" />
               VER CATÁLOGO
-            </Link>
+            </Button>
           </div>
         </div>
       </section>

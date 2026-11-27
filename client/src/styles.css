@@ -699,14 +699,11 @@ a {
 }
 
 .catalog-hero {
-  align-items: center;
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 1fr);
+  display: block;
 }
 
 .catalog-hero-copy .section-description {
-  margin-bottom: 0;
+  margin-bottom: 1.5rem;
 }
 
 .page-hero .catalog-hero-title {
@@ -738,9 +735,9 @@ a {
   border: 1px solid var(--bg-300);
   border-radius: 6px;
   display: grid;
-  gap: 0.75rem;
-  grid-template-columns: 1fr;
-  margin-top: 2rem;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  margin-top: 3rem;
   padding: 0.75rem;
 }
 
@@ -973,7 +970,7 @@ a {
 }
 
 @media (max-width: 900px) {
-  .catalog-hero {
+  .catalog-visit-card {
     grid-template-columns: 1fr;
   }
 
@@ -1596,6 +1593,32 @@ button.btn-primary:disabled {
 
   .catalog-visit-map {
     min-height: 180px;
+  }
+
+  .catalog-controls {
+    flex-wrap: wrap;
+  }
+
+  .catalog-sort,
+  .catalog-price-filter {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .catalog-search-label {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  .catalog-price-filter .catalog-search-label {
+    white-space: normal;
+  }
+
+  .catalog-search-input,
+  .catalog-price-input,
+  .catalog-sort-trigger {
+    font-size: 1rem;
+    min-height: 3.25rem;
   }
 
   .producto-detalle-grid,

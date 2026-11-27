@@ -69,42 +69,6 @@ function CatalogPage({ products = [], loading, error, onAddToCart }) {
             ?
           </p>
         </div>
-        <div className="catalog-visit-card">
-          <div className="catalog-visit-map">
-            <iframe
-              title="Mapa de nuestro local"
-              src={MAP_EMBED_URL}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-          <div className="catalog-visit-info">
-            <span className="section-tag">
-              ¡VISITANOS TAMBIÉN EN NUESTRO LOCAL FÍSICO!
-            </span>
-            <p>
-              Te recordamos que también podés visitarnos en nuestro local físico
-              y descubrir las piezas en persona y llevarte una gran experiencia.
-            </p>
-            <strong className="catalog-visit-address">
-              <MapPin aria-hidden="true" />
-              {STORE_ADDRESS}
-            </strong>
-            <div className="catalog-visit-hours">
-              <strong>
-                <Clock aria-hidden="true" />
-                Horarios:
-              </strong>
-              <span>Lunes a Viernes: 10:00 - 19:00.</span>
-              <span>Sábados: 10:00 - 14:00.</span>
-            </div>
-            <a href={MAP_LINK_URL} target="_blank" rel="noreferrer">
-              <Route aria-hidden="true" />
-              Te mostramos cómo llegar
-            </a>
-          </div>
-        </div>
       </section>
       <section className="destacados catalog-destacados">
         <div className="container">
@@ -243,6 +207,43 @@ function CatalogPage({ products = [], loading, error, onAddToCart }) {
                           : 'No encontramos productos con ese nombre o SKU.'}
                     </p>
                   )}
+                </div>
+              </div>
+              <div className="catalog-visit-card">
+                <div className="catalog-visit-map">
+                  <iframe
+                    title="Mapa de nuestro local"
+                    src={MAP_EMBED_URL}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="catalog-visit-info">
+                  <span className="section-tag">
+                    ¡VISITANOS TAMBIÉN EN NUESTRO LOCAL FÍSICO!
+                  </span>
+                  <p>
+                    Te recordamos que también podés visitarnos en nuestro local
+                    físico y descubrir las piezas en persona y llevarte una gran
+                    experiencia.
+                  </p>
+                  <strong className="catalog-visit-address">
+                    <MapPin aria-hidden="true" />
+                    {STORE_ADDRESS}
+                  </strong>
+                  <div className="catalog-visit-hours">
+                    <strong>
+                      <Clock aria-hidden="true" />
+                      Horarios:
+                    </strong>
+                    <span>Lunes a Viernes: 10:00 - 19:00.</span>
+                    <span>Sábados: 10:00 - 14:00.</span>
+                  </div>
+                  <a href={MAP_LINK_URL} target="_blank" rel="noreferrer">
+                    <Route aria-hidden="true" />
+                    Te mostramos cómo llegar
+                  </a>
                 </div>
               </div>
             </>

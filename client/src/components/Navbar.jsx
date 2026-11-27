@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import { useCart } from '../cart/CartContext';
 
 const logo = '/img/logo.svg';
 
@@ -15,7 +16,8 @@ const adminLink = {
   label: 'PANEL DE ADMINISTRACIÓN',
 };
 
-function Navbar({ cartCount = 0, onCartClick }) {
+function Navbar({ onCartClick }) {
+  const { cartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { authError, isAdmin, isAuthenticated, isLoading, logout } = useAuth();
 

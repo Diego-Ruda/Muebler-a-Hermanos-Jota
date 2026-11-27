@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import ProductDetail from './components/ProductDetail';
 import ProductList from './components/ProductList';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useCart } from './cart/CartContext';
 import { ROLES } from './auth/roles';
 import CatalogPage from './pages/CatalogPage';
 import ContactPage from './pages/ContactPage';
@@ -153,60 +154,19 @@ function HomePage({ products, loading, error, onAddToCart }) {
 }
 
 function App() {
-  const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
   const { products, loading, error, addProduct, updateProduct, removeProduct } =
     useProducts();
-
-  function handleAddToCart(product) {
-    setCart((currentCart) => {
-      const existingItem = currentCart.find(
-        (item) => item.producto._id === product._id
-      );
-
-      if (existingItem) {
-        return currentCart.map((item) =>
-          item.producto._id === product._id
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
-        );
-      }
-
-      return [...currentCart, { producto: product, cantidad: 1 }];
-    });
-  }
-
-  function changeQuantity(productId, delta) {
-    setCart((currentCart) =>
-      currentCart
-        .map((item) =>
-          item.producto._id === productId
-            ? { ...item, cantidad: item.cantidad + delta }
-            : item
-        )
-        .filter((item) => item.cantidad > 0)
-    );
-  }
-
-  function removeFromCart(productId) {
-    setCart((currentCart) =>
-      currentCart.filter((item) => item.producto._id !== productId)
-    );
-  }
+  const { addToCart, removeFromCart } = useCart();
 
   function handleProductDeleted(productId) {
     removeProduct(productId);
     removeFromCart(productId);
   }
 
-  const cartCount = cart.reduce((total, item) => total + item.cantidad, 0);
-
   return (
     <div className="app-shell">
-      <Navbar
-        cartCount={cartCount}
-        onCartClick={() => setCartOpen((open) => !open)}
-      />
+      <Navbar onCartClick={() => setCartOpen((open) => !open)} />
       <Routes>
         <Route
           path="/"
@@ -215,7 +175,7 @@ function App() {
               products={products}
               loading={loading}
               error={error}
-              onAddToCart={handleAddToCart}
+              onAddToCart={addToCart}
             />
           }
         />
@@ -226,7 +186,7 @@ function App() {
               products={products}
               loading={loading}
               error={error}
-              onAddToCart={handleAddToCart}
+              onAddToCart={addToCart}
             />
           }
         />
@@ -245,7 +205,7 @@ function App() {
           path="/productos/:id"
           element={
             <ProductDetail
-              onAddToCart={handleAddToCart}
+              onAddToCart={addToCart}
               onProductDeleted={handleProductDeleted}
             />
           }
@@ -276,14 +236,7 @@ function App() {
         />
       </Routes>
       <Footer />
-      <CartPanel
-        isOpen={cartOpen}
-        items={cart}
-        onClose={() => setCartOpen(false)}
-        onChangeQuantity={changeQuantity}
-        onRemove={removeFromCart}
-        onCheckout={() => setCart([])}
-      />
+      <CartPanel isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
 }

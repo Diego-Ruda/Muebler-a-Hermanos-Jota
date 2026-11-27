@@ -236,6 +236,182 @@ a {
   text-decoration: underline;
 }
 
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 5rem) 1.25rem;
+}
+
+.auth-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  width: min(100%, 980px);
+  height: 820px;
+  overflow: hidden;
+  border: 1px solid var(--bg-300);
+  border-radius: 0.75rem;
+  background: var(--bg-100);
+  box-shadow: 0 1.25rem 3rem rgb(44 24 16 / 12%);
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.auth-editorial {
+  display: flex;
+  min-height: 0;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+  color: #fffaf3;
+  background:
+    linear-gradient(180deg, rgb(29 20 15 / 28%), rgb(29 20 15 / 82%)),
+    url('/img/fondo.jfif') center / cover;
+}
+
+.auth-editorial-copy {
+  max-width: 24rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.auth-brand {
+  color: #f3c7a4;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.auth-editorial h1 {
+  margin-top: 1rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.auth-editorial p {
+  margin-top: 1.25rem;
+  color: rgb(255 250 243 / 82%);
+  font-size: 0.95rem;
+}
+
+.auth-home-link {
+  align-self: flex-start;
+  color: #fffaf3;
+}
+
+.auth-content {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.auth-heading h2 {
+  margin-top: 0.4rem;
+  font-size: 1.65rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.auth-heading p {
+  margin-top: 0.4rem;
+  color: #6d655e;
+  font-size: 0.9rem;
+}
+
+.auth-divider {
+  margin: 1.5rem 0 1rem;
+}
+
+.auth-tabs {
+  width: 100%;
+}
+
+.auth-tabs [data-slot='tabs-list'] {
+  width: 100%;
+}
+
+.auth-tabs [data-slot='tabs-tab'] {
+  flex: 1;
+}
+
+.auth-panel {
+  padding-top: 1.5rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.auth-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.auth-input {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+.auth-field-description {
+  color: #6d655e;
+  font-size: 0.8rem;
+}
+
+.auth-password-toggle {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+}
+
+.auth-submit {
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 760px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: 250px minmax(0, 1fr);
+    height: 1080px;
+  }
+
+  .auth-editorial {
+    min-height: 250px;
+    height: 250px;
+    padding: 1.5rem;
+  }
+
+  .auth-editorial-copy {
+    margin: 0;
+  }
+
+  .auth-editorial h1 {
+    max-width: 18rem;
+    font-size: 2rem;
+  }
+
+  .auth-editorial p {
+    max-width: 26rem;
+    margin-top: 0.75rem;
+  }
+
+  .auth-home-link {
+    margin-top: 1.5rem;
+  }
+}
+
 .form-alert {
   margin-bottom: 1rem;
 }

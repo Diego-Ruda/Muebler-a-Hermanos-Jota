@@ -3,6 +3,8 @@ import { useState } from 'react';
 const EMPTY_PRODUCT = {
   nombre: '',
   descripcion: '',
+  sku: '',
+  categoria: '',
   precio: '',
   stock: 0,
   imagenUrl: '',
@@ -14,6 +16,8 @@ function getInitialValues(product) {
   return {
     nombre: product.nombre ?? '',
     descripcion: product.descripcion ?? '',
+    sku: product.sku ?? '',
+    categoria: product.categoria ?? '',
     precio: product.precio ?? '',
     stock: product.stock ?? 0,
     imagenUrl: product.imagenUrl ?? '',
@@ -61,6 +65,8 @@ function ProductForm({
     const product = {
       nombre: values.nombre.trim(),
       descripcion: values.descripcion.trim(),
+      sku: values.sku.trim(),
+      categoria: values.categoria.trim(),
       precio: values.precio === '' ? Number.NaN : Number(values.precio),
       stock: values.stock === '' ? 0 : Number(values.stock),
       imagenUrl: values.imagenUrl.trim(),
@@ -100,6 +106,24 @@ function ProductForm({
           name="descripcion"
           rows="4"
           value={values.descripcion}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-field">
+        <label htmlFor="product-sku">SKU</label>
+        <input
+          id="product-sku"
+          name="sku"
+          value={values.sku}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-field">
+        <label htmlFor="product-category">Categoría</label>
+        <input
+          id="product-category"
+          name="categoria"
+          value={values.categoria}
           onChange={handleChange}
         />
       </div>

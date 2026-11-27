@@ -12,6 +12,16 @@ const productSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    sku: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    categoria: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     precio: {
       type: Number,
       required: [true, 'El precio es obligatorio'],

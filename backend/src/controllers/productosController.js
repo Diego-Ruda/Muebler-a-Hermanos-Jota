@@ -35,6 +35,8 @@ export async function crearProducto(req, res) {
   const {
     nombre,
     descripcion,
+    sku,
+    categoria,
     medidas,
     precio,
     stock,
@@ -48,6 +50,8 @@ export async function crearProducto(req, res) {
     const producto = await Product.create({
       nombre,
       descripcion,
+      sku,
+      categoria,
       medidas,
       precio,
       stock,

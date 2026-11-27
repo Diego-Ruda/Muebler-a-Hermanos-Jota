@@ -45,11 +45,17 @@
     "lint-staged": "^17.5.1",
     "prettier": "^3.9.9"
   },
+  "overrides": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^18.0.10",
     "jsonwebtoken": "^9.0.3",
     "jwt-decode": "^4.0.0",
-    "mongoose": "^9.11.4"
+    "mongoose": "^9.11.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   }
 }

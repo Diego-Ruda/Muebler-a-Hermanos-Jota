@@ -58,13 +58,13 @@ El sistema implementa:
 
 ## 🧱 Stack Tecnológico
 
-| Capa          | Tecnologías                                               |
-| ------------- | --------------------------------------------------------- |
-| Frontend      | React 18, React Router DOM 6, React Scripts (CRA), CSS    |
-| Backend       | Node.js 20+, Express 5, Mongoose 9, dotenv, CORS          |
-| Base de datos | MongoDB / MongoDB Atlas                                   |
-| Calidad       | ESLint, Prettier, Husky, lint-staged, commitlint          |
-| Deploy        | Vercel (frontend) · Render (backend) · MongoDB Atlas (DB) |
+| Capa          | Tecnologías                                                                      |
+| ------------- | -------------------------------------------------------------------------------- |
+| Frontend      | React 19, React Router DOM 6, Vite 8, Tailwind CSS 4, HeroUI 3, Gravity UI Icons |
+| Backend       | Node.js 20+, Express 5, Mongoose 9, dotenv, CORS                                 |
+| Base de datos | MongoDB / MongoDB Atlas                                                          |
+| Calidad       | ESLint, Prettier, Husky, lint-staged, commitlint                                 |
+| Deploy        | Vercel (frontend) · Render (backend) · MongoDB Atlas (DB)                        |
 
 ---
 
@@ -101,11 +101,11 @@ Muebler-a-Hermanos-Jota/
 │   ├── src/
 │   │   ├── components/              # Navbar, Footer, ProductCard, ProductForm, CartPanel, etc.
 │   │   ├── config/
-│   │   │   └── api.js               # URL base de la API (REACT_APP_API_URL)
+│   │   │   └── api.js               # URL base de la API (VITE_API_URL)
 │   │   ├── hooks/
 │   │   │   └── useProducts.js       # Fetch y estado de productos
 │   │   ├── pages/                   # Home, catálogo, contacto, detalle y admin
-│   │   ├── App.js                   # Rutas y estado global del carrito
+│   │   ├── App.jsx                  # Rutas y estado global del carrito
 │   │   ├── App.css, styles.css      # Estilos
 │   │   └── index.js                 # Entrada de React
 │   └── package.json                 # Dependencias y scripts del frontend
@@ -138,7 +138,7 @@ Base URL en producción: `https://backend-muebler-a-hermanos-jota.onrender.com/`
 | `POST`   | `/api/productos`     | Crea un producto                         |
 | `PUT`    | `/api/productos/:id` | Actualiza un producto                    |
 | `DELETE` | `/api/productos/:id` | Elimina un producto                      |
-| `GET`    | `/api/users/profile` | Obtiene el perfil autenticado       |
+| `GET`    | `/api/users/profile` | Obtiene el perfil autenticado            |
 
 **Modelo `Product`:** `nombre` (requerido), `descripcion`, `precio` (requerido, ≥ 0), `stock` (≥ 0), `imagenUrl`, `medidas`, `detallesFabricacion`, `destacado` (boolean) y `timestamps` (`createdAt` / `updatedAt`).
 
@@ -160,15 +160,15 @@ El proyecto se despliega de forma **separada**: frontend estático en **Vercel**
 ### 🎨 Frontend en Vercel
 
 - Proyecto de Vercel apuntando al repositorio (Root Directory en la raíz, donde vive `vercel.json`).
-- Build: `npm run build --workspace client` → salida en `client/build`.
-- Variable de entorno: **`REACT_APP_API_URL`** con la URL pública del backend en Render (ej. `https://tu-backend.onrender.com`). El cliente la consume desde `client/src/config/api.js`.
+- Build: `npm run build --workspace client` → salida en `client/dist`.
+- Variable de entorno: **`VITE_API_URL`** con la URL pública del backend en Render (ej. `https://tu-backend.onrender.com`). El cliente la consume desde `client/src/config/api.js`.
 - El rewrite `/:path((?!api/).*)` → `/index.html` evita el 404 al recargar rutas internas de React Router (`/productos`, `/contacto`, `/producto/:id`) sin interceptar la API.
 - `client/public/img` se publica junto al build y se sirve en `/img/*`.
 
 Pasos:
 
 1. Importar el repo en Vercel y dejar el **Root Directory** en la raíz (`.`).
-2. Configurar `REACT_APP_API_URL` con la URL del backend en Render.
+2. Configurar `VITE_API_URL` con la URL del backend en Render.
 3. Deploy. Verificar el catálogo y una ruta interna con refresh.
 
 ### ⚙️ Backend en Render
@@ -194,7 +194,25 @@ npm run seed
 - Configurar el acceso de red para permitir conexiones desde Render (o `0.0.0.0/0` para pruebas).
 - Copiar la cadena de conexión en `MONGODB_URI` (local y en Render).
 
-> El archivo `api/productos.js` se mantiene como **adaptador serverless opcional** para Vercel. En la arquitectura actual el backend productivo corre en Render y el frontend lo consume directamente mediante `REACT_APP_API_URL`.
+> El archivo `api/productos.js` se mantiene como **adaptador serverless opcional** para Vercel. En la arquitectura actual el backend productivo corre en Render y el frontend lo consume directamente mediante `VITE_API_URL`.
+
+---
+
+### Interfaz y iconos
+
+- **HeroUI 3** aporta componentes React modernos junto con los estilos existentes. Los componentes actuales pueden mantenerse mientras se migra el diseño de forma incremental.
+- **Tailwind CSS 4** usa la importación `@import "tailwindcss"` en el CSS principal y se integra con Vite mediante `@tailwindcss/vite`.
+- **Gravity UI Icons 2.24** proporciona iconos React y SVG. Los componentes React se pueden importar de forma individual:
+
+```jsx
+import Cloud from '@gravity-ui/icons/Cloud';
+
+export function CloudButton() {
+  return <Cloud width={20} height={20} />;
+}
+```
+
+Los iconos individuales permiten aprovechar el tree-shaking. Los recursos SVG también están disponibles, pero requieren que el bundler pueda procesar archivos `.svg`.
 
 ---
 
@@ -213,11 +231,21 @@ cd Muebler-a-Hermanos-Jota
 npm install
 ```
 
-3. **Configura las variables de entorno del backend** creando `backend/.env`:
+3. **Configura las variables de entorno**:
+
+Backend: crea `backend/.env`:
 
 ```env
 MONGODB_URI=mongodb+srv://<usuario>:<password>@<cluster>/<base>
 PORT=3000
+JWT_SECRET=<clave-secreta>
+JWT_EXPIRES_IN=2h
+```
+
+Frontend local: no necesitas una variable adicional. Vite usa el proxy configurado hacia `http://localhost:3000`. Para usar otro backend, crea `client/.env`:
+
+```env
+VITE_API_URL=https://tu-backend.example.com
 ```
 
 4. **Inicializa la base de datos** con los productos de ejemplo:
@@ -236,7 +264,7 @@ npm run dev:backend
 npm run dev:client
 ```
 
-6. Accede a `http://localhost:5173`. En desarrollo, CRA usa el `proxy` hacia `http://localhost:3000`; si definís `REACT_APP_API_URL`, el frontend consumirá esa URL.
+6. Accede a `http://localhost:5173`. En desarrollo, Vite usa el proxy hacia `http://localhost:3000`; si definís `VITE_API_URL`, el frontend consumirá esa URL.
 
 ---
 
@@ -255,9 +283,9 @@ npm run dev:client
   - `npm run seed`: Ejecuta el seed de productos.
 
 - **Frontend (`client`):**
-  - `npm start`: Ejecuta la app React en desarrollo (puerto 5173).
+  - `npm start`: Ejecuta Vite en desarrollo (puerto 5173).
   - `npm run build`: Compila la app para producción.
-  - `npm test`: Ejecuta los tests.
+  - `npm run preview`: Previsualiza el build de producción.
 
 ---
 
@@ -279,7 +307,7 @@ npm run dev:client
 - Usar siempre `npm install` al cambiar de rama principal.
 - No versionar el archivo `.env`: contiene credenciales de MongoDB.
 - En Render, recordá cargar `MONGODB_URI` y ejecutar el seed la primera vez.
-- En Vercel, cada cambio en `REACT_APP_API_URL` requiere un nuevo deploy (las variables de CRA se inyectan en build time).
+- En Vercel, cada cambio en `VITE_API_URL` requiere un nuevo deploy (las variables de Vite se inyectan en build time).
 - ¡Revisá las issues y tareas resueltas en Trello para ver la evolución del trabajo colaborativo!
 
 ---

@@ -58,7 +58,7 @@ function HomePage({ products, loading, error, onAddToCart }) {
               <br />
               SE QUEDAN
               <br />
-              PARA SIEMPRE.
+              <span className="hero-title-underline">PARA SIEMPRE</span>.
             </h1>
             <p className="hero-description">
               Creamos muebles atemporales con maderas nobles y origen

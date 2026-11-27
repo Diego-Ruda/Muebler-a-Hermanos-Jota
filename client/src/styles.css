@@ -544,12 +544,45 @@ a {
   color: #fff;
 }
 
+.hero-title-underline {
+  display: inline-block;
+  isolation: isolate;
+  position: relative;
+  text-decoration: none;
+}
+
+.hero-title-underline::after {
+  background: color-mix(in oklab, var(--primary-100) 70%, transparent);
+  border-radius: 40% 55% 45% 50% / 60% 45% 55% 40%;
+  bottom: -0.08em;
+  content: '';
+  height: 0.32em;
+  left: -0.06em;
+  mix-blend-mode: multiply;
+  position: absolute;
+  right: -0.06em;
+  transform: rotate(-0.7deg);
+  z-index: -1;
+}
+
 .hero-description {
-  font-size: 1.05rem;
-  line-height: 1.75;
+  backdrop-filter: blur(2px);
+  background: linear-gradient(
+    90deg,
+    rgba(35, 20, 10, 0.3),
+    rgba(35, 20, 10, 0)
+  );
+  border-left: 3px solid var(--primary-100);
+  border-radius: 0 6px 6px 0;
+  color: rgba(247, 238, 221, 0.94);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  letter-spacing: 0.01em;
+  line-height: 1.8;
   margin-bottom: 2rem;
-  max-width: 540px;
-  color: rgba(247, 238, 221, 0.96);
+  margin-top: 2rem;
+  max-width: 580px;
+  padding: 0.35rem 1.25rem;
+  text-wrap: pretty;
 }
 
 .btn-primary {

@@ -7,13 +7,14 @@ const currencyFormatter = new Intl.NumberFormat('es-AR', {
   maximumFractionDigits: 0,
 });
 
-function ProductCard({ product, onAddToCart }) {
+function ProductCard({ product, onAddToCart, badge }) {
   const productPath = `/productos/${product._id}`;
   const stock = product.stock ?? 0;
   const isOutOfStock = stock <= 0;
 
   return (
     <Card className="product-card h-full w-full">
+      {badge && <span className="product-badge">{badge}</span>}
       <Link
         to={productPath}
         className="product-image-link"

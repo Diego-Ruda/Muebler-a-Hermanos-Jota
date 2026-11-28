@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Clock, MapPin, Route } from '@gravity-ui/icons';
 import { useAuth } from '../auth/AuthContext';
 import {
   Description,
@@ -14,6 +13,7 @@ import {
 } from '@heroui/react';
 import FlashMessage from '../components/FlashMessage';
 import ProductList from '../components/ProductList';
+import StoreMap from '../components/StoreMap';
 import {
   CATEGORY_OPTIONS,
   filterProducts,
@@ -21,14 +21,6 @@ import {
   sanitizeMaxPrice,
   SORT_OPTIONS,
 } from '../utils/catalogFilters';
-
-const STORE_ADDRESS = 'Av. San Juan 2847, CABA';
-const MAP_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(
-  STORE_ADDRESS
-)}&output=embed`;
-const MAP_LINK_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  STORE_ADDRESS
-)}`;
 
 function CatalogPage({ products = [], loading, error, onAddToCart }) {
   const location = useLocation();
@@ -209,43 +201,7 @@ function CatalogPage({ products = [], loading, error, onAddToCart }) {
                   )}
                 </div>
               </div>
-              <div className="catalog-visit-card">
-                <div className="catalog-visit-map">
-                  <iframe
-                    title="Mapa de nuestro local"
-                    src={MAP_EMBED_URL}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="catalog-visit-info">
-                  <span className="section-tag">
-                    ¡VISITANOS TAMBIÉN EN NUESTRO LOCAL FÍSICO!
-                  </span>
-                  <p>
-                    Te recordamos que también podés visitarnos en nuestro local
-                    físico y descubrir las piezas en persona y llevarte una gran
-                    experiencia.
-                  </p>
-                  <strong className="catalog-visit-address">
-                    <MapPin aria-hidden="true" />
-                    {STORE_ADDRESS}
-                  </strong>
-                  <div className="catalog-visit-hours">
-                    <strong>
-                      <Clock aria-hidden="true" />
-                      Horarios:
-                    </strong>
-                    <span>Lunes a Viernes: 10:00 - 19:00.</span>
-                    <span>Sábados: 10:00 - 14:00.</span>
-                  </div>
-                  <a href={MAP_LINK_URL} target="_blank" rel="noreferrer">
-                    <Route aria-hidden="true" />
-                    Te mostramos cómo llegar
-                  </a>
-                </div>
-              </div>
+              <StoreMap />
             </>
           )}
         </div>
